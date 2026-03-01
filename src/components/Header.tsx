@@ -22,23 +22,42 @@ export function Header() {
 
         <nav className="flex items-center gap-1 text-sm">
           {!isHome && (
-            <Link
-              href="/upload"
-              className={cn(
-                "rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent",
-                pathname === "/upload" && "bg-accent text-foreground"
-              )}
-            >
-              Upload
-            </Link>
+            <>
+              <Link
+                href="/guide"
+                className={cn(
+                  "rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent",
+                  pathname === "/guide" && "bg-accent text-foreground"
+                )}
+              >
+                Guide
+              </Link>
+              <Link
+                href="/upload"
+                className={cn(
+                  "rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent",
+                  pathname === "/upload" && "bg-accent text-foreground"
+                )}
+              >
+                Upload
+              </Link>
+            </>
           )}
           {isHome && (
-            <Link
-              href="/upload"
-              className="rounded-full bg-amber/10 px-4 py-1.5 text-sm font-medium text-amber transition-colors hover:bg-amber/15"
-            >
-              Get started
-            </Link>
+            <>
+              <Link
+                href="/guide"
+                className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+              >
+                Guide
+              </Link>
+              <Link
+                href="/upload"
+                className="rounded-full bg-amber/10 px-4 py-1.5 text-sm font-medium text-amber transition-colors hover:bg-amber/15"
+              >
+                Get started
+              </Link>
+            </>
           )}
         </nav>
       </div>

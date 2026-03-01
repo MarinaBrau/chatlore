@@ -3,31 +3,25 @@
 import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
-import { ArrowRight, Shield, Zap, FileOutput } from "lucide-react";
+import { ArrowRight, Shield, Eye, FileOutput } from "lucide-react";
 
 /* ─── Transformation demo data ─── */
-const rawLines = [
-  '{ "title": "Debug React hooks",',
-  '  "mapping": { "node-4a2f": {',
-  '    "message": { "author": {',
-  '      "role": "user" },',
-  '    "content": { "parts": [',
-  '      "Why does my useEffect',
-  '      run twice in dev?" ]',
-  "    }}}}",
+const chatItems = [
+  { title: "Debug React hooks", msgs: 23 },
+  { title: "Best database for my app", msgs: 45 },
+  { title: "CSS Grid vs Flexbox", msgs: 12 },
+  { title: "Deploy to Vercel", msgs: 8 },
+  { title: "Auth flow best practices", msgs: 31 },
 ];
 
-const structuredLines = [
-  "## Preferences",
-  "",
-  "- Prefers functional components",
-  "- Uses TypeScript strict mode",
-  "- Favors hooks over class components",
-  "",
-  "## Key Topics",
-  "",
-  "- React performance patterns",
-  "- State management with Zustand",
+const contextLines = [
+  { type: "heading", text: "Preferences" },
+  { type: "item", text: "Prefers functional React components" },
+  { type: "item", text: "Uses TypeScript strict mode" },
+  { type: "item", text: "Favors PostgreSQL for relational data" },
+  { type: "heading", text: "Communication" },
+  { type: "item", text: "Likes concise, direct answers" },
+  { type: "item", text: "Prefers examples over theory" },
 ];
 
 /* ─── Animation variants ─── */
@@ -76,18 +70,18 @@ const steps = [
 const pillars = [
   {
     icon: Shield,
-    title: "Your data stays on your machine",
-    body: "The JSON file is parsed entirely in your browser. Only the conversations you select are sent for analysis — and nothing is stored on our servers.",
+    title: "Nothing stored. Ever.",
+    body: "Your file is parsed in the browser. Selected conversations are analyzed via Claude\u2019s API and immediately discarded \u2014 no database, no logs, no trace.",
   },
   {
-    icon: Zap,
-    title: "Thousands of chats in seconds",
-    body: "Years of ChatGPT history? No problem. The parser runs in a background thread so your browser stays responsive, even with 5,000+ conversations.",
+    icon: Eye,
+    title: "You choose what\u2019s shared",
+    body: "Browse thousands of conversations locally. Only the ones you explicitly select are sent for analysis. Full control, full transparency.",
   },
   {
     icon: FileOutput,
     title: "Works with every Claude surface",
-    body: "Get output formatted for Claude.ai Projects, Claude Code (CLAUDE.md), or plain markdown you can use anywhere.",
+    body: "Get output formatted for Claude.ai Projects, Claude Code (CLAUDE.md), or plain markdown you can paste anywhere.",
   },
 ];
 
@@ -132,7 +126,7 @@ export default function Home() {
       {/* ════════ HERO ════════ */}
       <section
         ref={heroRef}
-        className="glow-amber relative flex flex-col items-center px-4 pb-28 pt-28 sm:pt-36"
+        className="glow-amber relative flex flex-col items-center px-4 pb-16 pt-28 sm:pt-36"
       >
         <motion.div
           variants={stagger}
@@ -140,27 +134,15 @@ export default function Home() {
           animate="visible"
           className="flex max-w-3xl flex-col items-center text-center"
         >
-          {/* Badge */}
-          <motion.div
-            variants={fadeSlide}
-            className="mb-8 inline-flex items-center gap-2 rounded-full border border-amber/20 bg-amber/5 px-4 py-1.5 text-sm text-amber"
-          >
-            <span className="relative flex size-2">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-amber opacity-40" />
-              <span className="relative inline-flex size-2 rounded-full bg-amber" />
-            </span>
-            Analyze 3 conversations free — no sign-up
-          </motion.div>
-
           {/* Headline */}
           <motion.h1
             variants={fadeSlide}
             className="font-[family-name:var(--font-display)] text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
           >
-            Switch to Claude
+            Make Claude feel like
             <br />
             <span className="italic text-amber">
-              without losing context
+              you&apos;ve used it for years
             </span>
           </motion.h1>
 
@@ -169,16 +151,15 @@ export default function Home() {
             variants={fadeSlide}
             className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
           >
-            You taught ChatGPT your coding style, tool preferences, and how
-            you think. Turn that into a context file Claude can use from
-            conversation one.
+            Starting fresh with a new AI shouldn&apos;t mean losing everything
+            you taught the last one.
           </motion.p>
 
           {/* CTA */}
           <motion.div variants={fadeSlide} className="mt-10">
             <Link
               href="/upload"
-              className="group inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-background transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.78_0.12_75/25%)]"
+              className="group inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
             >
               Build your context file
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
@@ -194,55 +175,84 @@ export default function Home() {
           className="mt-20 w-full max-w-3xl"
         >
           <div className="overflow-hidden rounded-xl border border-border/60 bg-card/50 shadow-2xl shadow-amber/5 backdrop-blur-sm">
-            <div className="grid sm:grid-cols-2">
-              {/* Raw side */}
-              <div className="border-b border-border/40 p-5 sm:border-b-0 sm:border-r">
+            <div className="grid sm:grid-cols-[1fr,auto,1fr]">
+              {/* Chat history side */}
+              <div className="p-5">
                 <span className="mb-3 inline-block rounded-md bg-muted px-2 py-0.5 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                  conversations.json
+                  Your ChatGPT history
                 </span>
-                <div className="mt-2 space-y-0.5 font-mono text-[13px] leading-relaxed text-muted-foreground/70">
-                  {rawLines.map((line, i) => (
+                <div className="mt-3 space-y-2">
+                  {chatItems.map((chat, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, x: -8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{
-                        delay: 1.0 + i * 0.06,
+                        delay: 1.0 + i * 0.07,
                         duration: 0.4,
                         ease: "easeOut" as const,
                       }}
+                      className="flex items-center gap-2.5 rounded-lg border border-border/30 bg-background/50 px-3 py-2"
                     >
-                      {line}
+                      <span className="text-sm text-muted-foreground/50">💬</span>
+                      <span className="flex-1 truncate text-[13px] text-muted-foreground">
+                        {chat.title}
+                      </span>
+                      <span className="shrink-0 text-[11px] text-muted-foreground/40">
+                        {chat.msgs} msgs
+                      </span>
                     </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* Structured side */}
-              <div className="p-5">
+              {/* Arrow separator */}
+              <div className="hidden items-center px-2 sm:flex">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 1.4, duration: 0.4 }}
+                >
+                  <ArrowRight className="size-5 text-amber/40" />
+                </motion.div>
+              </div>
+              <div className="flex items-center justify-center border-t border-border/40 py-2 sm:hidden">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 1.4, duration: 0.4 }}
+                  className="rotate-90"
+                >
+                  <ArrowRight className="size-5 text-amber/40" />
+                </motion.div>
+              </div>
+
+              {/* Context file side */}
+              <div className="border-t border-border/40 p-5 sm:border-t-0 sm:border-l">
                 <span className="mb-3 inline-block rounded-md bg-amber/10 px-2 py-0.5 font-mono text-[11px] uppercase tracking-widest text-amber">
-                  structured output
+                  Your context file
                 </span>
-                <div className="mt-2 space-y-0.5 font-mono text-[13px] leading-relaxed">
-                  {structuredLines.map((line, i) => (
+                <div className="mt-3 space-y-1.5">
+                  {contextLines.map((line, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, x: 8 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{
-                        delay: 1.3 + i * 0.06,
+                        delay: 1.5 + i * 0.07,
                         duration: 0.4,
                         ease: "easeOut" as const,
                       }}
                       className={
-                        line.startsWith("##")
-                          ? "font-semibold text-foreground"
-                          : line.startsWith("-")
-                            ? "text-amber/80"
-                            : "h-3"
+                        line.type === "heading"
+                          ? "mt-1 text-[13px] font-semibold text-foreground first:mt-0"
+                          : "flex items-start gap-2 text-[13px] text-amber/80"
                       }
                     >
-                      {line}
+                      {line.type === "item" && (
+                        <span className="mt-1 size-1 shrink-0 rounded-full bg-amber/40" />
+                      )}
+                      {line.text}
                     </motion.div>
                   ))}
                 </div>
@@ -252,8 +262,33 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* ════════ SOCIAL PROOF ════════ */}
+      <section className="px-4 py-12">
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mx-auto flex max-w-2xl items-center justify-center gap-8 sm:gap-12"
+        >
+          {[
+            { value: "100%", label: "Client-side parsing" },
+            { value: "0", label: "Data stored on servers" },
+            { value: "3", label: "Free analyses" },
+          ].map((stat, i) => (
+            <div key={stat.label} className="flex items-center gap-8 sm:gap-12">
+              {i > 0 && <div className="h-8 w-px bg-border/40" />}
+              <div className="text-center">
+                <p className="text-2xl font-semibold text-amber">{stat.value}</p>
+                <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </section>
+
       {/* ════════ HOW IT WORKS ════════ */}
-      <section className="relative border-t border-border/40 px-4 py-24">
+      <section className="relative px-4 py-20">
         <div className="mx-auto max-w-4xl">
           <motion.p
             initial={{ opacity: 0 }}
@@ -268,7 +303,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="mb-16 text-center font-[family-name:var(--font-display)] text-3xl sm:text-4xl"
+            className="mb-12 text-center font-[family-name:var(--font-display)] text-3xl sm:text-4xl"
           >
             From raw export to ready-made context
           </motion.h2>
@@ -336,20 +371,23 @@ export default function Home() {
           className="mx-auto flex max-w-lg flex-col items-center text-center"
         >
           <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl">
-            Claude already knows how to help.{" "}
-            <span className="italic text-amber">Teach it who you are.</span>
+            Your next Claude conversation could{" "}
+            <span className="italic text-amber">already know your preferences.</span>
           </h2>
           <p className="mt-4 text-muted-foreground">
-            Drop your ChatGPT export, pick the conversations that matter,
-            and walk away with a context file. First 3 analyses are free.
+            Upload your ChatGPT export, pick the conversations that matter,
+            and walk away with a ready-to-use context file.
           </p>
           <Link
             href="/upload"
-            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-background transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.78_0.12_75/25%)]"
+            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
           >
-            Build your context file
+            Try it free &mdash; no sign-up needed
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
+          <p className="mt-3 text-xs text-muted-foreground/60">
+            3 analyses free, no credit card required
+          </p>
         </motion.div>
       </section>
     </div>
