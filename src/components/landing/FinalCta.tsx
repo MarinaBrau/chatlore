@@ -1,0 +1,38 @@
+"use client";
+
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+
+export function FinalCta() {
+  return (
+    <section className="border-t border-border/40 px-4 py-24">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="mx-auto flex max-w-lg flex-col items-center text-center"
+      >
+        <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl">
+          Your next Claude conversation could{" "}
+          <span className="italic text-amber">already know your preferences.</span>
+        </h2>
+        <p className="mt-4 text-muted-foreground">
+          It only takes a few minutes. Pick the conversations that matter,
+          and Claude will remember what makes you, you.
+        </p>
+        <Link
+          href="/upload"
+          className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
+        >
+          Start now &mdash; no sign-up needed
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        </Link>
+        <p className="mt-3 text-xs text-muted-foreground">
+          100% free &middot; no sign-up &middot; takes under 5 minutes
+        </p>
+      </motion.div>
+    </section>
+  );
+}

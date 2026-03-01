@@ -1,323 +1,215 @@
 {
   "project": {
-    "name": "AI Chat History Migrator",
-    "description": "Ferramenta web para importar histórico do ChatGPT e gerar memórias estruturadas + system prompts para Claude",
-    "branchName": "saci/mvp-chat-migrator"
+    "name": "ChatLore",
+    "description": "UX para Usuário Leigo — guia visual, linguagem acessível e orientação pós-export",
+    "branchName": "saci/ux-leigo"
   },
   "features": [
     {
       "id": "F1",
-      "name": "App Shell e Landing Page",
-      "description": "Estrutura do projeto Next.js, layout, e landing page de apresentação",
+      "name": "Guia de Exportação ChatGPT",
+      "description": "Modal na /upload com passo-a-passo visual para exportar dados do ChatGPT, incluindo mockup estilizado da interface",
       "priority": 1,
       "tasks": [
         {
           "id": "F1-T1",
-          "title": "Setup do projeto Next.js com dependências",
-          "description": "Criar projeto Next.js 15 com TypeScript, Tailwind CSS 4, shadcn/ui. Configurar estrutura de pastas (app router), eslint, e Vercel deploy config.",
+          "title": "Criar componente ChatGptMockup",
+          "description": "Componente React stateless que renderiza representação minimalista da tela de Settings do ChatGPT. Menu lateral com 'General' e 'Data controls' (destacado). Área principal com 'Export data' e botão 'Export' com destaque visual. Paleta neutra (cinza/branco). Responsivo.",
           "priority": 1,
           "passes": false,
           "context": {
-            "files": ["package.json", "tsconfig.json", "tailwind.config.ts", "next.config.ts"],
-            "libraries": ["next", "typescript", "tailwindcss", "shadcn/ui", "framer-motion"],
+            "files": ["src/components/landing/HowItWorks.tsx"],
+            "libraries": ["lucide-react", "tailwindcss"],
             "hints": [
-              "Usar App Router (app/ directory)",
-              "Tailwind CSS 4 com @tailwindcss/postcss",
-              "shadcn/ui com tema dark como padrão",
-              "Adicionar framer-motion para animações"
+              "Componente puro, sem estado — apenas layout visual",
+              "Usar rounded borders e sombras sutis para simular janela de app",
+              "Destacar 'Data controls' no menu e 'Export' button com cor diferente",
+              "Não usar logos ou marcas — apenas layout genérico reconhecível"
             ]
           },
           "acceptance": [
-            "Projeto roda com npm run dev sem erros",
-            "Tailwind CSS funciona (testar com classe utilitária)",
-            "shadcn/ui instalado e pelo menos 1 componente (Button) funciona",
-            "Dark mode como padrão",
+            "Renderiza mockup minimalista da tela de Settings do ChatGPT",
+            "Menu lateral com items incluindo 'Data controls' destacado",
+            "Botão 'Export' visualmente destacado na área principal",
+            "Paleta neutra (cinza/branco) sem conflito com tema ChatLore",
+            "Responsivo em mobile",
             "Typecheck passes"
           ],
           "tests": {
-            "command": "npm run build && npx tsc --noEmit"
+            "command": "npx next build"
           }
         },
         {
           "id": "F1-T2",
-          "title": "Landing page e layout principal",
-          "description": "Criar layout com header/footer e landing page com headline, explicação do produto, e CTA 'Começar grátis'. Design minimalista dark, responsivo.",
+          "title": "Criar ExportGuideModal e integrar na /upload",
+          "description": "Modal (shadcn Dialog) com 4 passos numerados para exportar dados do ChatGPT: (1) Open Settings no ChatGPT, (2) Go to Data Controls → Export, (3) Check email for download link, (4) Extract .zip and find conversations.json. Step 2 inclui ChatGptMockup. Adicionar botão trigger 'Don't know how to export? See our guide' abaixo da UploadZone na página /upload.",
           "priority": 2,
           "passes": false,
           "context": {
-            "files": ["src/app/layout.tsx", "src/app/page.tsx", "src/components/Header.tsx", "src/components/Footer.tsx"],
-            "libraries": ["framer-motion"],
+            "files": [
+              "src/app/upload/page.tsx",
+              "src/components/UploadZone.tsx"
+            ],
+            "libraries": ["radix-ui", "framer-motion", "lucide-react"],
             "hints": [
-              "Hero section: headline forte + subtítulo + CTA",
-              "Seção 'Como funciona' com 4 steps visuais",
-              "Footer simples com GitHub link",
-              "Meta tags OG + SEO",
-              "Responsivo mobile-first"
+              "Usar shadcn Dialog component pattern",
+              "Steps numerados com layout vertical (timeline style)",
+              "Importar ChatGptMockup criado em F1-T1",
+              "Botão trigger deve ser link-style (text-muted-foreground), não botão primário",
+              "O modal é client component — 'use client' necessário"
             ]
           },
           "acceptance": [
-            "Landing page renderiza com headline, explicação e CTA",
-            "Layout responsivo funciona em mobile (320px) e desktop (1280px)",
-            "CTA 'Começar grátis' navega para /upload",
-            "Meta tags OG presentes no head",
-            "Header e Footer presentes em todas as páginas",
+            "Botão 'Don't know how to export?' visível abaixo da drop zone na /upload",
+            "Modal abre com 4 passos numerados com instruções claras",
+            "Step 2 inclui ChatGptMockup component",
+            "Modal fecha ao clicar fora ou no botão X",
+            "Funciona em mobile (responsive)",
             "Typecheck passes",
-            "Verify in browser using dev-browser skill"
+            "Verify in browser using dev tools"
           ],
           "tests": {
-            "command": "npx tsc --noEmit"
+            "command": "npx next build"
           }
         }
       ]
     },
     {
       "id": "F2",
-      "name": "Upload e Parse Client-Side",
-      "description": "Upload de conversations.json com parse no browser via Web Worker",
+      "name": "Simplificar Linguagem",
+      "description": "Revisar copy da landing page e loading states da results page para remover jargão técnico e humanizar a experiência",
       "priority": 2,
       "tasks": [
         {
           "id": "F2-T1",
-          "title": "Parser do ChatGPT conversations.json",
-          "description": "Criar módulo de parsing que extrai conversas do formato ChatGPT export. Extrair: title, create_time, messages (flatten da árvore mapping), message_count. Rodar em Web Worker para não bloquear UI.",
-          "priority": 3,
+          "title": "Revisar copy da landing page",
+          "description": "Atualizar textos nos componentes HowItWorks, TrustPillars e FinalCta para remover jargão técnico. Mudanças: (1) HowItWorks step 01: substituir menção a 'conversations.json' por linguagem acessível. (2) HowItWorks step 04: explicar benefício em vez de formatos técnicos. (3) TrustPillars: substituir 'Claude's API' por linguagem sem jargão. (4) FinalCta subtexto: mais encorajador. Manter headline do Hero intacta.",
+          "priority": 1,
           "passes": false,
           "context": {
-            "files": ["src/lib/parsers/chatgpt.ts", "src/lib/parsers/types.ts", "src/workers/parse-worker.ts"],
+            "files": [
+              "src/components/landing/HowItWorks.tsx",
+              "src/components/landing/TrustPillars.tsx",
+              "src/components/landing/FinalCta.tsx"
+            ],
             "libraries": [],
             "hints": [
-              "ChatGPT export é array de objetos com 'mapping' (árvore de mensagens)",
-              "Flatten mapping tree: seguir parent→children pra extrair mensagens em ordem",
-              "Ignorar mensagens de sistema (author.role === 'system')",
-              "Web Worker via new Worker() com postMessage/onmessage",
-              "Retornar array de Conversation com metadados"
+              "Tom: warm but confident — como um amigo tech-savvy explicando",
+              "Evitar: .json, API, system prompt, context file",
+              "Permitido: Claude, ChatGPT, conversations, preferences, context",
+              "Hero headline NÃO muda"
             ]
           },
           "acceptance": [
-            "Parseia corretamente o formato conversations.json do ChatGPT",
-            "Extrai title, create_time, messages[], message_count de cada conversa",
-            "Flatten da árvore de mapping produz mensagens em ordem cronológica",
-            "Ignora mensagens de sistema",
-            "Roda em Web Worker sem bloquear main thread",
-            "Lança erro claro para JSON inválido ou formato incompatível",
+            "HowItWorks step 01 não menciona 'conversations.json'",
+            "HowItWorks step 04 foca em benefício, não formato técnico",
+            "TrustPillars não menciona 'API'",
+            "FinalCta subtexto mais encorajador",
+            "Headline do Hero permanece inalterada",
             "Typecheck passes"
           ],
           "tests": {
-            "command": "npx tsc --noEmit"
+            "command": "npx next build"
           }
         },
         {
           "id": "F2-T2",
-          "title": "UI de upload com drag & drop",
-          "description": "Página /upload com zona de drag & drop e botão de seleção de arquivo. Aceita apenas .json. Mostra progresso do parse e redireciona para listagem após sucesso.",
-          "priority": 4,
+          "title": "Humanizar loading states na /results",
+          "description": "Substituir 'Analyzing your conversations...' por mensagens rotativas a cada ~3s: 'Learning about your preferences...', 'Discovering your patterns...', 'Finding what makes you unique...'. Após sucesso, mostrar checkmark animado + 'Your context is ready!' por 1.5s antes de exibir resultados.",
+          "priority": 2,
           "passes": false,
           "context": {
-            "files": ["src/app/upload/page.tsx", "src/components/UploadZone.tsx"],
+            "files": ["src/app/results/page.tsx"],
             "libraries": ["framer-motion"],
             "hints": [
-              "Drag & drop nativo com onDragOver/onDrop",
-              "Input file hidden com accept='.json'",
-              "Validação: extensão .json + tamanho < 500MB",
-              "Estado: idle → parsing → success → redirect",
-              "Armazenar resultado do parse em Context ou Zustand (client state)",
-              "Animação de transição ao completar"
+              "Usar useState + useEffect + setInterval para rotação de mensagens",
+              "Array de mensagens como const fora do componente",
+              "Celebração: motion.div com scale animation + Check icon de lucide-react",
+              "Usar setTimeout de 1.5s antes de setar estado final"
             ]
           },
           "acceptance": [
-            "Drag & drop zone aceita arquivo e inicia parse",
-            "Botão 'Selecionar arquivo' funciona como alternativa",
-            "Rejeita arquivos não-.json com mensagem de erro",
-            "Mostra estado de loading durante parse",
-            "Redireciona para /conversations após parse bem-sucedido",
-            "Dados parseados disponíveis na próxima página via state management",
-            "Typecheck passes",
-            "Verify in browser using dev-browser skill"
+            "Loading mostra mensagens rotativas (mínimo 3 mensagens diferentes)",
+            "Mensagens trocam a cada ~3 segundos",
+            "Após sucesso, exibe celebração breve (checkmark + texto) por 1.5s",
+            "Após celebração, mostra resultados normalmente",
+            "Typecheck passes"
           ],
           "tests": {
-            "command": "npx tsc --noEmit"
+            "command": "npx next build"
           }
         }
       ]
     },
     {
       "id": "F3",
-      "name": "Listagem e Seleção de Conversas",
-      "description": "Listar conversas parseadas com busca, ordenação e seleção para processamento",
+      "name": "Guia Pós-Export (Next Steps)",
+      "description": "Seção 'What's next?' na /results com cards de orientação para cada formato de export + mockup do Claude.ai + link direto",
       "priority": 3,
       "tasks": [
         {
           "id": "F3-T1",
-          "title": "Lista de conversas com metadados e busca",
-          "description": "Página /conversations que mostra todas as conversas parseadas. Cada item mostra título, data, nº mensagens, preview. Busca por título, ordenação por data. Scroll virtualizado para performance com listas grandes.",
-          "priority": 5,
+          "title": "Criar componente ClaudeProjectMockup",
+          "description": "Componente React stateless que renderiza representação minimalista da interface de Project do Claude.ai. Sidebar com 'Projects' listados e área principal com campo 'Instructions' destacado onde o usuário deve colar o texto. Paleta cream/neutra. Responsivo.",
+          "priority": 1,
           "passes": false,
           "context": {
-            "files": ["src/app/conversations/page.tsx", "src/components/ConversationList.tsx", "src/components/ConversationCard.tsx"],
-            "libraries": ["@tanstack/react-virtual"],
+            "files": ["src/components/landing/TrustPillars.tsx"],
+            "libraries": ["lucide-react", "tailwindcss"],
             "hints": [
-              "Usar @tanstack/react-virtual para virtualização de lista",
-              "Busca client-side com filter no título",
-              "Ordenação: mais recente primeiro (default), toggle pra mais antiga",
-              "Preview: primeiras 100 chars da primeira mensagem do user",
-              "Contador total ex: '1,234 conversas encontradas'"
+              "Similar ao ChatGptMockup mas com estética Claude (cream tones)",
+              "Destacar campo 'Instructions' com borda ou glow sutil",
+              "Adicionar indicador visual tipo 'paste here' (seta ou highlight)",
+              "Componente puro sem estado"
             ]
           },
           "acceptance": [
-            "Lista renderiza todas as conversas com título, data, nº mensagens, preview",
-            "Busca filtra por título em tempo real",
-            "Ordenação por data funciona (mais recente / mais antiga)",
-            "Scroll virtualizado — performance ok com 1000+ itens",
-            "Contador total visível",
-            "Typecheck passes",
-            "Verify in browser using dev-browser skill"
+            "Renderiza mockup minimalista da interface de Project do Claude.ai",
+            "Sidebar com lista de projects",
+            "Área principal com campo 'Instructions' destacado",
+            "Indicador visual de 'paste here'",
+            "Paleta cream/neutra",
+            "Responsivo",
+            "Typecheck passes"
           ],
           "tests": {
-            "command": "npx tsc --noEmit"
+            "command": "npx next build"
           }
         },
         {
           "id": "F3-T2",
-          "title": "Seleção múltipla e controle freemium",
-          "description": "Adicionar checkboxes de seleção em cada conversa. Selecionar todas/limpar. Contador de selecionadas. Botão 'Processar' com indicador de usos restantes (3 grátis via localStorage).",
-          "priority": 6,
+          "title": "Adicionar seção Next Steps na /results",
+          "description": "Nova seção abaixo dos botões de export com heading 'What's next?' e 3 cards em accordion: (1) Claude.ai Projects — mockup + botão 'Open Claude.ai' (https://claude.ai), (2) Claude Code — instrução de salvar CLAUDE.md na raiz do repo + snippet de terminal estilizado, (3) Quick paste — instrução de colar no início de qualquer chat. Cada card tem ícone, título e conteúdo expandível.",
+          "priority": 2,
           "passes": false,
           "context": {
-            "files": ["src/components/ConversationList.tsx", "src/components/SelectionBar.tsx", "src/lib/usage.ts"],
-            "libraries": [],
+            "files": [
+              "src/app/results/page.tsx",
+              "src/components/ExportButtons.tsx",
+              "src/components/ResultCard.tsx"
+            ],
+            "libraries": ["radix-ui", "lucide-react", "framer-motion"],
             "hints": [
-              "Checkbox via shadcn/ui Checkbox component",
-              "Selection state: Set<conversationId>",
-              "Sticky bar no topo com: contador + 'Selecionar todas' + 'Limpar' + 'Processar (X restantes)'",
-              "localStorage key: 'chat-migrator-usage-count'",
-              "Ao atingir 3, botão Processar mostra modal de upgrade"
+              "Reutilizar pattern de accordion do ResultCard",
+              "Card 1 importa ClaudeProjectMockup de F3-T1",
+              "Botão 'Open Claude.ai' como link externo com ícone ExternalLink",
+              "Card 2 mostra bloco de código estilizado",
+              "Seção inteira pode ser um componente NextSteps separado"
             ]
           },
           "acceptance": [
-            "Checkbox em cada conversa seleciona/deseleciona",
-            "Botão 'Selecionar todas' e 'Limpar seleção' funcionam",
-            "Contador mostra 'X conversas selecionadas'",
-            "Botão 'Processar' mostra usos restantes (ex: '2/3 restantes')",
-            "Botão desabilitado quando nenhuma conversa selecionada",
-            "Após 3 usos, mostra modal de limite atingido",
+            "Seção 'What's next?' aparece abaixo dos botões de export",
+            "3 cards em accordion: Claude.ai Projects, Claude Code, Quick paste",
+            "Card Claude.ai inclui ClaudeProjectMockup + botão 'Open Claude.ai'",
+            "Card Claude Code inclui instrução + snippet de terminal",
+            "Card Quick paste inclui instrução de colar",
+            "Botão 'Open Claude.ai' abre nova aba",
+            "Cards são colapsáveis",
             "Typecheck passes",
-            "Verify in browser using dev-browser skill"
+            "Verify in browser using dev tools"
           ],
           "tests": {
-            "command": "npx tsc --noEmit"
-          }
-        }
-      ]
-    },
-    {
-      "id": "F4",
-      "name": "Processamento IA e Resultados",
-      "description": "API route para processar conversas via Claude API e tela de resultados",
-      "priority": 4,
-      "tasks": [
-        {
-          "id": "F4-T1",
-          "title": "API route de processamento com Claude",
-          "description": "Criar /api/process que recebe conversas, envia ao Claude API (claude-sonnet-4), e retorna análise estruturada: resumo, tópicos-chave, preferências identificadas, padrões de uso. Rate limiting básico por IP.",
-          "priority": 7,
-          "passes": false,
-          "context": {
-            "files": ["src/app/api/process/route.ts", "src/lib/claude.ts", "src/lib/prompts.ts"],
-            "libraries": ["@anthropic-ai/sdk"],
-            "hints": [
-              "Usar @anthropic-ai/sdk oficial",
-              "Model: claude-sonnet-4-20250514",
-              "Prompt estruturado que pede: resumo, tópicos, preferências, padrões",
-              "Truncar conversas longas (>50k chars) pegando início + fim",
-              "Rate limit: Map<IP, {count, timestamp}> com 10 req/min",
-              "Response como JSON estruturado",
-              "ANTHROPIC_API_KEY via env var"
-            ]
-          },
-          "acceptance": [
-            "POST /api/process aceita array de conversas",
-            "Retorna JSON com: summary, topics, preferences, patterns",
-            "Trunca conversas maiores que 50k chars sem perder contexto",
-            "Rate limiting bloqueia após 10 requests/minuto por IP",
-            "Retorna 429 com mensagem clara quando rate limited",
-            "Retorna 400 para payload inválido",
-            "API key não exposta no client-side",
-            "Typecheck passes"
-          ],
-          "tests": {
-            "command": "npx tsc --noEmit"
-          }
-        },
-        {
-          "id": "F4-T2",
-          "title": "Tela de resultados com visualização",
-          "description": "Página /results que mostra os resultados do processamento IA. Cada conversa processada tem seu card de resultado com seções colapsáveis. Opção de 'combinar tudo' para visão consolidada.",
-          "priority": 8,
-          "passes": false,
-          "context": {
-            "files": ["src/app/results/page.tsx", "src/components/ResultCard.tsx", "src/components/CombinedResults.tsx"],
-            "libraries": ["react-markdown"],
-            "hints": [
-              "Seções: Resumo, Tópicos-chave, Preferências, Padrões",
-              "Cada seção colapsável via shadcn/ui Collapsible ou Accordion",
-              "Markdown rendering via react-markdown",
-              "Toggle 'Individual' / 'Combinado' no topo",
-              "Combinado: mescla todos os resultados em um output unificado",
-              "Loading skeleton enquanto processa"
-            ]
-          },
-          "acceptance": [
-            "Resultados mostram seções: Resumo, Tópicos, Preferências, Padrões",
-            "Cada seção renderiza markdown corretamente",
-            "Seções são colapsáveis",
-            "Toggle entre visão individual e combinada funciona",
-            "Loading state enquanto API processa",
-            "Erro de API mostra mensagem com botão de retry",
-            "Typecheck passes",
-            "Verify in browser using dev-browser skill"
-          ],
-          "tests": {
-            "command": "npx tsc --noEmit"
-          }
-        }
-      ]
-    },
-    {
-      "id": "F5",
-      "name": "Exportação Multi-Formato",
-      "description": "Exportar resultados como texto, Claude Project instructions, ou CLAUDE.md",
-      "priority": 5,
-      "tasks": [
-        {
-          "id": "F5-T1",
-          "title": "Sistema de exportação com 3 formatos",
-          "description": "Adicionar botões de exportação na tela de resultados. 3 formatos: copiar como texto markdown, copiar como Claude Project instructions (formato otimizado), download como CLAUDE.md. Cada formato usa template diferente.",
-          "priority": 9,
-          "passes": false,
-          "context": {
-            "files": ["src/lib/exporters/markdown.ts", "src/lib/exporters/project-instructions.ts", "src/lib/exporters/claude-md.ts", "src/components/ExportButtons.tsx"],
-            "libraries": [],
-            "hints": [
-              "Texto markdown: headings + bullets padrão",
-              "Project instructions: formato conciso, direto, sem headings grandes — otimizado pra campo de texto do Claude",
-              "CLAUDE.md: com frontmatter, seções bem definidas, pronto pra colocar em .claude/",
-              "Copiar usa navigator.clipboard.writeText()",
-              "Download usa Blob + URL.createObjectURL + anchor click",
-              "Toast 'Copiado!' via shadcn/ui Sonner"
-            ]
-          },
-          "acceptance": [
-            "Botão 'Copiar como texto' copia markdown pro clipboard",
-            "Botão 'Copiar como Project Instructions' copia formato otimizado pro Claude",
-            "Botão 'Baixar CLAUDE.md' faz download do arquivo .md",
-            "Cada formato produz output visivelmente diferente e otimizado pro seu uso",
-            "Feedback visual 'Copiado!' aparece ao copiar",
-            "Exportação funciona tanto para resultado individual quanto combinado",
-            "Typecheck passes",
-            "Verify in browser using dev-browser skill"
-          ],
-          "tests": {
-            "command": "npx tsc --noEmit"
+            "command": "npx next build"
           }
         }
       ]

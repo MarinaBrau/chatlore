@@ -2,18 +2,27 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
-import { Loader2, AlertCircle, RotateCcw } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Loader2, AlertCircle, RotateCcw, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ResultCard } from "@/components/ResultCard";
 import { ExportButtons } from "@/components/ExportButtons";
+import { NextSteps } from "@/components/NextSteps";
 import type { ConversationAnalysis } from "@/lib/types";
 import Link from "next/link";
 
 type ViewMode = "individual" | "combined";
 
+const loadingMessages = [
+  "Learning about your preferences...",
+  "Discovering your patterns...",
+  "Finding what makes you unique...",
+  "Reading between the lines...",
+  "Mapping your interests...",
+];
+
 interface ProcessState {
-  status: "loading" | "success" | "error";
+  status: "loading" | "celebrating" | "success" | "error";
   results: ConversationAnalysis[];
   combined: ConversationAnalysis | null;
   error: string | null;
@@ -22,6 +31,7 @@ interface ProcessState {
 export default function ResultsPage() {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("individual");
+  const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
   const [state, setState] = useState<ProcessState>({
     status: "loading",
     results: [],
@@ -29,6 +39,15 @@ export default function ResultsPage() {
     error: null,
   });
   const hasStarted = useRef(false);
+
+  // Rotate loading messages
+  useEffect(() => {
+    if (state.status !== "loading") return;
+    const interval = setInterval(() => {
+      setLoadingMsgIndex((i) => (i + 1) % loadingMessages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [state.status]);
 
   const processConversations = useCallback(async () => {
     const raw = sessionStorage.getItem("chatlore-selected");
@@ -80,7 +99,10 @@ export default function ResultsPage() {
         patterns: [...new Set(results.flatMap((r) => r.patterns))],
       };
 
-      setState({ status: "success", results, combined, error: null });
+      setState({ status: "celebrating", results, combined, error: null });
+      setTimeout(() => {
+        setState((prev) => ({ ...prev, status: "success" }));
+      }, 1500);
     } catch (err) {
       setState({
         status: "error",
@@ -103,11 +125,46 @@ export default function ResultsPage() {
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
         <Loader2 className="size-8 animate-spin text-primary" />
         <div className="text-center">
-          <p className="font-medium">Analyzing your conversations...</p>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={loadingMsgIndex}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.3 }}
+              className="font-medium"
+            >
+              {loadingMessages[loadingMsgIndex]}
+            </motion.p>
+          </AnimatePresence>
           <p className="mt-1 text-sm text-muted-foreground">
             This may take a few seconds per conversation.
           </p>
         </div>
+      </div>
+    );
+  }
+
+  // Celebrating state
+  if (state.status === "celebrating") {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
+        <motion.div
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", stiffness: 200, damping: 15 }}
+          className="flex size-14 items-center justify-center rounded-full bg-emerald-100"
+        >
+          <Check className="size-7 text-emerald-600" />
+        </motion.div>
+        <motion.p
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="font-medium"
+        >
+          Your context is ready!
+        </motion.p>
       </div>
     );
   }
@@ -204,6 +261,9 @@ export default function ResultsPage() {
         <h2 className="mb-3 text-sm font-semibold">Export</h2>
         <ExportButtons analyses={displayResults} />
       </div>
+
+      {/* Next Steps */}
+      <NextSteps />
     </motion.div>
   );
 }

@@ -4,6 +4,7 @@ import { useCallback, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { UploadZone } from "@/components/UploadZone";
+import { ExportGuideModal } from "@/components/ExportGuideModal";
 import { useParser } from "@/lib/parsers/use-parser";
 import { useConversations } from "@/context/conversations";
 
@@ -55,10 +56,13 @@ export default function UploadPage() {
           error={error}
         />
 
-        <p className="mt-4 text-center text-xs text-muted-foreground">
-          Your file is parsed entirely in your browser. Nothing is uploaded to
-          our servers.
-        </p>
+        <div className="mt-4 flex flex-col items-center gap-2">
+          <ExportGuideModal />
+          <p className="text-center text-xs text-muted-foreground">
+            Your file is parsed entirely in your browser. Nothing is uploaded to
+            our servers.
+          </p>
+        </div>
       </motion.div>
     </div>
   );

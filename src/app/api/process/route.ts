@@ -1,18 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { analyzeWithClaude } from "@/lib/claude";
 import { buildAnalysisPrompt } from "@/lib/prompts";
 import { checkRateLimit } from "@/lib/rate-limit";
 import type { Message } from "@/lib/parsers/types";
 
-interface ConversationPayload {
-  id: string;
-  title: string;
-  messages: Message[];
-}
+const MessageSchema = z.object({
+  id: z.string(),
+  role: z.enum(["user", "assistant", "system", "tool"]),
+  content: z.string(),
+  timestamp: z.string().nullable(),
+});
 
-interface RequestBody {
-  conversations: ConversationPayload[];
-}
+const ConversationSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  messages: z.array(MessageSchema).min(1),
+});
+
+const RequestSchema = z.object({
+  conversations: z.array(ConversationSchema).min(1).max(10),
+});
 
 export async function POST(request: NextRequest) {
   // Rate limiting
@@ -32,7 +40,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Parse and validate body
-  let body: RequestBody;
+  let body: unknown;
   try {
     body = await request.json();
   } catch {
@@ -42,42 +50,19 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  if (
-    !body.conversations ||
-    !Array.isArray(body.conversations) ||
-    body.conversations.length === 0
-  ) {
+  const parsed = RequestSchema.safeParse(body);
+  if (!parsed.success) {
     return NextResponse.json(
-      { error: "Request must include a non-empty 'conversations' array" },
+      { error: parsed.error.issues[0]?.message ?? "Invalid request data" },
       { status: 400 }
     );
-  }
-
-  if (body.conversations.length > 10) {
-    return NextResponse.json(
-      { error: "Maximum 10 conversations per request" },
-      { status: 400 }
-    );
-  }
-
-  // Validate each conversation
-  for (const conv of body.conversations) {
-    if (!conv.id || !conv.title || !Array.isArray(conv.messages)) {
-      return NextResponse.json(
-        {
-          error:
-            "Each conversation must have 'id', 'title', and 'messages' fields",
-        },
-        { status: 400 }
-      );
-    }
   }
 
   // Process conversations sequentially to avoid API rate limits
   try {
     const results = [];
-    for (const conv of body.conversations) {
-      const prompt = buildAnalysisPrompt(conv.title, conv.messages);
+    for (const conv of parsed.data.conversations) {
+      const prompt = buildAnalysisPrompt(conv.title, conv.messages as unknown as Message[]);
       const analysis = await analyzeWithClaude(prompt);
       results.push({
         id: conv.id,
