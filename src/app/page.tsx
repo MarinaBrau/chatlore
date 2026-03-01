@@ -274,7 +274,7 @@ export default function Home() {
           {[
             { value: "100%", label: "Client-side parsing" },
             { value: "0", label: "Data stored on servers" },
-            { value: "3", label: "Free analyses" },
+            { value: "Free", label: "Always" },
           ].map((stat, i) => (
             <div key={stat.label} className="flex items-center gap-8 sm:gap-12">
               {i > 0 && <div className="h-8 w-px bg-border/40" />}
@@ -382,11 +382,11 @@ export default function Home() {
             href="/upload"
             className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
           >
-            Try it free &mdash; no sign-up needed
+            Start now &mdash; no sign-up needed
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
           <p className="mt-3 text-xs text-muted-foreground/60">
-            3 analyses free, no credit card required
+            100% free, no sign-up required
           </p>
         </motion.div>
       </section>

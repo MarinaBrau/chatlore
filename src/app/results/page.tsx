@@ -7,7 +7,6 @@ import { Loader2, AlertCircle, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ResultCard } from "@/components/ResultCard";
 import { ExportButtons } from "@/components/ExportButtons";
-import { incrementUsage } from "@/lib/usage";
 import type { ConversationAnalysis } from "@/lib/types";
 import Link from "next/link";
 
@@ -82,7 +81,6 @@ export default function ResultsPage() {
       };
 
       setState({ status: "success", results, combined, error: null });
-      incrementUsage();
     } catch (err) {
       setState({
         status: "error",

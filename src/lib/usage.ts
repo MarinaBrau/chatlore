@@ -1,5 +1,4 @@
 const STORAGE_KEY = "chatlore-usage-count";
-const FREE_LIMIT = 3;
 
 export function getUsageCount(): number {
   if (typeof window === "undefined") return 0;
@@ -14,13 +13,3 @@ export function incrementUsage(): number {
   localStorage.setItem(STORAGE_KEY, String(current));
   return current;
 }
-
-export function getRemainingUses(): number {
-  return Math.max(0, FREE_LIMIT - getUsageCount());
-}
-
-export function hasReachedLimit(): boolean {
-  return getUsageCount() >= FREE_LIMIT;
-}
-
-export const FREE_LIMIT_COUNT = FREE_LIMIT;

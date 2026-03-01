@@ -361,7 +361,7 @@ export default function GuidePage() {
             <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
           </Link>
           <p className="mt-3 text-xs text-muted-foreground/60">
-            3 analyses free, no credit card required
+            100% free, no sign-up required
           </p>
         </motion.div>
       </section>

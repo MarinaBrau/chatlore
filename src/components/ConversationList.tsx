@@ -5,8 +5,6 @@ import { useVirtualizer } from "@tanstack/react-virtual";
 import { Search, ArrowUpDown } from "lucide-react";
 import { ConversationCard } from "./ConversationCard";
 import { SelectionBar } from "./SelectionBar";
-import { LimitModal } from "./LimitModal";
-import { getRemainingUses, hasReachedLimit } from "@/lib/usage";
 import type { Conversation } from "@/lib/parsers/types";
 
 interface ConversationListProps {
@@ -23,7 +21,6 @@ export function ConversationList({
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-  const [showLimitModal, setShowLimitModal] = useState(false);
   const parentRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
@@ -71,25 +68,17 @@ export function ConversationList({
   }, []);
 
   const handleProcess = useCallback(() => {
-    if (hasReachedLimit()) {
-      setShowLimitModal(true);
-      return;
-    }
-
     const selected = conversations.filter((c) => selectedIds.has(c.id));
     if (selected.length > 0) {
       onProcess(selected);
     }
   }, [conversations, selectedIds, onProcess]);
 
-  const remaining = getRemainingUses();
-
   return (
     <div className="flex h-full flex-col gap-4">
       <SelectionBar
         selectedCount={selectedIds.size}
         totalCount={filtered.length}
-        remainingUses={remaining}
         onSelectAll={selectAll}
         onClearSelection={clearSelection}
         onProcess={handleProcess}
@@ -177,7 +166,6 @@ export function ConversationList({
         </div>
       )}
 
-      <LimitModal open={showLimitModal} onOpenChange={setShowLimitModal} />
     </div>
   );
 }

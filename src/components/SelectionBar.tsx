@@ -6,7 +6,6 @@ import { Sparkles } from "lucide-react";
 interface SelectionBarProps {
   selectedCount: number;
   totalCount: number;
-  remainingUses: number;
   onSelectAll: () => void;
   onClearSelection: () => void;
   onProcess: () => void;
@@ -15,7 +14,6 @@ interface SelectionBarProps {
 export function SelectionBar({
   selectedCount,
   totalCount,
-  remainingUses,
   onSelectAll,
   onClearSelection,
   onProcess,
@@ -56,9 +54,6 @@ export function SelectionBar({
       >
         <Sparkles className="size-3.5" />
         Process
-        <span className="ml-1 rounded-full bg-primary-foreground/20 px-1.5 py-0.5 text-xs">
-          {remainingUses}/3
-        </span>
       </Button>
     </div>
   );
