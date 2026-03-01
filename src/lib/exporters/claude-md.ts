@@ -11,7 +11,7 @@ export function exportAsClaudeMd(analyses: ConversationAnalysis[]): string {
 
   sections.push("# User Context");
   sections.push(
-    "> Migrated from ChatGPT conversation history using AI Chat History Migrator."
+    "> Migrated from ChatGPT conversation history using ChatLore."
   );
 
   sections.push(`## Background\n\n${merged.summary}`);

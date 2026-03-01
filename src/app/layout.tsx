@@ -25,11 +25,11 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "AI Chat History Migrator — Import your ChatGPT history to Claude",
+  title: "ChatLore — Import your ChatGPT history to Claude",
   description:
     "Transform your ChatGPT conversation history into structured memories and system prompts ready to use with Claude.",
   openGraph: {
-    title: "AI Chat History Migrator",
+    title: "ChatLore",
     description:
       "Import your ChatGPT history and generate structured memories for Claude.",
     type: "website",

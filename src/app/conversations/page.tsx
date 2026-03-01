@@ -16,7 +16,7 @@ export default function ConversationsPage() {
     (selected: Conversation[]) => {
       try {
         sessionStorage.setItem(
-          "chat-migrator-selected",
+          "chatlore-selected",
           JSON.stringify(selected)
         );
       } catch {

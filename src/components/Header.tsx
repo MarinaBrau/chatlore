@@ -13,10 +13,10 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2.5">
           <span className="flex size-7 items-center justify-center rounded-md bg-amber/10 font-mono text-xs font-bold text-amber">
-            CM
+            CL
           </span>
           <span className="text-sm font-medium tracking-tight">
-            ChatMigrator
+            ChatLore
           </span>
         </Link>
 

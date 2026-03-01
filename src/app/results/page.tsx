@@ -32,7 +32,7 @@ export default function ResultsPage() {
   const hasStarted = useRef(false);
 
   const processConversations = useCallback(async () => {
-    const raw = sessionStorage.getItem("chat-migrator-selected");
+    const raw = sessionStorage.getItem("chatlore-selected");
     if (!raw) {
       router.push("/upload");
       return;

@@ -1,4 +1,4 @@
-const STORAGE_KEY = "chat-migrator-usage-count";
+const STORAGE_KEY = "chatlore-usage-count";
 const FREE_LIMIT = 3;
 
 export function getUsageCount(): number {
