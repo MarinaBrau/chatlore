@@ -5,23 +5,23 @@ import { motion } from "framer-motion";
 const steps = [
   {
     num: "01",
-    title: "Export your chat history",
-    body: "Download your conversations from ChatGPT with a few clicks. We'll walk you through every step — your file never leaves your browser.",
+    title: "Grab your ChatGPT data",
+    body: "Go to Settings > Data Controls > Export in ChatGPT. OpenAI will email you a link to download your history (it takes a few minutes).",
   },
   {
     num: "02",
-    title: "Pick the conversations that shaped you",
-    body: "Browse every chat with titles, dates, and previews. Select the ones where you made decisions, set preferences, or solved hard problems.",
+    title: "Pick what matters most",
+    body: "Upload your file here. Browse your chats and select the ones that define your tone, your style, or your complex projects.",
   },
   {
     num: "03",
-    title: "Stateless analysis, zero retention",
-    body: "Only your selected conversations are sent to Claude\u2019s API for analysis \u2014 stateless, zero logs, nothing stored. Your file never leaves the browser. The API processes, responds, and forgets.",
+    title: "Smart Analysis",
+    body: "Claude identifies what you care about \u2014 your style, preferences, and recurring topics \u2014 across every selected conversation.",
   },
   {
     num: "04",
-    title: "Make Claude feel like home",
-    body: "Get a ready-to-use file that teaches Claude who you are. Your next conversation will feel like picking up right where you left off.",
+    title: "Teach it to Claude",
+    body: "Paste your new context into Claude Project instructions or as a CLAUDE.md file. Now Claude knows you perfectly.",
   },
 ];
 

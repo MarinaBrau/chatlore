@@ -10,24 +10,24 @@ import {
 
 const faqs = [
   {
-    q: "Are my conversations used to train AI models?",
-    a: "No. Your file is parsed entirely in your browser — nothing is uploaded. Selected conversations are sent to Claude's API for analysis via stateless calls. Anthropic does not use API inputs for training. Zero retention, zero logs.",
+    q: "Do I need to pay for this?",
+    a: "No, ChatLore is completely free to use. You don't even need to create an account.",
   },
   {
-    q: "Do I need a paid Claude plan?",
-    a: "No. The context file works with any Claude plan — free or Pro. Just paste it into a conversation or Project Instructions. No API key needed on your end.",
+    q: "Are my private chats safe?",
+    a: "Yes. Your data is processed locally in your browser. We never store your conversations or use them for training.",
   },
   {
-    q: "Does it work with Cursor, Windsurf, or other editors?",
-    a: "Yes. Download the CLAUDE.md file and place it in your project root. Any tool that reads CLAUDE.md (Claude Code, Cursor, Windsurf) will pick it up automatically.",
+    q: "How long does the export take?",
+    a: "OpenAI usually sends the export email within 5-10 minutes, but it can take longer if you have years of history.",
   },
   {
-    q: "What data leaves my browser?",
-    a: "Only the conversations you explicitly select. They're sent to Claude's API for analysis — stateless processing, no storage, no database. Your original export file is never uploaded anywhere.",
+    q: "Does it work with other AIs?",
+    a: "While optimized for Claude, the context file is plain text and works great with ChatGPT Custom Instructions or Gemini too.",
   },
   {
     q: "How long does the analysis take?",
-    a: "Usually under 30 seconds for up to 10 conversations. The file parsing itself is instant since it runs in your browser via a Web Worker.",
+    a: "Usually under 30 seconds. The file reading is instant since it runs in your browser.",
   },
 ];
 

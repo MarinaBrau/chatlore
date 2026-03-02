@@ -89,36 +89,35 @@ export function HeroSection() {
         initial="hidden"
         animate="visible"
         className="flex max-w-3xl flex-col items-center text-center"
+      {/* Headline */}
+      <motion.h1
+        variants={fadeSlide}
+        className="font-[family-name:var(--font-display)] text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
       >
-        <motion.h1
-          variants={fadeSlide}
-          className="font-[family-name:var(--font-display)] text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
-        >
-          Make Claude feel like
-          <br />
-          <span className="italic text-amber">
-            you&apos;ve used it for years
-          </span>
-        </motion.h1>
+        Teach Claude your
+        <br />
+        <span className="italic text-amber">
+          style, memory and goals
+        </span>
+      </motion.h1>
 
-        <motion.p
-          variants={fadeSlide}
-          className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
-        >
-          Starting fresh with a new AI shouldn&apos;t mean losing everything
-          you taught the last one.
-        </motion.p>
+      {/* Subhead */}
+      <motion.p
+        variants={fadeSlide}
+        className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
+      >
+        Stop repeating yourself. Move your ChatGPT history to Claude and keep your personal touch in every answer.
+      </motion.p>
 
-        <motion.div variants={fadeSlide} className="mt-10">
-          <Link
-            href="/upload"
-            onClick={() => trackEvent("cta_clicked", { location: "hero" })}
-            className="group inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
-          >
-            Build your context file
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-          </Link>
-        </motion.div>
+      {/* CTA */}
+      <motion.div variants={fadeSlide} className="mt-10">
+        <Link
+          href="/upload"
+          className="group inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
+        >
+          Start Syncing Now
+          <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+        </Link>
       </motion.div>
 
       <motion.div

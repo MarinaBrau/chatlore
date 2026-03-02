@@ -3,20 +3,19 @@
 import { motion } from "framer-motion";
 
 const previewLines = [
-  { type: "heading", text: "## Preferences" },
-  { type: "item", text: "- Prefers functional React with TypeScript strict mode" },
-  { type: "item", text: "- Favors PostgreSQL for relational data" },
-  { type: "item", text: "- Uses Tailwind CSS over styled-components" },
+  { type: "heading", text: "## Your Writing Style" },
+  { type: "item", text: "- Prefers a friendly, professional tone" },
+  { type: "item", text: "- Avoids corporate jargon and buzzwords" },
+  { type: "item", text: "- Uses direct and concise sentences" },
   { type: "blank", text: "" },
-  { type: "heading", text: "## Communication Style" },
-  { type: "item", text: "- Likes concise, direct answers" },
-  { type: "item", text: "- Prefers examples over theory" },
-  { type: "item", text: "- Asks for trade-offs before choosing" },
+  { type: "heading", text: "## Expertise & Projects" },
+  { type: "item", text: "- Focuses on Product Marketing and SaaS" },
+  { type: "item", text: "- Ongoing project: Content Strategy 2026" },
+  { type: "item", text: "- Prefers case studies over theoretical data" },
   { type: "blank", text: "" },
-  { type: "heading", text: "## Tech Stack" },
-  { type: "item", text: "- Next.js, Tailwind, Vercel" },
-  { type: "item", text: "- Claude API for AI features" },
-  { type: "item", text: "- BigQuery for analytics pipelines" },
+  { type: "heading", text: "## Communication Goals" },
+  { type: "item", text: "- Improve LinkedIn engagement" },
+  { type: "item", text: "- Streamline internal team updates" },
 ];
 
 export function OutputPreview() {
