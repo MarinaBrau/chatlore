@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { parseChatGPTExport } from "./chatgpt";
-import type { Conversation } from "./types";
+import type { Conversation, Message } from "./types";
 
 interface ParserState {
   status: "idle" | "parsing" | "success" | "error";
@@ -11,8 +11,7 @@ interface ParserState {
 }
 
 /**
- * Hook to parse a ChatGPT export file.
- * Uses a Web Worker when available, falls back to main thread.
+ * Hook to parse a ChatGPT export file or manual text.
  */
 export function useParser() {
   const [state, setState] = useState<ParserState>({
@@ -21,6 +20,49 @@ export function useParser() {
     error: null,
   });
   const workerRef = useRef<Worker | null>(null);
+
+  const parseRawText = useCallback((text: string) => {
+    setState({ status: "parsing", conversations: [], error: null });
+    
+    // Simulate slight delay for UX
+    setTimeout(() => {
+      try {
+        if (text.length < 50) {
+          throw new Error("Please paste a longer conversation for better analysis.");
+        }
+
+        // Create a synthetic conversation object
+        const conversation: Conversation = {
+          id: `manual-${Date.now()}`,
+          title: "Pasted Conversation",
+          createTime: new Date(),
+          updateTime: new Date(),
+          messageCount: 1,
+          preview: text.slice(0, 150),
+          messages: [
+            {
+              id: "msg-1",
+              role: "user",
+              content: text,
+              timestamp: new Date(),
+            },
+          ],
+        };
+
+        setState({ 
+          status: "success", 
+          conversations: [conversation], 
+          error: null 
+        });
+      } catch (err) {
+        setState({
+          status: "error",
+          conversations: [],
+          error: err instanceof Error ? err.message : "Processing failed",
+        });
+      }
+    }, 800);
+  }, []);
 
   const parse = useCallback((file: File) => {
     setState({ status: "parsing", conversations: [], error: null });
@@ -45,7 +87,6 @@ export function useParser() {
         worker.onmessage = (event) => {
           const { type, conversations, error } = event.data;
           if (type === "success" && conversations) {
-            // Worker serializes Date objects as strings — reconstruct them
             const hydrated = conversations.map(hydrateConversation);
             setState({ status: "success", conversations: hydrated, error: null });
           } else {
@@ -60,7 +101,6 @@ export function useParser() {
         };
 
         worker.onerror = () => {
-          // Worker failed to load — fallback to main thread
           worker.terminate();
           workerRef.current = null;
           parseOnMainThread(text);
@@ -68,7 +108,6 @@ export function useParser() {
 
         worker.postMessage({ type: "parse", data: text });
       } catch {
-        // Worker not supported — parse on main thread
         parseOnMainThread(text);
       }
     };
@@ -105,12 +144,9 @@ export function useParser() {
     setState({ status: "idle", conversations: [], error: null });
   }, []);
 
-  return { ...state, parse, reset };
+  return { ...state, parse, parseRawText, reset };
 }
 
-/**
- * Reconstruct Date objects after Worker serialization (postMessage converts them to strings).
- */
 function hydrateConversation(conv: Conversation): Conversation {
   return {
     ...conv,
