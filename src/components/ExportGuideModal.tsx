@@ -51,30 +51,30 @@ export function ExportGuideModal() {
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
-          <DialogTitle>How to export from ChatGPT</DialogTitle>
-          <DialogDescription>
-            Follow these steps to get your chat history file
+          <DialogTitle className="text-xl">How to get your history file</DialogTitle>
+          <DialogDescription className="text-sm">
+            Follow these 4 simple steps. It takes less than 2 minutes of your time.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="mt-2 space-y-5">
+        <div className="mt-6 space-y-6">
           {steps.map((step) => (
-            <div key={step.num} className="flex gap-3">
+            <div key={step.num} className="flex gap-4">
               {/* Step number */}
-              <div className="flex size-7 shrink-0 items-center justify-center rounded-full bg-amber/10 text-xs font-semibold text-amber">
+              <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-amber text-sm font-bold text-white shadow-lg shadow-amber/20">
                 {step.num}
               </div>
 
               <div className="flex-1 space-y-2">
                 <div className="flex items-center gap-2">
-                  <step.icon className="size-4 text-muted-foreground" />
-                  <h3 className="text-sm font-semibold">{step.title}</h3>
+                  <step.icon className="size-4 text-amber" />
+                  <h3 className="text-sm font-bold">{step.title}</h3>
                 </div>
                 <p className="text-sm leading-relaxed text-muted-foreground">
                   {step.body}
                 </p>
                 {step.mockup && (
-                  <div className="mt-3">
+                  <div className="mt-4 rounded-xl border border-border/40 overflow-hidden shadow-sm">
                     <ChatGptMockup />
                   </div>
                 )}
@@ -83,11 +83,9 @@ export function ExportGuideModal() {
           ))}
         </div>
 
-        <div className="mt-4 rounded-md bg-muted/50 px-3 py-2.5">
-          <p className="text-xs leading-relaxed text-muted-foreground">
-            <span className="font-medium text-foreground">Tip:</span> The email
-            usually arrives within 1–5 minutes. If you don&apos;t see it, check
-            your spam folder.
+        <div className="mt-6 rounded-2xl border border-amber/20 bg-amber/5 p-4">
+          <p className="text-xs leading-relaxed text-amber/80 font-medium">
+            <span className="font-bold uppercase tracking-wider">Privacy Note:</span> ChatLore reads your file locally in your browser. We never see your conversations, and we never store your data. Your history stays yours.
           </p>
         </div>
       </DialogContent>

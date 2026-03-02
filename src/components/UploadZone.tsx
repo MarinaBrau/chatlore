@@ -108,21 +108,24 @@ export function UploadZone({ onFileAccepted, status, error }: UploadZoneProps) {
             exit={{ opacity: 0, scale: 0.9 }}
             className="flex flex-col items-center gap-3"
           >
-            <div className="flex size-14 items-center justify-center rounded-xl border border-border/60 bg-background">
+            <div className="flex size-14 items-center justify-center rounded-xl border border-border/60 bg-background transition-all group-hover:border-amber/40 group-hover:bg-amber/5">
               {isDragging ? (
-                <FileJson className="size-6 text-primary" />
+                <FileJson className="size-6 text-amber animate-bounce" />
               ) : (
-                <Upload className="size-6 text-muted-foreground" />
+                <Upload className="size-6 text-muted-foreground group-hover:text-amber" />
               )}
             </div>
             <div className="text-center">
-              <p className="font-medium">
+              <p className="font-bold text-lg">
                 {isDragging
-                  ? "Drop your file here"
-                  : "Drop your conversations.json here"}
+                  ? "Drop it here!"
+                  : "Upload your ChatGPT history"}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                or click to select a file
+                Drag and drop your <span className="font-mono text-xs text-amber font-semibold">conversations.json</span> file here
+              </p>
+              <p className="mt-4 text-xs font-medium text-amber/60">
+                or click to browse your computer
               </p>
             </div>
           </motion.div>
