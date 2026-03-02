@@ -14,6 +14,8 @@ export interface AnalysisResult {
   topics: string[];
   preferences: string[];
   patterns: string[];
+  toneAdjectives: string[];
+  negativeConstraints: string[];
 }
 
 /**
@@ -47,6 +49,8 @@ export async function analyzeWithClaude(
       topics: Array.isArray(parsed.topics) ? parsed.topics : [],
       preferences: Array.isArray(parsed.preferences) ? parsed.preferences : [],
       patterns: Array.isArray(parsed.patterns) ? parsed.patterns : [],
+      toneAdjectives: Array.isArray(parsed.tone_adjectives) ? parsed.tone_adjectives : [],
+      negativeConstraints: Array.isArray(parsed.negative_constraints) ? parsed.negative_constraints : [],
     };
   } catch (e) {
     console.error("JSON Parse Error:", e, "Raw Text:", text);

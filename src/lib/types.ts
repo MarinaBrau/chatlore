@@ -1,4 +1,3 @@
-/** Result from the /api/process endpoint for a single conversation */
 export interface ConversationAnalysis {
   id: string;
   title: string;
@@ -6,4 +5,6 @@ export interface ConversationAnalysis {
   topics: string[];
   preferences: string[];
   patterns: string[];
+  toneAdjectives?: string[];
+  negativeConstraints?: string[];
 }

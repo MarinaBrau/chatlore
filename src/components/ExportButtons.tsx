@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { exportAsMarkdown } from "@/lib/exporters/markdown";
 import { exportAsProjectInstructions } from "@/lib/exporters/project-instructions";
 import { exportAsClaudeMd } from "@/lib/exporters/claude-md";
+import { exportAsCursorRules } from "@/lib/exporters/cursor-rules";
 import { trackEvent } from "@/lib/analytics";
 import type { ConversationAnalysis } from "@/lib/types";
 
@@ -26,7 +27,7 @@ export function ExportButtons({ analyses }: ExportButtonsProps) {
   }, []);
 
   const downloadFile = useCallback((content: string, filename: string, format: string) => {
-    const blob = new Blob([content], { type: "text/markdown" });
+    const blob = new Blob([content], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
@@ -67,19 +68,35 @@ export function ExportButtons({ analyses }: ExportButtonsProps) {
         Copy as Simple Text
       </Button>
 
-      <div className="sm:col-span-2 pt-2 border-t border-border/20 mt-2">
-        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-3 font-bold">Advanced Export</p>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="gap-1.5 text-muted-foreground hover:text-amber"
-          onClick={() =>
-            downloadFile(exportAsClaudeMd(analyses), "CLAUDE.md", "claude_md")
-          }
-        >
-          <FileDown className="size-3.5" />
-          Download CLAUDE.md for Developers
-        </Button>
+      <div className="sm:col-span-2 pt-2 border-t border-border/20 mt-2 flex flex-wrap gap-4">
+        <div>
+          <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-3 font-bold">Advanced Export</p>
+          <div className="flex flex-wrap gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 text-muted-foreground hover:text-amber"
+              onClick={() =>
+                downloadFile(exportAsClaudeMd(analyses), "CLAUDE.md", "claude_md")
+              }
+            >
+              <FileDown className="size-3.5" />
+              Download CLAUDE.md
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="sm"
+              className="gap-1.5 text-muted-foreground hover:text-amber"
+              onClick={() =>
+                downloadFile(exportAsCursorRules(analyses), ".cursorrules", "cursor_rules")
+              }
+            >
+              <FileDown className="size-3.5" />
+              Download .cursorrules
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );
