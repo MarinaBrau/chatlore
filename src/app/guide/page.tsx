@@ -9,18 +9,16 @@ import {
   Settings,
   Upload,
   Search,
-  BarChart3,
   Copy,
   ClipboardCheck,
   FileDown,
   Lightbulb,
   FolderOpen,
   Terminal,
-  MessageSquare,
 } from "lucide-react";
 import { JsonLd } from "@/components/JsonLd";
 
-/* ── animation variants (same as landing) ── */
+/* ── animation variants ── */
 const stagger = {
   hidden: {},
   visible: {
@@ -40,131 +38,75 @@ const fadeSlide = {
   },
 };
 
-/* ── 4 condensed steps ── */
+/* ── Simplified steps for non-tech users ── */
 const steps = [
   {
     id: "export",
     num: "01",
     icon: Download,
-    title: "Export from ChatGPT",
+    title: "Get your data from ChatGPT",
     accent: true,
     substeps: [
-      { icon: Settings, text: "Open ChatGPT \u2192 Settings \u2192 Data controls" },
-      { icon: Download, text: "Click \u201cExport data\u201d and confirm via email" },
-      { icon: FolderOpen, text: "Download the .zip and extract it" },
-      { icon: FileText, text: "Find conversations.json inside" },
+      { icon: Settings, text: "Open ChatGPT Settings \u2192 Data controls" },
+      { icon: Download, text: "Click \u201cExport data\u201d. You'll get an email from OpenAI." },
+      { icon: FolderOpen, text: "Open the .zip file you received and find 'conversations.json'." },
     ],
-    tip: "The export email usually arrives within a few minutes. Check your spam folder if you don\u2019t see it.",
+    tip: "OpenAI usually sends the email in 5-10 minutes. Don't forget to check your spam!",
   },
   {
-    id: "upload-select",
+    id: "upload",
     num: "02",
     icon: Upload,
-    title: "Upload & select conversations",
+    title: "Upload to ChatLore",
     substeps: [
-      { icon: Upload, text: "Drag & drop conversations.json onto the upload area" },
-      { icon: FileText, text: "The file is parsed entirely in your browser \u2014 nothing leaves your machine" },
-      { icon: Search, text: "Search by title or keyword to find specific chats" },
-      { icon: BarChart3, text: "Sort by date or message count" },
-      { icon: MessageSquare, text: "Select the conversations that reflect your preferences and decisions" },
+      { icon: Upload, text: "Drag 'conversations.json' into the upload box." },
+      { icon: FileText, text: "We read the file locally. Your private data never leaves your computer." },
     ],
-    tip: "Focus on chats where you made decisions, stated preferences, or solved problems \u2014 these produce the richest context.",
+    tip: "If your file is very large, it might take a few seconds to load. Just hang tight!",
   },
   {
-    id: "review",
+    id: "select",
     num: "03",
-    icon: BarChart3,
-    title: "Review the analysis",
+    icon: Search,
+    title: "Select your best chats",
     substeps: [
-      { icon: FileText, text: "Summary \u2014 a high-level overview of your selected conversations" },
-      { icon: Search, text: "Topics \u2014 recurring subjects and themes Claude identified" },
-      { icon: Lightbulb, text: "Preferences \u2014 your stated likes, dislikes, and opinions" },
-      { icon: BarChart3, text: "Patterns \u2014 behavioral patterns across conversations" },
+      { icon: Search, text: "Search for chats where you gave feedback or set rules." },
+      { icon: ClipboardCheck, text: "Select at least 3-5 high-quality conversations for the best result." },
     ],
-    tip: "Toggle between individual and combined views to see per-conversation details or the merged analysis.",
+    tip: "The more specific the chats, the better Claude will understand your personal style.",
   },
   {
-    id: "export-use",
+    id: "use",
     num: "04",
-    icon: Terminal,
-    title: "Export & use in Claude",
+    icon: Copy,
+    title: "Teach it to Claude",
     accent: true,
     substeps: [
-      { icon: Copy, text: "Plain Text \u2014 copy to clipboard for pasting anywhere" },
-      { icon: ClipboardCheck, text: "Project Instructions \u2014 formatted for Claude.ai Projects" },
-      { icon: FileDown, text: "CLAUDE.md \u2014 download a file for Claude Code" },
-      { icon: ClipboardCheck, text: "Claude.ai \u2192 paste into \u201cProject instructions\u201d in any project\u2019s settings" },
-      { icon: Terminal, text: "Claude Code \u2192 place the CLAUDE.md file in your repo root or ~/.claude/" },
+      { icon: Copy, text: "Copy the generated text." },
+      { icon: ClipboardCheck, text: "Go to Claude.ai \u2192 Project Settings \u2192 Paste into 'Instructions'." },
     ],
-    tip: "Project Instructions and CLAUDE.md persist across conversations, so Claude always knows your context.",
+    tip: "Once pasted, Claude will remember these rules for every new chat in that project!",
   },
 ];
 
-/* ── export format comparison ── */
-const formatRows = [
+const useCases = [
   {
-    icon: Copy,
-    name: "Plain Text",
-    bestFor: "Quick, one-off conversations",
-    persistence: "Per conversation",
-    where: "Paste at the start of any chat",
+    title: "For Daily Use (Claude.ai)",
+    description: "Best for writers, managers, and general tasks.",
+    action: "Copy 'Project Instructions'",
+    where: "Paste into Claude.ai Project Settings",
   },
   {
-    icon: ClipboardCheck,
-    name: "Project Instructions",
-    bestFor: "Claude.ai power users",
-    persistence: "Per project",
-    where: "Project settings \u2192 Instructions",
-  },
-  {
-    icon: FileDown,
-    name: "CLAUDE.md",
-    bestFor: "Claude Code developers",
-    persistence: "Per repo",
-    where: "Repo root or ~/.claude/",
+    title: "For Developers (Cursor/IDE)",
+    description: "Best for coding with consistent style.",
+    action: "Download 'CLAUDE.md'",
+    where: "Place it in your project folder",
   },
 ];
-
-const howToSchema = {
-  "@context": "https://schema.org",
-  "@type": "HowTo",
-  name: "How to import your ChatGPT history into Claude",
-  description:
-    "Step-by-step guide to export your ChatGPT conversations and create a structured context file for Claude.",
-  totalTime: "PT5M",
-  tool: { "@type": "SoftwareApplication", name: "ChatLore", url: "https://chatlore.app" },
-  step: [
-    {
-      "@type": "HowToStep",
-      position: 1,
-      name: "Export from ChatGPT",
-      text: "Open ChatGPT → Settings → Data controls → Export data. Download the .zip and extract conversations.json.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 2,
-      name: "Upload & select conversations",
-      text: "Drag & drop conversations.json onto ChatLore. Select the conversations that reflect your preferences and decisions.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 3,
-      name: "Review the analysis",
-      text: "ChatLore analyzes your conversations and shows a summary of topics, preferences, and patterns.",
-    },
-    {
-      "@type": "HowToStep",
-      position: 4,
-      name: "Export & use in Claude",
-      text: "Copy as Project Instructions for Claude.ai, download as CLAUDE.md for Claude Code, or paste as plain text.",
-    },
-  ],
-};
 
 export default function GuidePage() {
   return (
     <div className="relative">
-      <JsonLd data={howToSchema} />
       {/* ── Hero ── */}
       <section className="px-4 pb-16 pt-24 sm:pt-32">
         <motion.div
@@ -177,231 +119,102 @@ export default function GuidePage() {
             variants={fadeSlide}
             className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-amber"
           >
-            Step-by-step guide
+            Simple Guide
           </motion.p>
           <motion.h1
             variants={fadeSlide}
             className="font-[family-name:var(--font-display)] text-4xl leading-tight sm:text-5xl"
           >
-            From ChatGPT export to Claude context
+            How to sync your <span className="italic text-amber">AI Memory</span>
           </motion.h1>
           <motion.p
             variants={fadeSlide}
             className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground"
           >
-            Four steps. Five minutes. A context file that makes Claude feel
-            like it already knows you.
+            Follow these 4 simple steps to make Claude understand your style and goals.
           </motion.p>
         </motion.div>
       </section>
 
-      {/* ── Steps with timeline ── */}
-      <section className="px-4 py-20">
-        <div className="relative mx-auto max-w-3xl">
-          {/* Timeline line */}
-          <div className="absolute left-[23px] top-6 bottom-6 hidden w-px bg-gradient-to-b from-amber/30 via-border/40 to-amber/30 sm:block" />
-
-          <div className="space-y-6">
-            {steps.map((step, i) => {
-              const Icon = step.icon;
-              const isAccent = step.accent;
-              return (
-                <motion.div
-                  key={step.num}
-                  id={step.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{
-                    delay: i * 0.08,
-                    duration: 0.6,
-                    ease: [0.25, 0.1, 0.25, 1] as [
-                      number,
-                      number,
-                      number,
-                      number,
-                    ],
-                  }}
-                  className="relative sm:pl-14"
-                >
-                  {/* Timeline dot (desktop) */}
-                  <div
-                    className={`absolute left-[18px] top-7 hidden size-[11px] rounded-full border-2 sm:block ${
-                      isAccent
-                        ? "border-amber bg-amber/20"
-                        : "border-border bg-background"
-                    }`}
-                  />
-
-                  <div
-                    className={`group scroll-mt-20 rounded-xl border p-6 transition-colors hover:bg-card/60 ${
-                      isAccent
-                        ? "border-amber/30 bg-card/40 hover:border-amber/40"
-                        : "border-border/40 bg-card/30 hover:border-amber/20"
-                    }`}
-                  >
-                    {/* Header */}
-                    <div className="flex items-start gap-4">
-                      <span className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-amber/10 text-amber transition-colors group-hover:bg-amber/15">
-                        <Icon className="size-5" />
-                      </span>
-                      <div>
-                        <p className="font-mono text-xs text-amber/40">
-                          {step.num}
-                        </p>
-                        <h2 className="text-lg font-semibold">{step.title}</h2>
-                      </div>
-                    </div>
-
-                    {/* Substeps */}
-                    <ul className="mt-5 space-y-3 pl-14">
-                      {step.substeps.map((sub) => {
-                        const SubIcon = sub.icon;
-                        return (
-                          <li
-                            key={sub.text}
-                            className="flex items-start gap-3 text-sm leading-relaxed text-muted-foreground"
-                          >
-                            <SubIcon className="mt-0.5 size-4 shrink-0 text-amber/40" />
-                            <span>{sub.text}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-
-                    {/* Tip */}
-                    {step.tip && (
-                      <div className="mt-5 ml-14 rounded-md border-l-2 border-amber/30 bg-amber/5 py-2 pl-4 pr-3">
-                        <p className="flex items-start gap-2 text-sm leading-relaxed text-muted-foreground">
-                          <Lightbulb className="mt-0.5 size-4 shrink-0 text-amber/50" />
-                          <span>{step.tip}</span>
-                        </p>
-                      </div>
-                    )}
+      {/* ── Steps ── */}
+      <section className="px-4 py-12">
+        <div className="mx-auto max-w-3xl space-y-6">
+          {steps.map((step, i) => {
+            const Icon = step.icon;
+            return (
+              <motion.div
+                key={step.num}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className={`rounded-2xl border p-8 ${
+                  step.accent ? "border-amber/30 bg-amber/5" : "border-border/40 bg-card/30"
+                }`}
+              >
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="flex size-10 items-center justify-center rounded-full bg-amber/10 text-amber font-bold">
+                    {step.num}
                   </div>
-                </motion.div>
-              );
-            })}
+                  <h2 className="text-xl font-bold">{step.title}</h2>
+                </div>
+                <ul className="space-y-4">
+                  {step.substeps.map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-3 text-muted-foreground">
+                      <sub.icon className="mt-1 size-4 shrink-0 text-amber/60" />
+                      <span>{sub.text}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-6 flex items-start gap-3 rounded-xl bg-background/50 p-4 border border-border/20">
+                  <Lightbulb className="mt-1 size-4 shrink-0 text-amber" />
+                  <p className="text-sm italic">{step.tip}</p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── Better Use Cases Section ── */}
+      <section className="border-t border-border/40 px-4 py-24">
+        <div className="mx-auto max-w-4xl">
+          <h2 className="mb-12 text-center font-[family-name:var(--font-display)] text-3xl">
+            Where to use your context?
+          </h2>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {useCases.map((uc) => (
+              <div key={uc.title} className="rounded-2xl border border-border/40 p-8 bg-card/20">
+                <h3 className="text-lg font-bold mb-2">{uc.title}</h3>
+                <p className="text-sm text-muted-foreground mb-6">{uc.description}</p>
+                <div className="space-y-2">
+                  <div className="text-xs uppercase tracking-widest text-amber font-bold">Action:</div>
+                  <div className="text-sm font-mono bg-background p-2 rounded border border-border/20">
+                    {uc.action}
+                  </div>
+                  <div className="text-xs uppercase tracking-widest text-amber font-bold mt-4">Where:</div>
+                  <div className="text-sm text-muted-foreground">
+                    {uc.where}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── Which format should you use? ── */}
+      {/* ── Final CTA ── */}
       <section className="border-t border-border/40 px-4 py-24">
-        <div className="mx-auto max-w-3xl">
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mb-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-amber"
-          >
-            Quick reference
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mb-12 text-center font-[family-name:var(--font-display)] text-3xl sm:text-4xl"
-          >
-            Which format should you use?
-          </motion.h2>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="overflow-hidden rounded-xl border border-border/40"
-          >
-            {/* Table header */}
-            <div className="hidden grid-cols-[1fr,1fr,auto,1fr] gap-px bg-border/20 text-xs font-medium uppercase tracking-wider text-muted-foreground sm:grid">
-              <div className="bg-card/50 px-4 py-3">Format</div>
-              <div className="bg-card/50 px-4 py-3">Best for</div>
-              <div className="bg-card/50 px-4 py-3">Persists</div>
-              <div className="bg-card/50 px-4 py-3">Where to put it</div>
-            </div>
-
-            {/* Table rows */}
-            {formatRows.map((row, i) => {
-              const RowIcon = row.icon;
-              return (
-                <div
-                  key={row.name}
-                  className={`border-t border-border/20 ${i % 2 === 0 ? "bg-card/20" : "bg-card/30"}`}
-                >
-                  {/* Desktop row */}
-                  <div className="hidden grid-cols-[1fr,1fr,auto,1fr] items-center gap-px sm:grid">
-                    <div className="flex items-center gap-2.5 px-4 py-3.5">
-                      <RowIcon className="size-4 text-amber/60" />
-                      <span className="text-sm font-medium">{row.name}</span>
-                    </div>
-                    <div className="px-4 py-3.5 text-sm text-muted-foreground">
-                      {row.bestFor}
-                    </div>
-                    <div className="px-4 py-3.5">
-                      <span className="rounded-full bg-amber/10 px-2.5 py-0.5 text-xs font-medium text-amber">
-                        {row.persistence}
-                      </span>
-                    </div>
-                    <div className="px-4 py-3.5 font-mono text-xs text-muted-foreground">
-                      {row.where}
-                    </div>
-                  </div>
-
-                  {/* Mobile card */}
-                  <div className="space-y-2 px-4 py-4 sm:hidden">
-                    <div className="flex items-center gap-2.5">
-                      <RowIcon className="size-4 text-amber/60" />
-                      <span className="text-sm font-medium">{row.name}</span>
-                      <span className="ml-auto rounded-full bg-amber/10 px-2.5 py-0.5 text-xs font-medium text-amber">
-                        {row.persistence}
-                      </span>
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      {row.bestFor}
-                    </p>
-                    <p className="font-mono text-xs text-muted-foreground/60">
-                      {row.where}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="border-t border-border/40 px-4 py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{
-            duration: 0.7,
-            ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
-          }}
-          className="mx-auto max-w-3xl text-center"
-        >
-          <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl">
-            Ready to build your context file?
-          </h2>
-          <p className="mx-auto mt-4 max-w-md text-base text-muted-foreground">
-            Upload your ChatGPT export and let Claude distill your preferences
-            into a reusable context file.
-          </p>
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to try it?</h2>
+          <p className="text-muted-foreground mb-8">It takes less than 5 minutes to set up your AI memory.</p>
           <Link
             href="/upload"
-            className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
+            className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:bg-amber/90"
           >
-            Start now
-            <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
+            Start Now
+            <ArrowRight className="size-4" />
           </Link>
-          <p className="mt-3 text-xs text-muted-foreground/60">
-            100% free, no sign-up required
-          </p>
-        </motion.div>
+        </div>
       </section>
     </div>
   );
