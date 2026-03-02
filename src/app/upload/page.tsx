@@ -64,10 +64,10 @@ export default function UploadPage() {
             Desktop Recommended
           </div>
           <h1 className="text-3xl font-bold tracking-tight">
-            How do you want to import?
+            Sync from any AI
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Get your data from ChatGPT the way it suits you best.
+            Upload your history from ChatGPT or Gemini to build your profile.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export default function UploadPage() {
             }`}
           >
             <FileJson className="size-4" />
-            File Upload (Recommended)
+            ChatGPT / Gemini File
           </button>
           <button
             onClick={() => setMethod("paste")}

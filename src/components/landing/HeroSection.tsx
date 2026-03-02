@@ -273,7 +273,7 @@ export function HeroSection() {
             variants={fadeSlide}
             className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
           >
-            Stop repeating yourself. Move your ChatGPT history to Claude and keep your personal touch in every answer.
+            Stop repeating yourself. Move your history from ChatGPT or Gemini to Claude and keep your personal touch in every answer.
           </motion.p>
 
           {/* CTA */}
