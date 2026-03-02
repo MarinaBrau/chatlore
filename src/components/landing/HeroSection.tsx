@@ -286,6 +286,13 @@ export function HeroSection() {
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </motion.div>
+
+          <motion.p
+            variants={fadeSlide}
+            className="mt-6 flex items-center justify-center gap-2 text-[11px] font-medium uppercase tracking-widest text-muted-foreground/40 lg:justify-start"
+          >
+            Best on Desktop • Free forever • 100% Secure
+          </motion.p>
         </motion.div>
       </div>
     </section>

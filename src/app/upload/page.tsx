@@ -40,6 +40,13 @@ export default function UploadPage() {
         className="w-full max-w-xl"
       >
         <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-amber/10 px-3 py-1 text-xs font-semibold text-amber">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-amber"></span>
+            </span>
+            Desktop Recommended
+          </div>
           <h1 className="text-2xl font-bold sm:text-3xl">
             Upload your ChatGPT export
           </h1>
