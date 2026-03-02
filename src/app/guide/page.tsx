@@ -11,12 +11,12 @@ import {
   Search,
   Copy,
   ClipboardCheck,
-  FileDown,
   Lightbulb,
   FolderOpen,
-  Terminal,
+  MessageCircle,
+  Brain,
+  Sparkles,
 } from "lucide-react";
-import { JsonLd } from "@/components/JsonLd";
 
 /* ── animation variants ── */
 const stagger = {
@@ -38,69 +38,72 @@ const fadeSlide = {
   },
 };
 
-/* ── Simplified steps for non-tech users ── */
+/* ── Universal steps ── */
 const steps = [
   {
     id: "export",
     num: "01",
     icon: Download,
-    title: "Get your data from ChatGPT",
+    title: "Export your AI history",
     accent: true,
     substeps: [
-      { icon: Settings, text: "Open ChatGPT Settings \u2192 Data controls" },
-      { icon: Download, text: "Click \u201cExport data\u201d. You'll get an email from OpenAI." },
-      { icon: FolderOpen, text: "Open the .zip file you received and find 'conversations.json'." },
+      { icon: MessageCircle, text: "ChatGPT: Settings \u2192 Data controls \u2192 Export." },
+      { icon: Brain, text: "Gemini: Go to Google Takeout \u2192 Select Gemini \u2192 Export." },
+      { icon: Sparkles, text: "Claude: Settings \u2192 Account \u2192 Export Data." },
     ],
-    tip: "OpenAI usually sends the email in 5-10 minutes. Don't forget to check your spam!",
+    tip: "You'll receive a .zip file via email. Extract it and find the .json file (e.g., conversations.json).",
   },
   {
     id: "upload",
     num: "02",
     icon: Upload,
-    title: "Upload to ChatLore",
+    title: "Drop it into ChatLore",
     substeps: [
-      { icon: Upload, text: "Drag 'conversations.json' into the upload box." },
-      { icon: FileText, text: "We read the file locally. Your private data never leaves your computer." },
+      { icon: Upload, text: "Drag your export file or paste a single chat manually." },
+      { icon: FileText, text: "Everything is parsed locally in your browser. Total privacy." },
     ],
-    tip: "If your file is very large, it might take a few seconds to load. Just hang tight!",
+    tip: "No waiting! If you don't want to wait for the email, use our 'Manual Paste' feature.",
   },
   {
     id: "select",
     num: "03",
     icon: Search,
-    title: "Select your best chats",
+    title: "AI Analysis",
     substeps: [
-      { icon: Search, text: "Search for chats where you gave feedback or set rules." },
-      { icon: ClipboardCheck, text: "Select at least 3-5 high-quality conversations for the best result." },
+      { icon: Search, text: "We identify your writing tone, hidden preferences, and goals." },
+      { icon: ClipboardCheck, text: "You can edit the results to make them 100% accurate." },
     ],
-    tip: "The more specific the chats, the better Claude will understand your personal style.",
+    tip: "The more conversations you select, the better the final profile will be.",
   },
   {
     id: "use",
     num: "04",
     icon: Copy,
-    title: "Teach it to Claude",
+    title: "Sync to any AI",
     accent: true,
     substeps: [
-      { icon: Copy, text: "Copy the generated text." },
-      { icon: ClipboardCheck, text: "Go to Claude.ai \u2192 Project Settings \u2192 Paste into 'Instructions'." },
+      { icon: Copy, text: "Choose your target: Claude, ChatGPT, or Gemini." },
+      { icon: ClipboardCheck, text: "Copy the instructions and paste them into your assistant's settings." },
     ],
-    tip: "Once pasted, Claude will remember these rules for every new chat in that project!",
+    tip: "Look for 'Project Instructions' in Claude, 'Custom Instructions' in ChatGPT, or 'System Instructions' in Gemini.",
   },
 ];
 
-const useCases = [
+const targetAIs = [
   {
-    title: "For Daily Use (Claude.ai)",
-    description: "Best for writers, managers, and general tasks.",
-    action: "Copy 'Project Instructions'",
-    where: "Paste into Claude.ai Project Settings",
+    title: "Claude.ai (Recommended)",
+    description: "Best for complex reasoning and long-term projects.",
+    where: "Project Settings \u2192 Instructions",
   },
   {
-    title: "For Developers (Cursor/IDE)",
-    description: "Best for coding with consistent style.",
-    action: "Download 'CLAUDE.md'",
-    where: "Place it in your project folder",
+    title: "ChatGPT",
+    description: "Best for quick daily tasks and simple automations.",
+    where: "Customize ChatGPT \u2192 Custom Instructions",
+  },
+  {
+    title: "Google Gemini",
+    description: "Best for integration with Google Workspace.",
+    where: "Gemini Manager \u2192 System Instructions",
   },
 ];
 
@@ -119,19 +122,19 @@ export default function GuidePage() {
             variants={fadeSlide}
             className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-amber"
           >
-            Simple Guide
+            Universal Sync Guide
           </motion.p>
           <motion.h1
             variants={fadeSlide}
             className="font-[family-name:var(--font-display)] text-4xl leading-tight sm:text-5xl"
           >
-            How to sync your <span className="italic text-amber">AI Memory</span>
+            Sync your AI Memory <span className="italic text-amber">between platforms</span>
           </motion.h1>
           <motion.p
             variants={fadeSlide}
             className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground"
           >
-            Follow these 4 simple steps to make Claude understand your style and goals.
+            Don&apos;t lose your style when switching assistants. Follow these steps to migrate between ChatGPT, Gemini, and Claude.
           </motion.p>
         </motion.div>
       </section>
@@ -140,7 +143,6 @@ export default function GuidePage() {
       <section className="px-4 py-12">
         <div className="mx-auto max-w-3xl space-y-6">
           {steps.map((step, i) => {
-            const Icon = step.icon;
             return (
               <motion.div
                 key={step.num}
@@ -148,7 +150,7 @@ export default function GuidePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 className={`rounded-2xl border p-8 ${
-                  step.accent ? "border-amber/30 bg-amber/5" : "border-border/40 bg-card/30"
+                  step.accent ? "border-amber/30 bg-amber/5 shadow-sm shadow-amber/5" : "border-border/40 bg-card/30"
                 }`}
               >
                 <div className="flex items-center gap-4 mb-6">
@@ -161,13 +163,13 @@ export default function GuidePage() {
                   {step.substeps.map((sub, idx) => (
                     <li key={idx} className="flex items-start gap-3 text-muted-foreground">
                       <sub.icon className="mt-1 size-4 shrink-0 text-amber/60" />
-                      <span>{sub.text}</span>
+                      <span className="text-sm">{sub.text}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="mt-6 flex items-start gap-3 rounded-xl bg-background/50 p-4 border border-border/20">
                   <Lightbulb className="mt-1 size-4 shrink-0 text-amber" />
-                  <p className="text-sm italic">{step.tip}</p>
+                  <p className="text-xs italic leading-relaxed">{step.tip}</p>
                 </div>
               </motion.div>
             );
@@ -175,25 +177,21 @@ export default function GuidePage() {
         </div>
       </section>
 
-      {/* ── Better Use Cases Section ── */}
-      <section className="border-t border-border/40 px-4 py-24">
-        <div className="mx-auto max-w-4xl">
+      {/* ── Target AI Section ── */}
+      <section id="targets" className="border-t border-border/40 px-4 py-24">
+        <div className="mx-auto max-w-5xl">
           <h2 className="mb-12 text-center font-[family-name:var(--font-display)] text-3xl">
-            Where to use your context?
+            Where to paste your results?
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {useCases.map((uc) => (
-              <div key={uc.title} className="rounded-2xl border border-border/40 p-8 bg-card/20">
-                <h3 className="text-lg font-bold mb-2">{uc.title}</h3>
-                <p className="text-sm text-muted-foreground mb-6">{uc.description}</p>
-                <div className="space-y-2">
-                  <div className="text-xs uppercase tracking-widest text-amber font-bold">Action:</div>
-                  <div className="text-sm font-mono bg-background p-2 rounded border border-border/20">
-                    {uc.action}
-                  </div>
-                  <div className="text-xs uppercase tracking-widest text-amber font-bold mt-4">Where:</div>
-                  <div className="text-sm text-muted-foreground">
-                    {uc.where}
+          <div className="grid gap-6 sm:grid-cols-3">
+            {targetAIs.map((target) => (
+              <div key={target.title} className="rounded-2xl border border-border/40 p-6 bg-card/20 flex flex-col">
+                <h3 className="text-lg font-bold mb-2">{target.title}</h3>
+                <p className="text-xs text-muted-foreground mb-6 flex-1">{target.description}</p>
+                <div className="mt-auto">
+                  <div className="text-[10px] uppercase tracking-widest text-amber font-bold mb-2">Settings Path:</div>
+                  <div className="text-xs font-mono bg-background p-2 rounded border border-border/20 break-words">
+                    {target.where}
                   </div>
                 </div>
               </div>
@@ -202,14 +200,26 @@ export default function GuidePage() {
         </div>
       </section>
 
+      {/* ── Privacy Note ── */}
+      <section id="privacy" className="px-4 py-12">
+        <div className="mx-auto max-w-3xl rounded-3xl border border-border/40 bg-muted/20 p-8 text-center">
+          <h2 className="text-xl font-bold mb-4">Your Privacy is our Priority</h2>
+          <p className="text-sm text-muted-foreground leading-relaxed">
+            ChatLore is a 100% client-side tool. This means your conversation files never leave your computer. 
+            The analysis happens in your browser session and is forgotten as soon as you close the tab. 
+            We do not have a database, and we do not store your personal information.
+          </p>
+        </div>
+      </section>
+
       {/* ── Final CTA ── */}
       <section className="border-t border-border/40 px-4 py-24">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to try it?</h2>
-          <p className="text-muted-foreground mb-8">It takes less than 5 minutes to set up your AI memory.</p>
+          <h2 className="text-3xl font-bold mb-4 italic">Ready to Sync?</h2>
+          <p className="text-muted-foreground mb-8">Take your AI personality with you, anywhere.</p>
           <Link
             href="/upload"
-            className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:bg-amber/90"
+            className="group inline-flex items-center gap-3 rounded-full bg-amber px-10 py-4 text-sm font-bold text-white transition-all hover:bg-amber/90 shadow-xl shadow-amber/20"
           >
             Start Now
             <ArrowRight className="size-4" />
