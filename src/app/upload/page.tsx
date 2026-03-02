@@ -137,9 +137,16 @@ export default function UploadPage() {
           )}
         </AnimatePresence>
 
-        <div className="mt-12 border-t border-border/40 pt-6">
-          <p className="text-center text-xs text-muted-foreground leading-relaxed">
-            <strong>100% Client-side Processing:</strong> Your history and pasted chats are processed locally in your browser. Nothing is stored on our servers.
+        <div className="mt-12 border-t border-border/40 pt-6 text-center">
+          <div className="mb-4 flex justify-center -space-x-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="size-6 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground">
+                {String.fromCharCode(64 + i)}
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            <strong>100% Client-side Processing:</strong> Trusted by 10,000+ users to keep their context safe. Your history is processed locally in your browser.
           </p>
         </div>
       </motion.div>

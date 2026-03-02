@@ -2,33 +2,37 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border/30 py-8">
-      <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-4 sm:flex-row sm:justify-between">
-        <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-          ChatLore
-        </p>
-        <div className="flex items-center gap-6 text-sm text-muted-foreground">
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors hover:text-amber"
-          >
-            GitHub
-          </a>
-          <Link
-            href="/guide"
-            className="transition-colors hover:text-amber"
-          >
-            Guide
-          </Link>
-          <a
-            href="mailto:hello@chatlore.app"
-            className="transition-colors hover:text-amber"
-          >
-            Contact
-          </a>
+    <footer className="border-t border-border/30 bg-muted/10 py-12">
+      <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 sm:flex-row sm:justify-between">
+        <div className="flex flex-col gap-4">
+          <p className="font-mono text-xs uppercase tracking-widest text-amber font-bold">
+            ChatLore
+          </p>
+          <p className="max-w-xs text-sm text-muted-foreground">
+            The universal memory layer for your AI life. Sync context between ChatGPT, Gemini, and Claude securely.
+          </p>
         </div>
+        
+        <div className="flex gap-12 text-sm">
+          <div className="flex flex-col gap-3">
+            <span className="font-bold text-foreground">Product</span>
+            <Link href="/upload" className="text-muted-foreground hover:text-amber transition-colors">Sync Now</Link>
+            <Link href="/guide" className="text-muted-foreground hover:text-amber transition-colors">Guide</Link>
+          </div>
+          
+          <div className="flex flex-col gap-3">
+            <span className="font-bold text-foreground">Legal & Support</span>
+            <Link href="/guide#privacy" className="text-muted-foreground hover:text-amber transition-colors">Privacy Policy</Link>
+            <a href="mailto:hello@chatlore.app" className="text-muted-foreground hover:text-amber transition-colors">Contact</a>
+            <a href="https://github.com/MarinaBrau/chatlore" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-amber transition-colors">GitHub</a>
+          </div>
+        </div>
+      </div>
+      
+      <div className="mx-auto mt-12 max-w-5xl border-t border-border/30 px-4 pt-8 text-center sm:text-left">
+        <p className="text-xs text-muted-foreground/60">
+          © {new Date().getFullYear()} ChatLore. Open source and privacy-first.
+        </p>
       </div>
     </footer>
   );

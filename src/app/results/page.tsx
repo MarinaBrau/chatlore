@@ -217,8 +217,8 @@ export default function ResultsPage() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="mx-auto max-w-3xl px-4 py-8">
       <div className="mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Your Claude Profile</h1>
-          <p className="mt-1 text-muted-foreground text-sm">Review, edit, and copy your context below.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Your Universal AI Profile</h1>
+          <p className="mt-1 text-muted-foreground text-sm">Review your style, preferences, and patterns. Ready for any AI.</p>
         </div>
         
         <div className="flex items-center gap-2">

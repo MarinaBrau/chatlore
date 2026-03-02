@@ -33,12 +33,10 @@ export function OutputPreview() {
             What you get
           </p>
           <h2 className="mb-3 font-[family-name:var(--font-display)] text-3xl sm:text-4xl">
-            A context file that{" "}
-            <span className="italic text-amber">speaks for you</span>
+            One profile for <span className="italic text-amber">every assistant</span>
           </h2>
           <p className="mx-auto mb-10 max-w-lg text-muted-foreground">
-            ChatLore turns your chat history into a structured profile that
-            Claude reads before every conversation.
+            ChatLore turns your messy chat history into a structured master profile that works with ChatGPT, Claude, and Gemini.
           </p>
         </motion.div>
 
@@ -55,7 +53,7 @@ export function OutputPreview() {
             <span className="size-2.5 rounded-full bg-neutral-700" />
             <span className="size-2.5 rounded-full bg-neutral-700" />
             <span className="ml-2 font-mono text-[11px] text-neutral-500">
-              claude-context.md
+              universal-ai-profile.md
             </span>
           </div>
 
