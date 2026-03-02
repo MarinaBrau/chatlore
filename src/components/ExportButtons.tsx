@@ -19,9 +19,9 @@ export function ExportButtons({ analyses }: ExportButtonsProps) {
     try {
       await navigator.clipboard.writeText(text);
       trackEvent("export_clicked", { format, method: "copy" });
-      toast.success(`${label} copied to clipboard!`);
+      toast.success(`${label} copied! Now paste it in Claude.`);
     } catch {
-      toast.error("Failed to copy. Try again.");
+      toast.error("Failed to copy. Please try again.");
     }
   }, []);
 
@@ -38,46 +38,49 @@ export function ExportButtons({ analyses }: ExportButtonsProps) {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
       <Button
-        variant="outline"
-        size="sm"
-        className="gap-1.5"
-        onClick={() =>
-          copyToClipboard(exportAsMarkdown(analyses), "Markdown", "markdown")
-        }
-      >
-        <Copy className="size-3.5" />
-        Copy as Text
-      </Button>
-
-      <Button
-        variant="outline"
-        size="sm"
-        className="gap-1.5"
+        variant="default"
+        size="lg"
+        className="gap-2 bg-amber hover:bg-amber/90 text-white font-bold h-14 shadow-lg shadow-amber/20"
         onClick={() =>
           copyToClipboard(
             exportAsProjectInstructions(analyses),
-            "Project Instructions",
+            "Claude Instructions",
             "project_instructions"
           )
         }
       >
-        <ClipboardCheck className="size-3.5" />
-        Copy as Project Instructions
+        <ClipboardCheck className="size-5" />
+        Copy for Claude (Recommended)
       </Button>
 
       <Button
         variant="outline"
-        size="sm"
-        className="gap-1.5"
+        size="lg"
+        className="gap-2 h-14 border-border/60"
         onClick={() =>
-          downloadFile(exportAsClaudeMd(analyses), "CLAUDE.md", "claude_md")
+          copyToClipboard(exportAsMarkdown(analyses), "Simple Text", "markdown")
         }
       >
-        <FileDown className="size-3.5" />
-        Download CLAUDE.md
+        <Copy className="size-5" />
+        Copy as Simple Text
       </Button>
+
+      <div className="sm:col-span-2 pt-2 border-t border-border/20 mt-2">
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-3 font-bold">Advanced Export</p>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="gap-1.5 text-muted-foreground hover:text-amber"
+          onClick={() =>
+            downloadFile(exportAsClaudeMd(analyses), "CLAUDE.md", "claude_md")
+          }
+        >
+          <FileDown className="size-3.5" />
+          Download CLAUDE.md for Developers
+        </Button>
+      </div>
     </div>
   );
 }

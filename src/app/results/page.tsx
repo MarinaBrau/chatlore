@@ -225,49 +225,62 @@ export default function ResultsPage() {
       transition={{ duration: 0.3 }}
       className="mx-auto max-w-3xl px-4 py-6"
     >
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Results</h1>
-
-        {state.results.length > 1 && (
-          <div className="flex rounded-lg border border-border/60 bg-background p-0.5">
-            <button
-              onClick={() => setViewMode("individual")}
-              className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
-                viewMode === "individual"
-                  ? "bg-accent font-medium text-accent-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Individual
-            </button>
-            <button
-              onClick={() => setViewMode("combined")}
-              className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
-                viewMode === "combined"
-                  ? "bg-accent font-medium text-accent-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              }`}
-            >
-              Combined
-            </button>
-          </div>
-        )}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold tracking-tight">Your Claude Profile is Ready</h1>
+        <p className="mt-2 text-muted-foreground">
+          Copy the instructions below and teach Claude who you are.
+        </p>
       </div>
 
-      <div className="space-y-4">
-        {displayResults.map((result) => (
-          <ResultCard key={result.id} analysis={result} />
-        ))}
-      </div>
-
-      {/* Export section */}
-      <div className="mt-8 rounded-lg border border-border/50 bg-card p-4">
-        <h2 className="mb-3 text-sm font-semibold">Export</h2>
+      {/* Primary Action: Export */}
+      <div className="mb-10 rounded-2xl border border-amber/30 bg-amber/5 p-6 shadow-sm">
+        <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-amber">1. Save your context</h2>
         <ExportButtons analyses={displayResults} />
       </div>
 
-      {/* Next Steps */}
-      <NextSteps />
+      {/* Guide: Next Steps */}
+      <div className="mb-12">
+        <h2 className="mb-4 text-sm font-bold uppercase tracking-widest text-muted-foreground">2. How to use it</h2>
+        <NextSteps />
+      </div>
+
+      {/* Detailed Results: The "Proof" */}
+      <div className="border-t border-border/40 pt-10">
+        <div className="mb-6 flex items-center justify-between">
+          <h2 className="text-xl font-bold italic text-muted-foreground">What we discovered</h2>
+
+          {state.results.length > 1 && (
+            <div className="flex rounded-lg border border-border/60 bg-background p-0.5">
+              <button
+                onClick={() => setViewMode("individual")}
+                className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
+                  viewMode === "individual"
+                    ? "bg-accent font-medium text-accent-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Individual
+              </button>
+              <button
+                onClick={() => setViewMode("combined")}
+                className={`rounded-md px-3 py-1.5 text-sm transition-colors ${
+                  viewMode === "combined"
+                    ? "bg-accent font-medium text-accent-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                Combined
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="space-y-4">
+          {displayResults.map((result) => (
+            <ResultCard key={result.id} analysis={result} />
+          ))}
+        </div>
+      </div>
     </motion.div>
   );
 }

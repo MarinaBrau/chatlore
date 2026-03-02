@@ -1,129 +1,75 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Laptop, Terminal, MessageSquare, ExternalLink } from "lucide-react";
+import { Laptop, MessageSquare, ExternalLink, ArrowRight } from "lucide-react";
 import { ClaudeProjectMockup } from "@/components/mockups/ClaudeProjectMockup";
 
 export function NextSteps() {
   return (
-    <div className="mt-6 rounded-lg border border-border/50 bg-card p-4">
-      <h2 className="mb-3 text-sm font-semibold">What&apos;s next?</h2>
-      <p className="mb-4 text-sm text-muted-foreground">
-        You&apos;ve got your context file — here&apos;s how to use it.
-      </p>
+    <div className="mt-8 space-y-6">
+      <div className="rounded-2xl border border-amber/20 bg-amber/5 p-6 sm:p-8">
+        <h2 className="mb-4 text-xl font-bold flex items-center gap-2">
+          <Laptop className="size-6 text-amber" />
+          What&apos;s next? (2 min)
+        </h2>
+        
+        <div className="grid gap-8 lg:grid-cols-2">
+          <div className="space-y-6">
+            <p className="text-sm text-muted-foreground font-medium">
+              You&apos;ve got your context file — here&apos;s how to use it in Claude.ai:
+            </p>
+            
+            <div className="space-y-4">
+              <div className="flex gap-4">
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">1</div>
+                <p className="text-sm">Click the <strong>Copy for Claude</strong> button above.</p>
+              </div>
+              
+              <div className="flex gap-4">
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">2</div>
+                <p className="text-sm">Go to Claude.ai, open a <strong>Project</strong> and find <strong>Settings</strong>.</p>
+              </div>
+              
+              <div className="flex gap-4">
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">3</div>
+                <p className="text-sm">Paste into the <strong>Instructions</strong> box. Done!</p>
+              </div>
+            </div>
 
-      <Accordion type="single" collapsible>
-        {/* Claude.ai Projects */}
-        <AccordionItem value="projects" className="px-0">
-          <AccordionTrigger>
-            <span className="flex items-center gap-2">
-              <Laptop className="size-4 text-amber" />
-              Claude.ai Projects
-            </span>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-3">
-              <ol className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex gap-2">
-                  <span className="shrink-0 font-medium text-foreground">
-                    1.
-                  </span>
-                  Open Claude.ai and create or open a Project
-                </li>
-                <li className="flex gap-2">
-                  <span className="shrink-0 font-medium text-foreground">
-                    2.
-                  </span>
-                  Go to Project Settings and find the &quot;Instructions&quot; field
-                </li>
-                <li className="flex gap-2">
-                  <span className="shrink-0 font-medium text-foreground">
-                    3.
-                  </span>
-                  Paste your copied context there — Claude will remember it in
-                  every conversation within that project
-                </li>
-              </ol>
-
-              <ClaudeProjectMockup />
-
+            <div className="pt-4">
               <a
                 href="https://claude.ai"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md bg-amber px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-amber/90"
+                className="group inline-flex items-center gap-2 rounded-full bg-amber px-6 py-3 text-sm font-bold text-white transition-all hover:bg-amber/90"
               >
-                Open Claude.ai
-                <ExternalLink className="size-3.5" />
+                Go to Claude.ai
+                <ExternalLink className="size-4" />
               </a>
             </div>
-          </AccordionContent>
-        </AccordionItem>
+          </div>
 
-        {/* Claude Code */}
-        <AccordionItem value="code" className="px-0">
-          <AccordionTrigger>
-            <span className="flex items-center gap-2">
-              <Terminal className="size-4 text-amber" />
-              Claude Code
-            </span>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                Save the downloaded file in your project&apos;s root folder.
-                Claude Code will automatically read it every time you start a
-                session.
-              </p>
-
-              <div className="rounded-md border border-border/60 bg-neutral-950 px-4 py-3 font-mono text-sm text-neutral-300">
-                <span className="text-neutral-500">$</span>{" "}
-                <span className="text-emerald-400">mv</span> ~/Downloads/CLAUDE.md
-                ./CLAUDE.md
+          <div className="relative">
+            <div className="absolute -inset-4 rounded-xl bg-gradient-to-tr from-amber/20 to-transparent blur-2xl opacity-50" />
+            <div className="relative overflow-hidden rounded-xl border border-border/40 shadow-sm">
+              <div className="bg-muted px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground border-b border-border/40">
+                Claude Settings Example
               </div>
-
-              <p className="text-xs text-muted-foreground">
-                You can also place it at{" "}
-                <code className="rounded bg-muted px-1 py-0.5 text-xs">
-                  ~/.claude/CLAUDE.md
-                </code>{" "}
-                to apply it globally across all your projects.
-              </p>
+              <ClaudeProjectMockup />
             </div>
-          </AccordionContent>
-        </AccordionItem>
+          </div>
+        </div>
+      </div>
 
-        {/* Quick paste */}
-        <AccordionItem value="paste" className="border-b-0 px-0">
-          <AccordionTrigger>
-            <span className="flex items-center gap-2">
-              <MessageSquare className="size-4 text-amber" />
-              Quick paste into any chat
-            </span>
-          </AccordionTrigger>
-          <AccordionContent>
-            <div className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                Just paste the text at the beginning of any Claude conversation.
-                Start your message with something like:
-              </p>
-              <div className="rounded-md border border-border/60 bg-muted/50 px-3 py-2 text-sm italic text-muted-foreground">
-                &quot;Here&apos;s some context about me, please keep this in
-                mind: [paste your context]&quot;
-              </div>
-              <p className="text-xs text-muted-foreground">
-                This works in any Claude surface — web, mobile, or API. The
-                context lasts for that conversation only.
-              </p>
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+      <div className="rounded-2xl border border-border/40 bg-card p-6">
+        <h3 className="mb-3 text-sm font-bold flex items-center gap-2">
+          <MessageSquare className="size-4 text-muted-foreground" />
+          Using a free Claude account?
+        </h3>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          If you don&apos;t use Projects, just paste your text at the start of any new chat. 
+          Claude will instantly learn your style for that conversation.
+        </p>
+      </div>
     </div>
   );
 }
