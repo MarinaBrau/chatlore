@@ -3,26 +3,26 @@
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, FileJson, Check, Upload } from "lucide-react";
+import { ArrowRight, FileJson, Check, Upload, Sparkles } from "lucide-react";
 
 /* ─── Animation constants ─── */
 const FRAME_DURATION = 3000;
 const TOTAL_FRAMES = 3;
 
 const conversations = [
-  { title: "Project: Blog Post Drafts", msgs: 15 },
-  { title: "Personal Budget Planning", msgs: 8 },
-  { title: "Debug React hooks", msgs: 23 },
-  { title: "Study Notes: World History", msgs: 12 },
+  { title: "Project: Marketing Plan", msgs: 15 },
+  { title: "Personal Coding Style", msgs: 23 },
+  { title: "Writing Tone Preferences", msgs: 8 },
+  { title: "Study Notes: AI Ethics", msgs: 12 },
 ];
 
 const contextLines = [
-  "## Your Writing Style",
-  "- Friendly, professional tone",
-  "- Avoids corporate jargon",
-  "## Expertise & Projects",
-  "- React & TypeScript coding",
-  "- Personal Finance App",
+  "## Personality & Style",
+  "- Professional but friendly tone",
+  "- Direct and concise answers",
+  "## Rules & Constraints",
+  "- No corporate jargon",
+  "- Prefer step-by-step code",
 ];
 
 const stagger = {
@@ -103,7 +103,7 @@ export function HeroSection() {
         >
           {/* Step indicators */}
           <div className="mb-6 flex items-center justify-center gap-2 lg:justify-start">
-            {["Upload", "Select", "Sync"].map((label, i) => (
+            {["Input", "Select", "Sync"].map((label, i) => (
               <div key={label} className="flex items-center gap-2">
                 <span
                   className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider transition-all duration-300 ${
@@ -148,13 +148,13 @@ export function HeroSection() {
                       <div className="flex items-center gap-2">
                         <FileJson className="size-4 text-amber" />
                         <span className="font-mono text-sm text-amber">
-                          conversations.json
+                          AI Export File
                         </span>
                       </div>
                     </motion.div>
                   </div>
-                  <p className="font-medium text-muted-foreground">
-                    Drop your history file
+                  <p className="font-medium text-muted-foreground text-center">
+                    Import from ChatGPT, Gemini, or Claude
                   </p>
                 </motion.div>
               )}
@@ -188,9 +188,6 @@ export function HeroSection() {
                       <span className="flex-1 truncate text-sm font-medium">
                         {conv.title}
                       </span>
-                      <span className="shrink-0 font-mono text-[11px] text-muted-foreground/60">
-                        {conv.msgs} msgs
-                      </span>
                     </motion.div>
                   ))}
                 </motion.div>
@@ -209,7 +206,7 @@ export function HeroSection() {
                   <div className="overflow-hidden rounded-xl border border-border/40 bg-neutral-950">
                     <div className="border-b border-neutral-800 bg-neutral-900/50 px-4 py-2">
                       <span className="font-mono text-[10px] uppercase tracking-wider text-neutral-500">
-                        personalized-profile.md
+                        universal-ai-memory.md
                       </span>
                     </div>
                     <div className="px-5 py-4 font-mono text-[13px] leading-relaxed">
@@ -239,8 +236,8 @@ export function HeroSection() {
                     <div className="flex size-6 items-center justify-center rounded-full bg-emerald-100/10">
                       <Check className="size-4 text-emerald-500" />
                     </div>
-                    <span className="text-sm font-semibold text-emerald-500">
-                      Sync Complete
+                    <span className="text-sm font-semibold text-emerald-500 text-center">
+                      Ready for Any AI assistant
                     </span>
                   </motion.div>
                 </motion.div>
@@ -261,10 +258,10 @@ export function HeroSection() {
             variants={fadeSlide}
             className="font-[family-name:var(--font-display)] text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
           >
-            Teach Claude your
+            Sync your memory
             <br />
             <span className="italic text-amber">
-              style, memory and goals
+              across every AI
             </span>
           </motion.h1>
 
@@ -273,7 +270,7 @@ export function HeroSection() {
             variants={fadeSlide}
             className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
           >
-            Stop repeating yourself. Move your history from ChatGPT or Gemini to Claude and keep your personal touch in every answer.
+            Move your style and context between ChatGPT, Claude, and Gemini instantly. Don&apos;t start from zero when switching assistants.
           </motion.p>
 
           {/* CTA */}
@@ -291,7 +288,7 @@ export function HeroSection() {
             variants={fadeSlide}
             className="mt-6 flex items-center justify-center gap-2 text-[11px] font-medium uppercase tracking-widest text-muted-foreground/40 lg:justify-start"
           >
-            Best on Desktop • Free forever • 100% Secure
+            ChatGPT • Gemini • Claude • Cursor
           </motion.p>
         </motion.div>
       </div>

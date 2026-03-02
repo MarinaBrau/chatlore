@@ -72,14 +72,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ChatLore — Sync ChatGPT History to Claude & Projects",
+  title: "ChatLore — Universal AI Memory Sync",
   description:
-    "Easily migrate your ChatGPT history to Claude.ai. Generate structured context, custom instructions, and personalized AI profiles in minutes. 100% private and free.",
-  keywords: ["ChatGPT to Claude", "migrate AI history", "Claude project instructions", "AI context transfer", "sync AI memory"],
+    "Sync your style and preferences between ChatGPT, Claude, and Gemini. Generate structured profiles and system instructions in minutes. 100% private and free.",
+  keywords: ["AI memory sync", "transfer ChatGPT to Claude", "Gemini context migration", "AI custom instructions", "sync AI profiles"],
   openGraph: {
-    title: "ChatLore — Sync ChatGPT History to Claude",
+    title: "ChatLore — Universal AI Memory Sync",
     description:
-      "Transform your ChatGPT history into structured memory for Claude. Private, fast, and free.",
+      "Don't start from zero. Transfer your AI memory between ChatGPT, Claude, and Gemini instantly.",
     url: "https://chatlore.app",
     siteName: "ChatLore",
     locale: "en_US",
@@ -87,8 +87,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChatLore — Sync ChatGPT History to Claude",
-    description: "Easily migrate your ChatGPT history to Claude. Generate structured context in minutes.",
+    title: "ChatLore — Universal AI Memory Sync",
+    description: "Sync your AI memory between ChatGPT, Claude, and Gemini instantly.",
   },
   robots: {
     index: true,

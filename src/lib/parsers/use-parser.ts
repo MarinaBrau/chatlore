@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from "react";
 import { parseChatGPTExport } from "./chatgpt";
 import { parseGeminiExport } from "./gemini";
+import { parseClaudeExport } from "./claude";
 import type { Conversation, Message } from "./types";
 
 interface ParserState {
@@ -12,7 +13,7 @@ interface ParserState {
 }
 
 /**
- * Hook to parse AI export files (ChatGPT or Gemini) or manual text.
+ * Hook to parse AI export files (ChatGPT, Gemini, or Claude) or manual text.
  */
 export function useParser() {
   const [state, setState] = useState<ParserState>({
@@ -20,7 +21,6 @@ export function useParser() {
     conversations: [],
     error: null,
   });
-  const workerRef = useRef<Worker | null>(null);
 
   const parseRawText = useCallback((text: string) => {
     setState({ status: "parsing", conversations: [], error: null });
@@ -48,11 +48,7 @@ export function useParser() {
           ],
         };
 
-        setState({ 
-          status: "success", 
-          conversations: [conversation], 
-          error: null 
-        });
+        setState({ status: "success", conversations: [conversation], error: null });
       } catch (err) {
         setState({
           status: "error",
@@ -77,7 +73,6 @@ export function useParser() {
       
       const text = result;
       
-      // Auto-detect format and parse on main thread for simplicity in this universal update
       try {
         const json = JSON.parse(text);
         let parsedConversations: Conversation[] = [];
@@ -90,8 +85,12 @@ export function useParser() {
         else if (Array.isArray(json) && json[0]?.conversations) {
           parsedConversations = parseGeminiExport(text);
         }
+        // Check for Claude format (chat_messages key exists)
+        else if (Array.isArray(json) && json[0]?.chat_messages) {
+          parsedConversations = parseClaudeExport(text);
+        }
         else {
-          throw new Error("Format not recognized. Please upload a valid ChatGPT or Gemini export file.");
+          throw new Error("Format not recognized. Please upload a valid ChatGPT, Gemini, or Claude export file.");
         }
 
         setState({ status: "success", conversations: parsedConversations, error: null });
