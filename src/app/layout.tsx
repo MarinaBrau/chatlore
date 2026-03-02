@@ -9,27 +9,49 @@ import { Toaster } from "@/components/ui/sonner";
 import { ConversationsProvider } from "@/context/conversations";
 import "./globals.css";
 
+const softwareSchema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "ChatLore",
+  "operatingSystem": "Web",
+  "applicationCategory": "UtilitiesApplication",
+  "description": "A secure web tool to migrate ChatGPT history to Claude.ai. Extracts user style, preferences, and knowledge to create structured context files and Project Instructions.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "ChatGPT JSON export parsing",
+    "Manual chat paste sync",
+    "Claude Project Instructions generation",
+    "CLAUDE.md export for developers",
+    "100% private client-side processing"
+  ]
+};
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       "@id": "https://chatlore.app/#organization",
-      name: "ChatLore",
-      url: "https://chatlore.app",
-      logo: {
+      "name": "ChatLore",
+      "url": "https://chatlore.app",
+      "logo": {
         "@type": "ImageObject",
-        url: "https://chatlore.app/logo.png",
-      },
+        "url": "https://chatlore.app/logo.png"
+      }
     },
     {
       "@type": "WebSite",
       "@id": "https://chatlore.app/#website",
-      url: "https://chatlore.app",
-      name: "ChatLore",
-      publisher: { "@id": "https://chatlore.app/#organization" },
+      "url": "https://chatlore.app",
+      "name": "ChatLore",
+      "publisher": { "@id": "https://chatlore.app/#organization" }
     },
-  ],
+    softwareSchema
+  ]
 };
 
 const geistSans = Geist({
@@ -50,15 +72,28 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ChatLore — Import your ChatGPT history to Claude",
+  title: "ChatLore — Sync ChatGPT History to Claude & Projects",
   description:
-    "Transform your ChatGPT conversation history into structured memories and system prompts ready to use with Claude.",
+    "Easily migrate your ChatGPT history to Claude.ai. Generate structured context, custom instructions, and personalized AI profiles in minutes. 100% private and free.",
+  keywords: ["ChatGPT to Claude", "migrate AI history", "Claude project instructions", "AI context transfer", "sync AI memory"],
   openGraph: {
-    title: "ChatLore",
+    title: "ChatLore — Sync ChatGPT History to Claude",
     description:
-      "Import your ChatGPT history and generate structured memories for Claude.",
+      "Transform your ChatGPT history into structured memory for Claude. Private, fast, and free.",
+    url: "https://chatlore.app",
+    siteName: "ChatLore",
+    locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "ChatLore — Sync ChatGPT History to Claude",
+    description: "Easily migrate your ChatGPT history to Claude. Generate structured context in minutes.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  }
 };
 
 export default function RootLayout({
