@@ -15,8 +15,8 @@ const steps = [
   },
   {
     num: "03",
-    title: "AI reads between the lines",
-    body: "Claude discovers what makes you unique — your interests, preferences, communication style, and recurring topics — across every conversation you selected.",
+    title: "Stateless analysis, zero retention",
+    body: "Only your selected conversations are sent to Claude\u2019s API for analysis \u2014 stateless, zero logs, nothing stored. Your file never leaves the browser. The API processes, responds, and forgets.",
   },
   {
     num: "04",

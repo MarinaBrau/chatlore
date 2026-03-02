@@ -1,13 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Shield, Eye, FileOutput } from "lucide-react";
+import { ShieldCheck, Eye, FileOutput } from "lucide-react";
 
 const pillars = [
   {
-    icon: Shield,
+    icon: ShieldCheck,
     title: "Nothing stored. Ever.",
-    body: "Your file is parsed in the browser. Selected conversations are securely analyzed and immediately discarded \u2014 no database, no logs, no trace.",
+    body: "Your file is parsed entirely in your browser. Selected conversations go through Claude\u2019s API via stateless calls \u2014 zero data retention, no database, no logs.",
   },
   {
     icon: Eye,

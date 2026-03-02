@@ -13,6 +13,21 @@ interface ConversationListProps {
 }
 
 type SortOrder = "newest" | "oldest";
+type DateFilter = "all" | "30d" | "90d" | "1y";
+
+const dateFilters: { value: DateFilter; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "30d", label: "30 days" },
+  { value: "90d", label: "90 days" },
+  { value: "1y", label: "1 year" },
+];
+
+function getDateThreshold(filter: DateFilter): Date | null {
+  if (filter === "all") return null;
+  const now = new Date();
+  const days = filter === "30d" ? 30 : filter === "90d" ? 90 : 365;
+  return new Date(now.getTime() - days * 24 * 60 * 60 * 1000);
+}
 
 export function ConversationList({
   conversations,
@@ -20,13 +35,21 @@ export function ConversationList({
 }: ConversationListProps) {
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState<SortOrder>("newest");
+  const [dateFilter, setDateFilter] = useState<DateFilter>("all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
   const parentRef = useRef<HTMLDivElement>(null);
 
   const filtered = useMemo(() => {
-    const query = search.toLowerCase().trim();
     let result = conversations;
 
+    // Date filter
+    const threshold = getDateThreshold(dateFilter);
+    if (threshold) {
+      result = result.filter((c) => c.createTime >= threshold);
+    }
+
+    // Search filter
+    const query = search.toLowerCase().trim();
     if (query) {
       result = result.filter((c) => c.title.toLowerCase().includes(query));
     }
@@ -38,7 +61,7 @@ export function ConversationList({
     );
 
     return result;
-  }, [conversations, search, sortOrder]);
+  }, [conversations, search, sortOrder, dateFilter]);
 
   const virtualizer = useVirtualizer({
     count: filtered.length,
@@ -84,6 +107,23 @@ export function ConversationList({
         onProcess={handleProcess}
       />
 
+      {/* Date filter pills */}
+      <div className="flex items-center gap-1.5">
+        {dateFilters.map((f) => (
+          <button
+            key={f.value}
+            onClick={() => setDateFilter(f.value)}
+            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+              dateFilter === f.value
+                ? "bg-amber/10 text-amber"
+                : "text-muted-foreground hover:bg-accent hover:text-foreground"
+            }`}
+          >
+            {f.label}
+          </button>
+        ))}
+      </div>
+
       {/* Search + sort bar */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1">
@@ -110,9 +150,10 @@ export function ConversationList({
 
       {/* Counter */}
       <p className="text-sm text-muted-foreground">
-        {filtered.length.toLocaleString()} conversation
-        {filtered.length !== 1 ? "s" : ""}
-        {search && ` matching "${search}"`}
+        {filtered.length === conversations.length
+          ? `${filtered.length.toLocaleString()} conversation${filtered.length !== 1 ? "s" : ""}`
+          : `${filtered.length.toLocaleString()} of ${conversations.length.toLocaleString()} conversations`}
+        {search && ` matching \u201c${search}\u201d`}
       </p>
 
       {/* Virtualized list */}

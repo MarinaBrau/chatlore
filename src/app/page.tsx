@@ -1,9 +1,12 @@
 "use client";
 
 import { HeroSection } from "@/components/landing/HeroSection";
+import { OutputPreview } from "@/components/landing/OutputPreview";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { HowItWorks } from "@/components/landing/HowItWorks";
+import { FlowDemo } from "@/components/landing/FlowDemo";
 import { TrustPillars } from "@/components/landing/TrustPillars";
+import { FaqSection } from "@/components/landing/FaqSection";
 import { FinalCta } from "@/components/landing/FinalCta";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -34,9 +37,12 @@ export default function Home() {
     <div className="grain flex flex-col">
       <JsonLd data={softwareSchema} />
       <HeroSection />
+      <OutputPreview />
       <SocialProof />
       <HowItWorks />
+      <FlowDemo />
       <TrustPillars />
+      <FaqSection />
       <FinalCta />
     </div>
   );

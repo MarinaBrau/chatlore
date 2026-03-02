@@ -1,72 +1,43 @@
 {
   "project": {
     "name": "ChatLore",
-    "description": "UX para Usuário Leigo — guia visual, linguagem acessível e orientação pós-export",
-    "branchName": "saci/ux-leigo"
+    "description": "Melhorias de Usabilidade e Conversão — clarificação técnica, preview output, filtros, mockup animado, FAQ",
+    "branchName": "saci/ux-usability"
   },
   "features": [
     {
       "id": "F1",
-      "name": "Guia de Exportação ChatGPT",
-      "description": "Modal na /upload com passo-a-passo visual para exportar dados do ChatGPT, incluindo mockup estilizado da interface",
+      "name": "Clarificação Técnica de Privacidade",
+      "description": "Reescrever step 03 do HowItWorks e TrustPillars para explicar explicitamente: parse local + API stateless + zero data retention",
       "priority": 1,
       "tasks": [
         {
           "id": "F1-T1",
-          "title": "Criar componente ChatGptMockup",
-          "description": "Componente React stateless que renderiza representação minimalista da tela de Settings do ChatGPT. Menu lateral com 'General' e 'Data controls' (destacado). Área principal com 'Export data' e botão 'Export' com destaque visual. Paleta neutra (cinza/branco). Responsivo.",
+          "title": "Reescrever HowItWorks step 03 e TrustPillars com clarificação técnica",
+          "description": "No HowItWorks step 03: mudar título de 'AI reads between the lines' para algo que mencione stateless processing. Corpo: explicar que parse é 100% browser, apenas texto selecionado vai via API Claude (stateless, zero logs, zero retention). Usar ícone ShieldCheck. No TrustPillars pilar 1: adicionar menção a 'Stateless API calls' ou 'Zero-data retention'. Manter tom direto e técnico.",
           "priority": 1,
           "passes": false,
           "context": {
-            "files": ["src/components/landing/HowItWorks.tsx"],
-            "libraries": ["lucide-react", "tailwindcss"],
-            "hints": [
-              "Componente puro, sem estado — apenas layout visual",
-              "Usar rounded borders e sombras sutis para simular janela de app",
-              "Destacar 'Data controls' no menu e 'Export' button com cor diferente",
-              "Não usar logos ou marcas — apenas layout genérico reconhecível"
-            ]
-          },
-          "acceptance": [
-            "Renderiza mockup minimalista da tela de Settings do ChatGPT",
-            "Menu lateral com items incluindo 'Data controls' destacado",
-            "Botão 'Export' visualmente destacado na área principal",
-            "Paleta neutra (cinza/branco) sem conflito com tema ChatLore",
-            "Responsivo em mobile",
-            "Typecheck passes"
-          ],
-          "tests": {
-            "command": "npx next build"
-          }
-        },
-        {
-          "id": "F1-T2",
-          "title": "Criar ExportGuideModal e integrar na /upload",
-          "description": "Modal (shadcn Dialog) com 4 passos numerados para exportar dados do ChatGPT: (1) Open Settings no ChatGPT, (2) Go to Data Controls → Export, (3) Check email for download link, (4) Extract .zip and find conversations.json. Step 2 inclui ChatGptMockup. Adicionar botão trigger 'Don't know how to export? See our guide' abaixo da UploadZone na página /upload.",
-          "priority": 2,
-          "passes": false,
-          "context": {
             "files": [
-              "src/app/upload/page.tsx",
-              "src/components/UploadZone.tsx"
+              "src/components/landing/HowItWorks.tsx",
+              "src/components/landing/TrustPillars.tsx"
             ],
-            "libraries": ["radix-ui", "framer-motion", "lucide-react"],
+            "libraries": ["lucide-react"],
             "hints": [
-              "Usar shadcn Dialog component pattern",
-              "Steps numerados com layout vertical (timeline style)",
-              "Importar ChatGptMockup criado em F1-T1",
-              "Botão trigger deve ser link-style (text-muted-foreground), não botão primário",
-              "O modal é client component — 'use client' necessário"
+              "Step 03 atual: título 'AI reads between the lines', body genérico sobre preferências",
+              "TrustPillars pilar 1 atual: 'Nothing stored. Ever.' com body 'Parsed in your browser, analyzed securely, discarded immediately'",
+              "Usar ícone ShieldCheck ou EyeOff para step 03",
+              "Tom: direto, técnico, sem marketing fluff",
+              "Termos recomendados: 'Stateless Processing', 'Zero-Data Retention'"
             ]
           },
           "acceptance": [
-            "Botão 'Don't know how to export?' visível abaixo da drop zone na /upload",
-            "Modal abre com 4 passos numerados com instruções claras",
-            "Step 2 inclui ChatGptMockup component",
-            "Modal fecha ao clicar fora ou no botão X",
-            "Funciona em mobile (responsive)",
-            "Typecheck passes",
-            "Verify in browser using dev tools"
+            "HowItWorks step 03 explica: parse local no browser + análise via API Claude stateless",
+            "Texto menciona explicitamente 'zero logs' ou 'zero data retention'",
+            "Ícone ShieldCheck ou EyeOff usado no step 03",
+            "TrustPillars pilar 1 inclui referência a stateless API calls",
+            "Tom técnico e direto mantido",
+            "Typecheck passes"
           ],
           "tests": {
             "command": "npx next build"
@@ -76,63 +47,37 @@
     },
     {
       "id": "F2",
-      "name": "Simplificar Linguagem",
-      "description": "Revisar copy da landing page e loading states da results page para remover jargão técnico e humanizar a experiência",
+      "name": "Preview do Output",
+      "description": "Seção 'What you get' na landing page entre Hero e SocialProof mostrando mockup do contexto gerado",
       "priority": 2,
       "tasks": [
         {
           "id": "F2-T1",
-          "title": "Revisar copy da landing page",
-          "description": "Atualizar textos nos componentes HowItWorks, TrustPillars e FinalCta para remover jargão técnico. Mudanças: (1) HowItWorks step 01: substituir menção a 'conversations.json' por linguagem acessível. (2) HowItWorks step 04: explicar benefício em vez de formatos técnicos. (3) TrustPillars: substituir 'Claude's API' por linguagem sem jargão. (4) FinalCta subtexto: mais encorajador. Manter headline do Hero intacta.",
+          "title": "Criar componente OutputPreview e inserir na landing",
+          "description": "Novo componente em src/components/landing/OutputPreview.tsx. Card estilo terminal/código (fundo escuro, fonte mono) mostrando exemplo de output: seções como 'Preferences', 'Communication Style', 'Tech Stack' com dados de exemplo realistas. Inserir entre HeroSection e SocialProof na page.tsx. Animação whileInView fade-in.",
           "priority": 1,
           "passes": false,
           "context": {
             "files": [
-              "src/components/landing/HowItWorks.tsx",
-              "src/components/landing/TrustPillars.tsx",
-              "src/components/landing/FinalCta.tsx"
+              "src/app/page.tsx",
+              "src/components/landing/HeroSection.tsx"
             ],
-            "libraries": [],
-            "hints": [
-              "Tom: warm but confident — como um amigo tech-savvy explicando",
-              "Evitar: .json, API, system prompt, context file",
-              "Permitido: Claude, ChatGPT, conversations, preferences, context",
-              "Hero headline NÃO muda"
-            ]
-          },
-          "acceptance": [
-            "HowItWorks step 01 não menciona 'conversations.json'",
-            "HowItWorks step 04 foca em benefício, não formato técnico",
-            "TrustPillars não menciona 'API'",
-            "FinalCta subtexto mais encorajador",
-            "Headline do Hero permanece inalterada",
-            "Typecheck passes"
-          ],
-          "tests": {
-            "command": "npx next build"
-          }
-        },
-        {
-          "id": "F2-T2",
-          "title": "Humanizar loading states na /results",
-          "description": "Substituir 'Analyzing your conversations...' por mensagens rotativas a cada ~3s: 'Learning about your preferences...', 'Discovering your patterns...', 'Finding what makes you unique...'. Após sucesso, mostrar checkmark animado + 'Your context is ready!' por 1.5s antes de exibir resultados.",
-          "priority": 2,
-          "passes": false,
-          "context": {
-            "files": ["src/app/results/page.tsx"],
             "libraries": ["framer-motion"],
             "hints": [
-              "Usar useState + useEffect + setInterval para rotação de mensagens",
-              "Array de mensagens como const fora do componente",
-              "Celebração: motion.div com scale animation + Check icon de lucide-react",
-              "Usar setTimeout de 1.5s antes de setar estado final"
+              "Inspiração visual: o card de 'context file' que já existe no Hero (contextLines array)",
+              "Fundo escuro (neutral-950) com texto verde/amber para simular terminal",
+              "Linhas de exemplo: '## Preferences', '- Prefers functional React components', '- Uses TypeScript strict mode', '## Communication', '- Likes concise, direct answers', '## Tech Stack', '- Next.js, Tailwind, PostgreSQL'",
+              "Heading acima: 'What you get' com subtexto 'A structured context file that makes Claude understand you'",
+              "page.tsx é 'use client' — inserir <OutputPreview /> entre <HeroSection /> e <SocialProof />"
             ]
           },
           "acceptance": [
-            "Loading mostra mensagens rotativas (mínimo 3 mensagens diferentes)",
-            "Mensagens trocam a cada ~3 segundos",
-            "Após sucesso, exibe celebração breve (checkmark + texto) por 1.5s",
-            "Após celebração, mostra resultados normalmente",
+            "Seção 'What you get' visível na landing entre Hero e SocialProof",
+            "Card estilo terminal com fundo escuro e fonte mono",
+            "Mostra exemplo de output com seções Preferences, Communication, Tech Stack",
+            "Dados de exemplo são realistas e não genéricos",
+            "Animação whileInView fade-in funciona",
+            "Responsivo em mobile",
             "Typecheck passes"
           ],
           "tests": {
@@ -143,70 +88,127 @@
     },
     {
       "id": "F3",
-      "name": "Guia Pós-Export (Next Steps)",
-      "description": "Seção 'What's next?' na /results com cards de orientação para cada formato de export + mockup do Claude.ai + link direto",
+      "name": "Filtro por Data nas Conversas",
+      "description": "Adicionar filtro por período (all/30d/90d/1y) na ConversationList, combinável com a busca por título existente",
       "priority": 3,
       "tasks": [
         {
           "id": "F3-T1",
-          "title": "Criar componente ClaudeProjectMockup",
-          "description": "Componente React stateless que renderiza representação minimalista da interface de Project do Claude.ai. Sidebar com 'Projects' listados e área principal com campo 'Instructions' destacado onde o usuário deve colar o texto. Paleta cream/neutra. Responsivo.",
+          "title": "Adicionar filtro por data na ConversationList",
+          "description": "Adicionar botões pill/chip de filtro por data acima ou ao lado da search bar existente: 'All', 'Last 30 days', 'Last 90 days', 'Last year'. Filtrar usando o campo create_time das conversas. Mostrar contagem de resultados filtrados (ex: '42 of 1,203 conversations'). Filtro por data combina com busca por título (AND). Default: 'All'.",
           "priority": 1,
           "passes": false,
           "context": {
-            "files": ["src/components/landing/TrustPillars.tsx"],
-            "libraries": ["lucide-react", "tailwindcss"],
+            "files": [
+              "src/components/ConversationList.tsx",
+              "src/lib/parsers/types.ts"
+            ],
+            "libraries": [],
             "hints": [
-              "Similar ao ChatGptMockup mas com estética Claude (cream tones)",
-              "Destacar campo 'Instructions' com borda ou glow sutil",
-              "Adicionar indicador visual tipo 'paste here' (seta ou highlight)",
-              "Componente puro sem estado"
+              "ConversationList já tem: search state (linha 21), useMemo com filtro por título (linha 26-41), sort (newest/oldest)",
+              "Conversations têm campo create_time (number — Unix timestamp)",
+              "Adicionar estado dateFilter: 'all' | '30d' | '90d' | '1y'",
+              "No useMemo existente, adicionar filtro de data ANTES do filtro de título",
+              "Estilo dos botões: similar ao toggle Individual/Combined em results/page.tsx",
+              "Exibir contagem como 'N of M conversations' ao lado ou abaixo dos filtros"
             ]
           },
           "acceptance": [
-            "Renderiza mockup minimalista da interface de Project do Claude.ai",
-            "Sidebar com lista de projects",
-            "Área principal com campo 'Instructions' destacado",
-            "Indicador visual de 'paste here'",
-            "Paleta cream/neutra",
-            "Responsivo",
+            "4 botões de filtro visíveis: All, Last 30 days, Last 90 days, Last year",
+            "Filtro por data funciona corretamente (filtra pelo campo create_time)",
+            "Filtro combina com busca por título (AND)",
+            "Contagem de resultados exibida (ex: '42 of 1,203 conversations')",
+            "Default é 'All' (todos visíveis)",
+            "Botão ativo tem estilo destacado",
             "Typecheck passes"
           ],
           "tests": {
             "command": "npx next build"
           }
-        },
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "name": "Mockup Animado do Fluxo",
+      "description": "Componente animado (Framer Motion) demonstrando o fluxo drag→select→context em loop na landing page",
+      "priority": 4,
+      "tasks": [
         {
-          "id": "F3-T2",
-          "title": "Adicionar seção Next Steps na /results",
-          "description": "Nova seção abaixo dos botões de export com heading 'What's next?' e 3 cards em accordion: (1) Claude.ai Projects — mockup + botão 'Open Claude.ai' (https://claude.ai), (2) Claude Code — instrução de salvar CLAUDE.md na raiz do repo + snippet de terminal estilizado, (3) Quick paste — instrução de colar no início de qualquer chat. Cada card tem ícone, título e conteúdo expandível.",
-          "priority": 2,
+          "id": "F4-T1",
+          "title": "Criar componente FlowDemo animado",
+          "description": "Componente em src/components/landing/FlowDemo.tsx. Animação em 3 frames com Framer Motion: (1) Arquivo sendo arrastado para upload zone (2-3s), (2) Conversas aparecendo com checkmarks de seleção (2-3s), (3) Arquivo de contexto sendo gerado com checkmark final (2-3s). Loop infinito. Inserir na landing entre HowItWorks e TrustPillars. Sem vídeo/GIF externo — tudo CSS/Framer Motion com divs estilizadas.",
+          "priority": 1,
           "passes": false,
           "context": {
             "files": [
-              "src/app/results/page.tsx",
-              "src/components/ExportButtons.tsx",
-              "src/components/ResultCard.tsx"
+              "src/app/page.tsx",
+              "src/components/landing/HowItWorks.tsx"
             ],
-            "libraries": ["radix-ui", "lucide-react", "framer-motion"],
+            "libraries": ["framer-motion", "lucide-react"],
             "hints": [
-              "Reutilizar pattern de accordion do ResultCard",
-              "Card 1 importa ClaudeProjectMockup de F3-T1",
-              "Botão 'Open Claude.ai' como link externo com ícone ExternalLink",
-              "Card 2 mostra bloco de código estilizado",
-              "Seção inteira pode ser um componente NextSteps separado"
+              "Usar motion.div com variants e AnimatePresence para transições",
+              "Frame 1: ícone de arquivo animando para dentro de uma drop zone (translate + opacity)",
+              "Frame 2: lista de 3-4 items aparecendo com stagger + checkmarks",
+              "Frame 3: card de output aparecendo com scale spring + checkmark verde",
+              "Transição entre frames com opacity/slide",
+              "Container com overflow-hidden e dimensão fixa para não causar layout shift",
+              "Paleta: usar amber/terracotta para destaques, neutro para fundo"
             ]
           },
           "acceptance": [
-            "Seção 'What's next?' aparece abaixo dos botões de export",
-            "3 cards em accordion: Claude.ai Projects, Claude Code, Quick paste",
-            "Card Claude.ai inclui ClaudeProjectMockup + botão 'Open Claude.ai'",
-            "Card Claude Code inclui instrução + snippet de terminal",
-            "Card Quick paste inclui instrução de colar",
-            "Botão 'Open Claude.ai' abre nova aba",
-            "Cards são colapsáveis",
-            "Typecheck passes",
-            "Verify in browser using dev tools"
+            "Componente FlowDemo renderiza entre HowItWorks e TrustPillars",
+            "3 frames distintos animam em sequência",
+            "Frame 1: arquivo movendo para drop zone",
+            "Frame 2: conversas com checkmarks aparecendo",
+            "Frame 3: output gerado com checkmark de sucesso",
+            "Loop infinito automático",
+            "Sem assets externos (vídeo/GIF) — tudo Framer Motion",
+            "Responsivo em mobile",
+            "Typecheck passes"
+          ],
+          "tests": {
+            "command": "npx next build"
+          }
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "name": "FAQ de Objeções",
+      "description": "Seção FAQ na landing page com perguntas focadas em quebrar objeções de segurança, custo e compatibilidade",
+      "priority": 5,
+      "tasks": [
+        {
+          "id": "F5-T1",
+          "title": "Criar seção FAQ na landing page",
+          "description": "Novo componente src/components/landing/FaqSection.tsx usando Accordion do shadcn/ui. Mínimo 4 perguntas: (1) 'Are my conversations used to train AI models?' → Não. Parse local, API stateless. (2) 'Do I need a paid Claude plan?' → Não, funciona com free e Pro. (3) 'Does it work with Cursor, Windsurf, or other editors?' → Sim, via CLAUDE.md. (4) 'What data leaves my browser?' → Só conversas selecionadas, via API stateless, zero retention. Tom: direto, técnico. Inserir entre TrustPillars e FinalCta na page.tsx.",
+          "priority": 1,
+          "passes": false,
+          "context": {
+            "files": [
+              "src/app/page.tsx",
+              "src/components/ui/accordion.tsx",
+              "src/components/NextSteps.tsx"
+            ],
+            "libraries": ["radix-ui"],
+            "hints": [
+              "Reusar Accordion do shadcn (já usado em NextSteps.tsx)",
+              "Tom: utility-first, sem marketing fluff",
+              "Respostas curtas (2-3 frases max)",
+              "Heading: 'Common questions' (não 'FAQ')",
+              "Animação whileInView para a seção inteira",
+              "Inserir em page.tsx entre <TrustPillars /> e <FinalCta />"
+            ]
+          },
+          "acceptance": [
+            "Seção 'Common questions' visível na landing entre TrustPillars e FinalCta",
+            "Usa Accordion do shadcn/ui",
+            "Mínimo 4 perguntas sobre: training data, pricing, compatibility, data privacy",
+            "Respostas são diretas e técnicas (2-3 frases)",
+            "Accordion é colapsável (type single)",
+            "Animação de entrada consistente com resto da página",
+            "Typecheck passes"
           ],
           "tests": {
             "command": "npx next build"
