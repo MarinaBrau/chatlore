@@ -1,6 +1,13 @@
 import Anthropic from "@anthropic-ai/sdk";
 
-const client = new Anthropic();
+// Ensure API key is present
+if (!process.env.ANTHROPIC_API_KEY) {
+  console.warn("Missing ANTHROPIC_API_KEY environment variable");
+}
+
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY || "dummy-key-for-build",
+});
 
 export interface AnalysisResult {
   summary: string;
@@ -15,9 +22,11 @@ export interface AnalysisResult {
 export async function analyzeWithClaude(
   prompt: string
 ): Promise<AnalysisResult> {
+  // Use Haiku for speed and cost-efficiency
   const response = await client.messages.create({
-    model: "claude-sonnet-4-20250514",
-    max_tokens: 2048,
+    model: "claude-3-haiku-20240307",
+    max_tokens: 4096,
+    temperature: 0, // Deterministic for consistent extraction
     messages: [{ role: "user", content: prompt }],
   });
 
@@ -26,7 +35,10 @@ export async function analyzeWithClaude(
     firstBlock && firstBlock.type === "text" ? firstBlock.text : "";
 
   // Parse JSON, handling possible markdown fences
-  const cleaned = text.replace(/^```(?:json)?\s*\n?/m, "").replace(/\n?\s*```\s*$/m, "").trim();
+  const cleaned = text
+    .replace(/^```(?:json)?\s*\n?/m, "")
+    .replace(/\n?\s*```\s*$/m, "")
+    .trim();
 
   try {
     const parsed = JSON.parse(cleaned);
@@ -36,7 +48,8 @@ export async function analyzeWithClaude(
       preferences: Array.isArray(parsed.preferences) ? parsed.preferences : [],
       patterns: Array.isArray(parsed.patterns) ? parsed.patterns : [],
     };
-  } catch {
+  } catch (e) {
+    console.error("JSON Parse Error:", e, "Raw Text:", text);
     throw new Error("Failed to parse Claude response as JSON");
   }
 }

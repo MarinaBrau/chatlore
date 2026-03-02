@@ -10,11 +10,19 @@ interface ManualPasteProps {
   isProcessing: boolean;
 }
 
+const MAX_PASTE_LENGTH = 100000; // ~100k chars is plenty for a quick paste
+
 export function ManualPaste({ onPaste, isProcessing }: ManualPasteProps) {
   const [text, setText] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = () => {
     if (!text.trim()) return;
+    if (text.length > MAX_PASTE_LENGTH) {
+      setError(`Text too long (${(text.length / 1000).toFixed(1)}k chars). Please keep it under 100k.`);
+      return;
+    }
+    setError(null);
     onPaste(text);
   };
 
@@ -23,11 +31,16 @@ export function ManualPaste({ onPaste, isProcessing }: ManualPasteProps) {
       <div className="relative">
         <textarea
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => {
+            setText(e.target.value);
+            if (error) setError(null);
+          }}
           placeholder="Paste your ChatGPT conversation here... (Copy the messages from your chat and paste them here)"
-          className="min-h-[300px] w-full rounded-xl border border-border/60 bg-card/30 p-4 text-sm leading-relaxed focus:border-amber/50 focus:outline-none focus:ring-1 focus:ring-amber/50"
+          className={`min-h-[300px] w-full rounded-xl border bg-card/30 p-4 text-sm leading-relaxed focus:outline-none focus:ring-1 focus:ring-amber/50 ${
+            error ? "border-destructive/50 focus:border-destructive" : "border-border/60 focus:border-amber/50"
+          }`}
         />
-        {text.length < 50 && !isProcessing && (
+        {text.length < 50 && !isProcessing && !error && (
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-center px-8">
             <p className="text-xs text-muted-foreground italic">
               Tip: Copy the messages from your ChatGPT window and paste them here. 
@@ -35,12 +48,21 @@ export function ManualPaste({ onPaste, isProcessing }: ManualPasteProps) {
             </p>
           </div>
         )}
+        <div className="absolute bottom-3 right-3 text-[10px] text-muted-foreground">
+          {text.length.toLocaleString()} / {MAX_PASTE_LENGTH.toLocaleString()}
+        </div>
       </div>
+
+      {error && (
+        <p className="text-xs text-destructive font-medium animate-pulse">
+          {error}
+        </p>
+      )}
 
       <div className="flex flex-col gap-3">
         <Button
           onClick={handleSubmit}
-          disabled={!text.trim() || isProcessing}
+          disabled={!text.trim() || isProcessing || !!error}
           className="h-12 w-full gap-2 bg-amber hover:bg-amber/90 text-white font-bold shadow-lg shadow-amber/10"
         >
           {isProcessing ? (
