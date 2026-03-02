@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 
@@ -11,10 +12,14 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-border/30 bg-background/70 backdrop-blur-xl">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2.5">
-          <span className="flex size-7 items-center justify-center rounded-md bg-amber/10 font-mono text-xs font-bold text-amber">
-            CL
-          </span>
+        <Link href="/" className="flex items-center gap-2">
+          <Image
+            src="/logo-icon.png"
+            alt="ChatLore"
+            width={28}
+            height={28}
+            className="size-7"
+          />
           <span className="text-sm font-medium tracking-tight">
             ChatLore
           </span>
