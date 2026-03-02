@@ -258,10 +258,10 @@ export function HeroSection() {
             variants={fadeSlide}
             className="font-[family-name:var(--font-display)] text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
           >
-            Sync your memory
+            Stop repeating yourself
             <br />
             <span className="italic text-amber">
-              across every AI
+              to every new AI
             </span>
           </motion.h1>
 
@@ -270,7 +270,7 @@ export function HeroSection() {
             variants={fadeSlide}
             className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
           >
-            Move your style and context between ChatGPT, Claude, and Gemini instantly. Don&apos;t start from zero when switching assistants.
+            Transfer your memory, style, and projects between ChatGPT, Claude, and Gemini in seconds. Your assistant changes, but your context stays.
           </motion.p>
 
           {/* CTA */}
@@ -279,7 +279,7 @@ export function HeroSection() {
               href="/upload"
               className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
             >
-              Start Syncing Now
+              Sync My Style Now
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
             </Link>
           </motion.div>

@@ -64,10 +64,10 @@ export default function UploadPage() {
             Desktop Recommended
           </div>
           <h1 className="text-3xl font-bold tracking-tight">
-            Sync from any AI
+            How do you want to start?
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Upload your history from ChatGPT or Gemini to build your profile.
+            Upload your history or paste a chat to capture your AI personality.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export default function UploadPage() {
             }`}
           >
             <FileJson className="size-4" />
-            ChatGPT / Gemini File
+            AI History File
           </button>
           <button
             onClick={() => setMethod("paste")}
@@ -93,7 +93,7 @@ export default function UploadPage() {
             }`}
           >
             <ClipboardCopy className="size-4" />
-            Manual Paste (Fast)
+            Manual Paste (Instant)
           </button>
         </div>
 
