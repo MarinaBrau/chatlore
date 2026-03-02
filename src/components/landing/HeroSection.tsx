@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 const chatItems = [
   { title: "Debug React hooks", msgs: 23 },
@@ -111,6 +112,7 @@ export function HeroSection() {
         <motion.div variants={fadeSlide} className="mt-10">
           <Link
             href="/upload"
+            onClick={() => trackEvent("cta_clicked", { location: "hero" })}
             className="group inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
           >
             Build your context file

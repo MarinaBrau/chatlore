@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, AlertCircle, RotateCcw, Check } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { ResultCard } from "@/components/ResultCard";
 import { ExportButtons } from "@/components/ExportButtons";
@@ -99,16 +100,19 @@ export default function ResultsPage() {
         patterns: [...new Set(results.flatMap((r) => r.patterns))],
       };
 
+      trackEvent("analysis_completed", { result_count: results.length });
       setState({ status: "celebrating", results, combined, error: null });
       setTimeout(() => {
         setState((prev) => ({ ...prev, status: "success" }));
       }, 1500);
     } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : "Processing failed";
+      trackEvent("analysis_failed", { error: errorMsg });
       setState({
         status: "error",
         results: [],
         combined: null,
-        error: err instanceof Error ? err.message : "Processing failed",
+        error: errorMsg,
       });
     }
   }, [router]);

@@ -7,6 +7,7 @@ import { ConversationList } from "@/components/ConversationList";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import type { Conversation } from "@/lib/parsers/types";
+import { trackEvent } from "@/lib/analytics";
 
 export default function ConversationsPage() {
   const { conversations } = useConversations();
@@ -25,6 +26,7 @@ export default function ConversationsPage() {
         alert("Too many conversations selected. Try selecting fewer.");
         return;
       }
+      trackEvent("process_started", { selected_count: selected.length });
       router.push("/results");
     },
     [router]

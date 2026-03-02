@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 import { HelpCircle, Settings, Mail, FolderOpen, Upload } from "lucide-react";
 import { ChatGptMockup } from "@/components/mockups/ChatGptMockup";
+import { trackEvent } from "@/lib/analytics";
 
 const steps = [
   {
@@ -41,7 +42,7 @@ const steps = [
 
 export function ExportGuideModal() {
   return (
-    <Dialog>
+    <Dialog onOpenChange={(open) => open && trackEvent("guide_modal_opened")}>
       <DialogTrigger asChild>
         <button className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
           <HelpCircle className="size-3.5" />

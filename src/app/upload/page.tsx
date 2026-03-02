@@ -7,6 +7,7 @@ import { UploadZone } from "@/components/UploadZone";
 import { ExportGuideModal } from "@/components/ExportGuideModal";
 import { useParser } from "@/lib/parsers/use-parser";
 import { useConversations } from "@/context/conversations";
+import { trackEvent } from "@/lib/analytics";
 
 export default function UploadPage() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function UploadPage() {
 
   const handleFile = useCallback(
     (file: File) => {
+      trackEvent("file_uploaded", { file_size_mb: Math.round(file.size / 1024 / 1024) });
       parse(file);
     },
     [parse]
@@ -23,6 +25,7 @@ export default function UploadPage() {
   // Redirect to conversations list after successful parse
   useEffect(() => {
     if (status === "success" && conversations.length > 0) {
+      trackEvent("parse_completed", { conversation_count: conversations.length });
       setConversations(conversations);
       router.push("/conversations");
     }

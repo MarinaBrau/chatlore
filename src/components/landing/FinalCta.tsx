@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 export function FinalCta() {
   return (
@@ -24,6 +25,7 @@ export function FinalCta() {
         </p>
         <Link
           href="/upload"
+          onClick={() => trackEvent("cta_clicked", { location: "final_cta" })}
           className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-7 py-3.5 text-sm font-semibold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
         >
           Start now &mdash; no sign-up needed

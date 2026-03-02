@@ -3,9 +3,34 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Instrument_Serif } from "next/font/google";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { GoogleAnalytics } from "@/components/GoogleAnalytics";
+import { JsonLd } from "@/components/JsonLd";
 import { Toaster } from "@/components/ui/sonner";
 import { ConversationsProvider } from "@/context/conversations";
 import "./globals.css";
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://chatlore.app/#organization",
+      name: "ChatLore",
+      url: "https://chatlore.app",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://chatlore.app/logo.png",
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://chatlore.app/#website",
+      url: "https://chatlore.app",
+      name: "ChatLore",
+      publisher: { "@id": "https://chatlore.app/#organization" },
+    },
+  ],
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,6 +68,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <JsonLd data={organizationSchema} />
+      </head>
+      <GoogleAnalytics />
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} antialiased`}
       >

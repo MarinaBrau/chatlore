@@ -18,6 +18,7 @@ import {
   Terminal,
   MessageSquare,
 } from "lucide-react";
+import { JsonLd } from "@/components/JsonLd";
 
 /* ── animation variants (same as landing) ── */
 const stagger = {
@@ -124,9 +125,46 @@ const formatRows = [
   },
 ];
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to import your ChatGPT history into Claude",
+  description:
+    "Step-by-step guide to export your ChatGPT conversations and create a structured context file for Claude.",
+  totalTime: "PT5M",
+  tool: { "@type": "SoftwareApplication", name: "ChatLore", url: "https://chatlore.app" },
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Export from ChatGPT",
+      text: "Open ChatGPT → Settings → Data controls → Export data. Download the .zip and extract conversations.json.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Upload & select conversations",
+      text: "Drag & drop conversations.json onto ChatLore. Select the conversations that reflect your preferences and decisions.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Review the analysis",
+      text: "ChatLore analyzes your conversations and shows a summary of topics, preferences, and patterns.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Export & use in Claude",
+      text: "Copy as Project Instructions for Claude.ai, download as CLAUDE.md for Claude Code, or paste as plain text.",
+    },
+  ],
+};
+
 export default function GuidePage() {
   return (
     <div className="relative">
+      <JsonLd data={howToSchema} />
       {/* ── Hero ── */}
       <section className="px-4 pb-16 pt-24 sm:pt-32">
         <motion.div
