@@ -128,20 +128,20 @@ export default function GuidePage() {
         <div className="mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold mb-12">Where to use your results?</h2>
           <div className="grid gap-6 sm:grid-cols-2 text-left">
-            <div className="rounded-2xl border border-border/40 p-6 bg-amber/5 border-amber/20">
-              <h3 className="font-bold text-amber mb-2 flex items-center gap-2">
-                <Sparkles className="size-4" /> Recommended: Claude Projects
+            <div className="rounded-2xl border border-border/40 p-6 bg-card/20">
+              <h3 className="font-bold mb-2 flex items-center gap-2">
+                <Sparkles className="size-4 text-primary" /> Claude.ai Projects
               </h3>
-              <p className="text-sm text-muted-foreground">
-                The best way to keep your memory permanent. Paste your results into <strong>Project Instructions</strong>.
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Paste your results into <strong>Project Instructions</strong>. This keeps your context permanent for every chat within that project.
               </p>
             </div>
             <div className="rounded-2xl border border-border/40 p-6 bg-card/20">
               <h3 className="font-bold mb-2 flex items-center gap-2">
-                <MessageCircle className="size-4 text-muted-foreground" /> ChatGPT / Gemini Custom
+                <MessageCircle className="size-4 text-primary" /> ChatGPT & Gemini
               </h3>
-              <p className="text-sm text-muted-foreground">
-                Paste into <strong>Custom Instructions</strong> (ChatGPT) or <strong>System Instructions</strong> (Gemini).
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Paste into <strong>Custom Instructions</strong> (ChatGPT) or <strong>System Instructions</strong> (Gemini) to sync your profile globally.
               </p>
             </div>
           </div>
