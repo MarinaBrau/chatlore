@@ -86,7 +86,7 @@ export function HeroSection() {
   return (
     <section
       ref={heroRef}
-      className="glow-amber relative flex flex-col items-center px-4 pb-16 pt-24 sm:pt-32"
+      className="glow-primary relative flex flex-col items-center px-4 pb-16 pt-24 sm:pt-32"
     >
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
         <motion.div
@@ -101,7 +101,7 @@ export function HeroSection() {
                 <span
                   className={`rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-wider transition-all duration-300 ${
                     frame === i
-                      ? "bg-amber/15 text-amber"
+                      ? "bg-primary/15 text-primary"
                       : "text-muted-foreground/50"
                   }`}
                 >
@@ -112,7 +112,7 @@ export function HeroSection() {
             ))}
           </div>
 
-          <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/50 p-6 shadow-2xl shadow-amber/5 backdrop-blur-sm sm:p-10">
+          <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/50 p-6 shadow-2xl shadow-primary/5 backdrop-blur-sm sm:p-10">
             <AnimatePresence mode="wait">
               {frame === 0 && (
                 <motion.div
@@ -123,16 +123,16 @@ export function HeroSection() {
                   transition={{ duration: 0.35 }}
                   className="flex flex-col items-center gap-4 py-8"
                 >
-                  <div className="rounded-2xl border-2 border-dashed border-amber/30 bg-amber/5 px-16 py-12">
+                  <div className="rounded-2xl border-2 border-dashed border-primary/30 bg-primary/5 px-16 py-12">
                     <motion.div
                       animate={{ y: [0, -8, 0] }}
                       transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                       className="flex flex-col items-center gap-3"
                     >
-                      <Upload className="size-10 text-amber/60" />
+                      <Upload className="size-10 text-primary/60" />
                       <div className="flex items-center gap-2">
-                        <FileJson className="size-4 text-amber" />
-                        <span className="font-mono text-sm text-amber">AI Export File</span>
+                        <FileJson className="size-4 text-primary" />
+                        <span className="font-mono text-sm text-primary">AI Export File</span>
                       </div>
                     </motion.div>
                   </div>
@@ -163,9 +163,9 @@ export function HeroSection() {
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ delay: 0.4 + i * 0.1, type: "spring", stiffness: 300 }}
-                        className="flex size-5 items-center justify-center rounded border border-amber bg-amber/10"
+                        className="flex size-5 items-center justify-center rounded border border-primary bg-primary/10"
                       >
-                        <Check className="size-3 text-amber" />
+                        <Check className="size-3 text-primary" />
                       </motion.div>
                       <span className="flex-1 truncate text-sm font-medium">{conv.title}</span>
                     </motion.div>
@@ -195,7 +195,7 @@ export function HeroSection() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: i * 0.1, duration: 0.3 }}
-                          className={line.startsWith("##") ? "mt-2 text-amber first:mt-0" : "text-neutral-400"}
+                          className={line.startsWith("##") ? "mt-2 text-primary first:mt-0" : "text-neutral-400"}
                         >
                           {line}
                         </motion.div>
@@ -230,7 +230,7 @@ export function HeroSection() {
           >
             Stop repeating yourself
             <br />
-            <span className="italic text-amber">to every new AI</span>
+            <span className="italic text-primary">to every new AI</span>
           </motion.h1>
 
           <motion.p
@@ -243,7 +243,7 @@ export function HeroSection() {
           <motion.div variants={FADE_UP_ANIMATION} className="mt-10">
             <Link
               href="/upload"
-              className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
+              className="group inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-primary/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
             >
               Sync My AI History
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />

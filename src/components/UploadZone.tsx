@@ -118,11 +118,11 @@ export function UploadZone({ onFileAccepted, status, error }: UploadZoneProps) {
             exit={{ opacity: 0, scale: 0.9 }}
             className="flex flex-col items-center gap-3"
           >
-            <div className="flex size-14 items-center justify-center rounded-xl border border-border/60 bg-background transition-all group-hover:border-amber/40 group-hover:bg-amber/5">
+            <div className="flex size-14 items-center justify-center rounded-xl border border-border/60 bg-background transition-all group-hover:border-primary/40 group-hover:bg-primary/5">
               {isDragging ? (
-                <FileJson className="size-6 text-amber animate-bounce" />
+                <FileJson className="size-6 text-primary animate-bounce" />
               ) : (
-                <Upload className="size-6 text-muted-foreground group-hover:text-amber" />
+                <Upload className="size-6 text-muted-foreground group-hover:text-primary" />
               )}
             </div>
             <div className="text-center">
@@ -132,9 +132,9 @@ export function UploadZone({ onFileAccepted, status, error }: UploadZoneProps) {
                   : "Upload your AI history file"}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Drag and drop your export from <span className="text-amber font-semibold">ChatGPT, Gemini, or Claude</span> here
+                Drag and drop your export from <span className="text-primary font-semibold">ChatGPT, Gemini, or Claude</span> here
               </p>
-              <p className="mt-4 text-xs font-medium text-amber/60">
+              <p className="mt-4 text-xs font-medium text-primary/60">
                 or click to browse your computer
               </p>
             </div>

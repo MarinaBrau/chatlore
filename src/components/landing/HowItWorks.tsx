@@ -33,7 +33,7 @@ export function HowItWorks() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mb-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-amber"
+          className="mb-4 text-center font-mono text-xs uppercase tracking-[0.2em] text-primary"
         >
           How it works
         </motion.p>
@@ -59,9 +59,9 @@ export function HowItWorks() {
                 duration: 0.6,
                 ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
               }}
-              className="group relative rounded-xl border border-border/40 bg-card/30 p-6 transition-colors hover:border-amber/20 hover:bg-card/60"
+              className="group relative rounded-xl border border-border/40 bg-card/30 p-6 transition-colors hover:border-primary/20 hover:bg-card/60"
             >
-              <span className="font-mono text-3xl font-light tracking-tight text-amber/30 transition-colors group-hover:text-amber/50">
+              <span className="font-mono text-3xl font-light tracking-tight text-primary/30 transition-colors group-hover:text-primary/50">
                 {step.num}
               </span>
               <h3 className="mt-3 text-lg font-semibold">{step.title}</h3>

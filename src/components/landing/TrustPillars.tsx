@@ -38,7 +38,7 @@ export function TrustPillars() {
             }}
             className="flex flex-col gap-3"
           >
-            <pillar.icon className="size-5 text-amber" />
+            <pillar.icon className="size-5 text-primary" />
             <h3 className="font-semibold">{pillar.title}</h3>
             <p className="text-sm leading-relaxed text-muted-foreground">
               {pillar.body}

@@ -39,8 +39,6 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
-  --color-amber: var(--amber);
-  --color-amber-muted: var(--amber-muted);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -53,10 +51,10 @@
 :root {
   --radius: 0.625rem;
   /* ── Light Amethyst Palette (Clean & Trustworthy) ── */
-  --background: oklch(0.99 0.005 280); /* Branco com alma de lavanda */
-  --foreground: oklch(0.20 0.04 280); /* Texto roxo profundo para leitura */
+  --background: oklch(0.99 0.005 280);
+  --foreground: oklch(0.20 0.04 280);
   
-  --card: oklch(1 0 0); /* Branco puro */
+  --card: oklch(1 0 0);
   --card-foreground: oklch(0.20 0.04 280);
   
   --popover: oklch(1 0 0);
@@ -66,7 +64,7 @@
   --primary: oklch(0.60 0.18 280);
   --primary-foreground: oklch(0.99 0.005 280);
   
-  --secondary: oklch(0.95 0.03 280); /* Lilás suave */
+  --secondary: oklch(0.95 0.03 280);
   --secondary-foreground: oklch(0.35 0.12 280);
   
   --muted: oklch(0.97 0.01 280);
@@ -79,10 +77,6 @@
   --border: oklch(0.20 0.04 280 / 10%);
   --input: oklch(0.20 0.04 280 / 8%);
   --ring: oklch(0.60 0.18 280 / 40%);
-  
-  /* Legacy mapping for components using 'amber' */
-  --amber: oklch(0.60 0.18 280);
-  --amber-muted: oklch(0.60 0.18 280 / 12%);
   
   --chart-1: oklch(0.60 0.18 280);
   --chart-2: oklch(0.75 0.12 280);
@@ -107,7 +101,6 @@
   --card-foreground: oklch(0.95 0.01 280);
   --primary: oklch(0.70 0.15 280);
   --primary-foreground: oklch(0.12 0.04 280);
-  --amber: oklch(0.70 0.15 280);
   --border: oklch(0.95 0.01 280 / 12%);
 }
 
@@ -118,24 +111,9 @@
   body {
     @apply bg-background text-foreground;
   }
-  
-  /* Accessibility: Better focus visibility for keyboard users */
-  :focus-visible {
-    @apply outline-2 outline-offset-2 outline-primary;
-  }
-
-  /* Accessibility: Respect users who prefer reduced motion */
-  @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-      scroll-behavior: auto !important;
-    }
-  }
 }
 
-/* Grain texture overlay - very subtle for light mode */
+/* Grain texture overlay */
 .grain::before {
   content: "";
   position: fixed;
@@ -149,7 +127,7 @@
 }
 
 /* Ambient glow - Soft lavender/purple light */
-.glow-amber {
+.glow-primary {
   background: radial-gradient(
     600px circle at var(--glow-x, 50%) var(--glow-y, 30%),
     oklch(0.60 0.18 280 / 5%),

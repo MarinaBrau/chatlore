@@ -10,9 +10,9 @@ const projects = [
 
 export function ClaudeProjectMockup() {
   return (
-    <div className="overflow-hidden rounded-lg border border-amber/20 bg-[oklch(0.97_0.01_75)] text-neutral-800 shadow-sm">
+    <div className="overflow-hidden rounded-lg border border-primary/20 bg-[oklch(0.98_0.01_280)] text-neutral-800 shadow-sm">
       {/* Title bar */}
-      <div className="flex items-center gap-1.5 border-b border-amber/10 bg-[oklch(0.95_0.015_75)] px-3 py-2">
+      <div className="flex items-center gap-1.5 border-b border-primary/10 bg-[oklch(0.97_0.015_280)] px-3 py-2">
         <span className="size-2.5 rounded-full bg-neutral-300" />
         <span className="size-2.5 rounded-full bg-neutral-300" />
         <span className="size-2.5 rounded-full bg-neutral-300" />
@@ -23,7 +23,7 @@ export function ClaudeProjectMockup() {
 
       <div className="grid grid-cols-[110px_1fr] sm:grid-cols-[130px_1fr]">
         {/* Sidebar */}
-        <div className="space-y-0.5 border-r border-amber/10 bg-[oklch(0.96_0.012_75)] p-2">
+        <div className="space-y-0.5 border-r border-primary/10 bg-[oklch(0.98_0.012_280)] p-2">
           <p className="mb-1 px-2 text-[10px] font-medium uppercase tracking-wider text-neutral-400">
             Projects
           </p>
@@ -32,7 +32,7 @@ export function ClaudeProjectMockup() {
               key={p.name}
               className={`flex items-center gap-1.5 rounded-md px-2 py-1.5 text-[12px] ${
                 p.active
-                  ? "bg-amber/10 font-medium text-amber"
+                  ? "bg-primary/10 font-medium text-primary"
                   : "text-neutral-500"
               }`}
             >
@@ -57,13 +57,13 @@ export function ClaudeProjectMockup() {
               <p className="mb-1 text-[11px] font-medium text-neutral-600">
                 Project instructions
               </p>
-              <div className="rounded-md border-2 border-dashed border-amber/40 bg-amber/5 p-2.5">
-                <p className="text-[11px] italic text-amber/70">
+              <div className="rounded-md border-2 border-dashed border-primary/40 bg-primary/5 p-2.5">
+                <p className="text-[11px] italic text-primary/70">
                   Paste your context here...
                 </p>
               </div>
               {/* Paste here indicator */}
-              <div className="absolute -right-1 top-5 flex items-center gap-1 rounded-full bg-amber px-2 py-0.5 text-[10px] font-medium text-white shadow-sm">
+              <div className="absolute -right-1 top-5 flex items-center gap-1 rounded-full bg-primary px-2 py-0.5 text-[10px] font-medium text-white shadow-sm">
                 <span>paste here</span>
               </div>
             </div>

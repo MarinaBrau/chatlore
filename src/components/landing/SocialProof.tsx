@@ -22,7 +22,7 @@ export function SocialProof() {
           <div key={stat.label} className="flex items-center gap-8 sm:gap-12">
             {i > 0 && <div className="h-8 w-px bg-border/40" />}
             <div className="text-center">
-              <p className="text-2xl font-semibold text-amber">{stat.value}</p>
+              <p className="text-2xl font-semibold text-primary">{stat.value}</p>
               <p className="mt-1 text-xs text-muted-foreground">{stat.label}</p>
             </div>
           </div>

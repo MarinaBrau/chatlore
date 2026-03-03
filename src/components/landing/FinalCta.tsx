@@ -17,7 +17,7 @@ export function FinalCta() {
       >
         <h2 className="font-[family-name:var(--font-display)] text-3xl sm:text-4xl">
           Your AI assistant should{" "}
-          <span className="italic text-amber">already know how you work.</span>
+          <span className="italic text-primary">already know how you work.</span>
         </h2>
         <p className="mt-4 text-muted-foreground">
           Stop starting from scratch. Sync your personality across ChatGPT, Claude, and Gemini in less than 5 minutes.
@@ -25,7 +25,7 @@ export function FinalCta() {
         <Link
           href="/upload"
           onClick={() => trackEvent("cta_clicked", { location: "final_cta" })}
-          className="group mt-8 inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
+          className="group mt-8 inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-primary/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
         >
           Sync My AI History Now
           <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />

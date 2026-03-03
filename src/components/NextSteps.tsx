@@ -18,10 +18,10 @@ export function NextSteps() {
 
   return (
     <div className="mt-8 space-y-6">
-      <div className="rounded-2xl border border-amber/20 bg-amber/5 p-6 sm:p-8">
+      <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 sm:p-8">
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <h2 className="text-xl font-bold flex items-center gap-2">
-            <Laptop className="size-6 text-amber" />
+            <Laptop className="size-6 text-primary" />
             What&apos;s next?
           </h2>
           
@@ -32,7 +32,7 @@ export function NextSteps() {
                 onClick={() => setActiveTarget(t.id as Target)}
                 className={cn(
                   "flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold transition-all",
-                  activeTab === t.id ? "bg-amber text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  activeTab === t.id ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground"
                 )}
               >
                 <t.icon className="size-3" />
@@ -52,15 +52,15 @@ export function NextSteps() {
               {activeTab === "claude" && (
                 <>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">1</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">1</div>
                     <p className="text-sm">Click <strong>Copy for Claude</strong> above.</p>
                   </div>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">2</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">2</div>
                     <p className="text-sm">Go to Claude.ai, open <strong>Project Settings</strong>.</p>
                   </div>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">3</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">3</div>
                     <p className="text-sm">Paste into <strong>Project Instructions</strong>. Done!</p>
                   </div>
                 </>
@@ -69,15 +69,15 @@ export function NextSteps() {
               {activeTab === "chatgpt" && (
                 <>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">1</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">1</div>
                     <p className="text-sm">Click <strong>Copy for ChatGPT</strong> above.</p>
                   </div>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">2</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">2</div>
                     <p className="text-sm">Go to ChatGPT, click your profile &rarr; <strong>Customize ChatGPT</strong>.</p>
                   </div>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">3</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">3</div>
                     <p className="text-sm">Paste into <strong>Custom Instructions</strong>. Save!</p>
                   </div>
                 </>
@@ -86,15 +86,15 @@ export function NextSteps() {
               {activeTab === "gemini" && (
                 <>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">1</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">1</div>
                     <p className="text-sm">Click <strong>Copy for Gemini</strong> above.</p>
                   </div>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">2</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">2</div>
                     <p className="text-sm">Go to Gemini, find <strong>System Instructions</strong> in settings.</p>
                   </div>
                   <div className="flex gap-4">
-                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-amber text-[10px] font-bold text-white">3</div>
+                    <div className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">3</div>
                     <p className="text-sm">Paste your profile to set the global context.</p>
                   </div>
                 </>
@@ -106,7 +106,7 @@ export function NextSteps() {
                 href={targets.find(t => t.id === activeTab)?.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2 rounded-full bg-amber px-6 py-3 text-sm font-bold text-white transition-all hover:bg-amber/90"
+                className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-bold text-white transition-all hover:bg-primary/90"
               >
                 Open {targets.find(t => t.id === activeTab)?.name}
                 <ExternalLink className="size-4" />
@@ -115,7 +115,7 @@ export function NextSteps() {
           </div>
 
           <div className="relative">
-            <div className="absolute -inset-4 rounded-xl bg-gradient-to-tr from-amber/20 to-transparent blur-2xl opacity-50" />
+            <div className="absolute -inset-4 rounded-xl bg-gradient-to-tr from-primary/20 to-transparent blur-2xl opacity-50" />
             <div className="relative overflow-hidden rounded-xl border border-border/40 shadow-sm bg-white/50 backdrop-blur-sm">
               <div className="bg-muted/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-muted-foreground border-b border-border/40">
                 {targets.find(t => t.id === activeTab)?.name} Interface Example

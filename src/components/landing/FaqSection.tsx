@@ -42,7 +42,7 @@ export function FaqSection() {
           transition={{ duration: 0.6 }}
           className="mb-8 text-center"
         >
-          <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-amber">
+          <p className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-primary">
             Common questions
           </p>
         </motion.div>

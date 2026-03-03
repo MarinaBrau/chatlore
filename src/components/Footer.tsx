@@ -15,9 +15,9 @@ export function Footer() {
         <div className="flex gap-12 text-sm">
           <div className="flex flex-col gap-3">
             <span className="font-bold text-foreground">Product</span>
-            <Link href="/upload" className="text-muted-foreground hover:text-amber transition-colors">Sync Now</Link>
-            <Link href="/guide" className="text-muted-foreground hover:text-amber transition-colors">Guide</Link>
-            <Link href="/faq" className="text-muted-foreground hover:text-amber transition-colors">FAQ</Link>
+            <Link href="/upload" className="text-muted-foreground hover:text-primary transition-colors">Sync Now</Link>
+            <Link href="/guide" className="text-muted-foreground hover:text-primary transition-colors">Guide</Link>
+            <Link href="/faq" className="text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
           </div>
           
           <div className="flex flex-col gap-3">

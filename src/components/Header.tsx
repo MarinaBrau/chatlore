@@ -64,7 +64,7 @@ export function Header() {
               </Link>
               <Link
                 href="/upload"
-                className="rounded-full bg-amber/10 px-4 py-1.5 text-sm font-medium text-amber transition-colors hover:bg-amber/15"
+                className="rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
               >
                 Get started
               </Link>
