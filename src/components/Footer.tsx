@@ -17,6 +17,7 @@ export function Footer() {
             <span className="font-bold text-foreground">Product</span>
             <Link href="/upload" className="text-muted-foreground hover:text-amber transition-colors">Sync Now</Link>
             <Link href="/guide" className="text-muted-foreground hover:text-amber transition-colors">Guide</Link>
+            <Link href="/faq" className="text-muted-foreground hover:text-amber transition-colors">FAQ</Link>
           </div>
           
           <div className="flex flex-col gap-3">

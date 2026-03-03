@@ -29,6 +29,15 @@ export function Header() {
                 Guide
               </Link>
               <Link
+                href="/faq"
+                className={cn(
+                  "rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent",
+                  pathname === "/faq" && "bg-accent text-foreground"
+                )}
+              >
+                FAQ
+              </Link>
+              <Link
                 href="/upload"
                 className={cn(
                   "rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent",
@@ -46,6 +55,12 @@ export function Header() {
                 className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
               >
                 Guide
+              </Link>
+              <Link
+                href="/faq"
+                className="rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:text-foreground hover:bg-accent"
+              >
+                FAQ
               </Link>
               <Link
                 href="/upload"
