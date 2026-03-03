@@ -35,6 +35,7 @@ export default function ResultsPage() {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("individual");
   const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
+  const [selectedItems, setSelectedItems] = useState<Record<string, string[]>>({});
   const [state, setState] = useState<ProcessState>({
     status: "loading",
     results: [],
@@ -43,24 +44,47 @@ export default function ResultsPage() {
   });
   const hasStarted = useRef(false);
 
-  // Rotate loading messages
-  useEffect(() => {
-    if (state.status !== "loading") return;
-    const interval = setInterval(() => {
-      setLoadingMsgIndex((i) => (i + 1) % loadingMessages.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [state.status]);
+  // Helper to initialize selections
+  const initSelections = (results: ConversationAnalysis[], combined: ConversationAnalysis | null) => {
+    const all = combined ? [combined, ...results] : results;
+    const initial: Record<string, string[]> = {};
+    
+    // By default, select all items
+    const topics = Array.from(new Set(all.flatMap(r => r.topics || [])));
+    const tone = Array.from(new Set(all.flatMap(r => r.toneAdjectives || [])));
+    const prefs = Array.from(new Set(all.flatMap(r => r.preferences || [])));
+    const negative = Array.from(new Set(all.flatMap(r => r.negativeConstraints || [])));
+    const patterns = Array.from(new Set(all.flatMap(r => r.patterns || [])));
+
+    setSelectedItems({
+      topics,
+      toneAdjectives: tone,
+      preferences: prefs,
+      negativeConstraints: negative,
+      patterns
+    });
+  };
+
+  const toggleItem = (field: string, value: string) => {
+    setSelectedItems(prev => {
+      const current = prev[field] || [];
+      const next = current.includes(value) 
+        ? current.filter(v => v !== value)
+        : [...current, value];
+      return { ...prev, [field]: next };
+    });
+  };
 
   // Load from sessionStorage on mount
   useEffect(() => {
     const saved = sessionStorage.getItem(STORAGE_KEY);
     if (saved && !hasStarted.current) {
       try {
-        const { results, combined, timestamp } = JSON.parse(saved);
-        // Only restore if less than 2h old (session-based)
+        const { results, combined, timestamp, selections } = JSON.parse(saved);
         if (Date.now() - timestamp < 2 * 60 * 60 * 1000) {
           setState({ status: "success", results, combined, error: null });
+          if (selections) setSelectedItems(selections);
+          else initSelections(results, combined);
           hasStarted.current = true;
         }
       } catch (e) {
@@ -69,16 +93,17 @@ export default function ResultsPage() {
     }
   }, []);
 
-  // Save to sessionStorage whenever results change
+  // Save to sessionStorage whenever results or selections change
   useEffect(() => {
     if (state.status === "success" && state.results.length > 0) {
       sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
         results: state.results,
         combined: state.combined,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        selections: selectedItems
       }));
     }
-  }, [state.results, state.combined, state.status]);
+  }, [state.results, state.combined, state.status, selectedItems]);
 
   const clearStorage = () => {
     sessionStorage.removeItem(STORAGE_KEY);
@@ -88,7 +113,6 @@ export default function ResultsPage() {
   const processConversations = useCallback(async () => {
     const raw = sessionStorage.getItem("chatlore-selected");
     if (!raw) {
-      // If we already have success (from localStorage), don't redirect
       if (state.status === "success") return;
       router.push("/upload");
       return;
@@ -125,7 +149,6 @@ export default function ResultsPage() {
       const data = await res.json();
       const results: ConversationAnalysis[] = data.results;
 
-      // Improved combined analysis logic to remove duplicates and normalize text
       const combined: ConversationAnalysis = {
         id: "combined",
         title: "Combined AI Profile",
@@ -138,6 +161,7 @@ export default function ResultsPage() {
       };
 
       trackEvent("analysis_completed", { result_count: results.length });
+      initSelections(results, combined);
       setState({ status: "celebrating", results, combined, error: null });
       setTimeout(() => {
         setState((prev) => ({ ...prev, status: "success" }));
@@ -169,7 +193,7 @@ export default function ResultsPage() {
   if (state.status === "loading") {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
-        <Loader2 className="size-8 animate-spin text-amber" />
+        <Loader2 className="size-8 animate-spin text-primary" />
         <div className="text-center">
           <AnimatePresence mode="wait">
             <motion.p key={loadingMsgIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="font-bold text-lg">
@@ -187,7 +211,7 @@ export default function ResultsPage() {
   if (state.status === "celebrating") {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4">
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 15 }} className="flex size-16 items-center justify-center rounded-full bg-amber text-white shadow-xl shadow-amber/20">
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 15 }} className="flex size-16 items-center justify-center rounded-full bg-primary text-white shadow-xl shadow-primary/20">
           <Check className="size-8" />
         </motion.div>
         <motion.p initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="font-bold text-xl">
@@ -225,10 +249,10 @@ export default function ResultsPage() {
         <div className="flex items-center gap-2">
           {state.results.length > 1 && (
             <div className="flex rounded-xl border border-border/60 bg-muted/30 p-1">
-              <button onClick={() => setViewMode("individual")} className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${viewMode === "individual" ? "bg-white text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+              <button onClick={() => setViewMode("individual")} className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${viewMode === "individual" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
                 Individual
               </button>
-              <button onClick={() => setViewMode("combined")} className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${viewMode === "combined" ? "bg-white text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
+              <button onClick={() => setViewMode("combined")} className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${viewMode === "combined" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"}`}>
                 Combined
               </button>
             </div>
@@ -239,15 +263,15 @@ export default function ResultsPage() {
         </div>
       </div>
 
-      <div className="mb-10 rounded-3xl border border-amber/30 bg-amber/5 p-6 sm:p-8 shadow-sm relative overflow-hidden">
+      <div className="mb-10 rounded-3xl border border-primary/20 bg-primary/5 p-6 sm:p-8 shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 p-4 opacity-5">
-          <Check className="size-24 text-amber" />
+          <Check className="size-24 text-primary" />
         </div>
-        <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-amber flex items-center gap-2">
-          <span className="flex size-5 items-center justify-center rounded-full bg-amber text-[10px] text-white">1</span>
+        <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+          <span className="flex size-5 items-center justify-center rounded-full bg-primary text-[10px] text-white">1</span>
           Save your context
         </h2>
-        <ExportButtons analyses={displayResults} />
+        <ExportButtons analyses={displayResults} selections={selectedItems} />
       </div>
 
       <div className="mb-12">
@@ -265,6 +289,8 @@ export default function ResultsPage() {
             <ResultCard 
               key={result.id} 
               analysis={result} 
+              selectedItems={selectedItems}
+              onToggleItem={toggleItem}
               onUpdate={viewMode === "combined" ? updateCombinedResult : updateIndividualResult}
             />
           ))}

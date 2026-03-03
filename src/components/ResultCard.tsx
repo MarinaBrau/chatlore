@@ -13,9 +13,11 @@ import { useState, useEffect } from "react";
 interface ResultCardProps {
   analysis: ConversationAnalysis;
   onUpdate?: (updated: ConversationAnalysis) => void;
+  selectedItems?: Record<string, string[]>;
+  onToggleItem?: (field: string, value: string) => void;
 }
 
-export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
+export function ResultCard({ analysis, onUpdate, selectedItems, onToggleItem }: ResultCardProps) {
   const [editedAnalysis, setEditedAnalysis] = useState(analysis);
 
   useEffect(() => {
@@ -28,6 +30,11 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
     if (onUpdate) onUpdate(updated);
   };
 
+  const isSelected = (field: string, value: string) => {
+    if (!selectedItems) return true;
+    return selectedItems[field]?.includes(value);
+  };
+
   return (
     <div className="rounded-2xl border border-border/50 bg-card overflow-hidden">
       <div className="border-b border-border/40 bg-muted/30 px-6 py-4">
@@ -38,7 +45,7 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
         <AccordionItem value="summary" className="px-6 border-b border-border/40">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
-              <FileText className="size-4 text-amber" />
+              <FileText className="size-4 text-primary" />
               Summary
             </span>
           </AccordionTrigger>
@@ -55,19 +62,25 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           <AccordionItem value="topics" className="px-6 border-b border-border/40">
             <AccordionTrigger className="hover:no-underline py-4">
               <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
-                <Tag className="size-4 text-amber" />
+                <Tag className="size-4 text-primary" />
                 Key Topics
               </span>
             </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2 mb-2">
                 {editedAnalysis.topics.map((topic, i) => (
-                  <span
+                  <button
                     key={i}
-                    className="rounded-lg bg-muted border border-border/40 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                    onClick={() => onToggleItem?.("topics", topic)}
+                    className={cn(
+                      "rounded-lg border px-2.5 py-1 text-xs font-medium transition-all",
+                      isSelected("topics", topic)
+                        ? "bg-primary/10 border-primary/30 text-primary"
+                        : "bg-muted border-border/40 text-muted-foreground opacity-60"
+                    )}
                   >
                     {topic}
-                  </span>
+                  </button>
                 ))}
               </div>
             </AccordionContent>
@@ -78,19 +91,25 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           <AccordionItem value="tone" className="px-6 border-b border-border/40">
             <AccordionTrigger className="hover:no-underline py-4">
               <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
-                <Mic2 className="size-4 text-amber" />
+                <Mic2 className="size-4 text-primary" />
                 Tone of Voice
               </span>
             </AccordionTrigger>
             <AccordionContent>
               <div className="flex flex-wrap gap-2 mb-2">
                 {editedAnalysis.toneAdjectives.map((tone, i) => (
-                  <span
+                  <button
                     key={i}
-                    className="rounded-full bg-amber/10 border border-amber/20 px-3 py-1 text-xs font-semibold text-amber"
+                    onClick={() => onToggleItem?.("toneAdjectives", tone)}
+                    className={cn(
+                      "rounded-full border px-3 py-1 text-xs font-semibold transition-all",
+                      isSelected("toneAdjectives", tone)
+                        ? "bg-primary text-white border-primary"
+                        : "bg-muted border-border/40 text-muted-foreground opacity-60"
+                    )}
                   >
                     {tone}
-                  </span>
+                  </button>
                 ))}
               </div>
             </AccordionContent>
@@ -100,7 +119,7 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
         <AccordionItem value="preferences" className="px-6 border-b border-border/40">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
-              <Heart className="size-4 text-amber" />
+              <Heart className="size-4 text-primary" />
               Preferences
             </span>
           </AccordionTrigger>
@@ -108,7 +127,13 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
             <ul className="space-y-3">
               {editedAnalysis.preferences.map((pref, i) => (
                 <li key={i} className="flex items-start gap-3 group">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-amber/40" />
+                  <button 
+                    onClick={() => onToggleItem?.("preferences", pref)}
+                    className={cn(
+                      "mt-1.5 size-2 shrink-0 rounded-full transition-all",
+                      isSelected("preferences", pref) ? "bg-primary" : "bg-muted-foreground/30"
+                    )}
+                  />
                   <input
                     value={pref}
                     onChange={(e) => {
@@ -116,7 +141,10 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
                       newPrefs[i] = e.target.value;
                       handleUpdate("preferences", newPrefs);
                     }}
-                    className="flex-1 bg-transparent text-sm text-muted-foreground focus:outline-none"
+                    className={cn(
+                      "flex-1 bg-transparent text-sm transition-all focus:outline-none",
+                      isSelected("preferences", pref) ? "text-muted-foreground" : "text-muted-foreground/40 italic"
+                    )}
                   />
                 </li>
               ))}
@@ -136,7 +164,13 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
               <ul className="space-y-3">
                 {editedAnalysis.negativeConstraints.map((constraint, i) => (
                   <li key={i} className="flex items-start gap-3">
-                    <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-destructive/30" />
+                    <button 
+                      onClick={() => onToggleItem?.("negativeConstraints", constraint)}
+                      className={cn(
+                        "mt-1.5 size-2 shrink-0 rounded-full transition-all",
+                        isSelected("negativeConstraints", constraint) ? "bg-destructive" : "bg-muted-foreground/30"
+                      )}
+                    />
                     <input
                       value={constraint}
                       onChange={(e) => {
@@ -144,7 +178,10 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
                         newConstraints[i] = e.target.value;
                         handleUpdate("negativeConstraints", newConstraints);
                       }}
-                      className="flex-1 bg-transparent text-sm text-muted-foreground focus:outline-none"
+                      className={cn(
+                        "flex-1 bg-transparent text-sm transition-all focus:outline-none",
+                        isSelected("negativeConstraints", constraint) ? "text-muted-foreground" : "text-muted-foreground/40 italic"
+                      )}
                     />
                   </li>
                 ))}
@@ -156,7 +193,7 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
         <AccordionItem value="patterns" className="px-6 border-b-0">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
-              <Repeat className="size-4 text-amber" />
+              <Repeat className="size-4 text-primary" />
               Patterns & Behaviors
             </span>
           </AccordionTrigger>
@@ -164,7 +201,13 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
             <ul className="space-y-3">
               {editedAnalysis.patterns.map((pattern, i) => (
                 <li key={i} className="flex items-start gap-3">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-amber/40" />
+                  <button 
+                    onClick={() => onToggleItem?.("patterns", pattern)}
+                    className={cn(
+                      "mt-1.5 size-2 shrink-0 rounded-full transition-all",
+                      isSelected("patterns", pattern) ? "bg-primary" : "bg-muted-foreground/30"
+                    )}
+                  />
                   <input
                     value={pattern}
                     onChange={(e) => {
@@ -172,7 +215,10 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
                       newPatterns[i] = e.target.value;
                       handleUpdate("patterns", newPatterns);
                     }}
-                    className="flex-1 bg-transparent text-sm text-muted-foreground focus:outline-none"
+                    className={cn(
+                      "flex-1 bg-transparent text-sm transition-all focus:outline-none",
+                      isSelected("patterns", pattern) ? "text-muted-foreground" : "text-muted-foreground/40 italic"
+                    )}
                   />
                 </li>
               ))}
@@ -180,6 +226,9 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+    </div>
+  );
+}
     </div>
   );
 }

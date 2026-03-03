@@ -6,32 +6,56 @@ import { mergeAnalyses } from "./merge";
  * Concise, directive tone, no large headings — fits the text field well.
  */
 export function exportAsProjectInstructions(
-  analyses: ConversationAnalysis[]
+  analyses: ConversationAnalysis[],
+  selections?: Record<string, string[]>
 ): string {
   const merged = mergeAnalyses(analyses);
   const sections: string[] = [];
 
+  const filter = (field: string, items: string[] = []) => {
+    if (!selections) return items;
+    const selected = selections[field] || [];
+    return items.filter(item => selected.includes(item));
+  };
+
   sections.push(
-    "# User Context (migrated from ChatGPT)\n"
+    "# User Context & Profile\n"
   );
 
   sections.push(`## About the User\n${merged.summary}`);
 
-  if (merged.topics.length > 0) {
+  const topics = filter("topics", merged.topics);
+  if (topics.length > 0) {
     sections.push(
-      `## Key Topics & Interests\n${merged.topics.map((t) => `- ${t}`).join("\n")}`
+      `## Key Topics & Interests\n${topics.map((t) => `- ${t}`).join("\n")}`
     );
   }
 
-  if (merged.preferences.length > 0) {
+  const tone = filter("toneAdjectives", merged.toneAdjectives);
+  if (tone.length > 0) {
     sections.push(
-      `## Communication Preferences\nThe user prefers:\n${merged.preferences.map((p) => `- ${p}`).join("\n")}`
+      `## Tone of Voice\n${tone.join(", ")}`
     );
   }
 
-  if (merged.patterns.length > 0) {
+  const prefs = filter("preferences", merged.preferences);
+  if (prefs.length > 0) {
     sections.push(
-      `## Interaction Patterns\n${merged.patterns.map((p) => `- ${p}`).join("\n")}`
+      `## Communication Preferences\nThe user prefers:\n${prefs.map((p) => `- ${p}`).join("\n")}`
+    );
+  }
+
+  const avoid = filter("negativeConstraints", merged.negativeConstraints);
+  if (avoid.length > 0) {
+    sections.push(
+      `## Negative Constraints\n${avoid.map((c) => `- ${c}`).join("\n")}`
+    );
+  }
+
+  const patterns = filter("patterns", merged.patterns);
+  if (patterns.length > 0) {
+    sections.push(
+      `## Interaction Patterns\n${patterns.map((p) => `- ${p}`).join("\n")}`
     );
   }
 
