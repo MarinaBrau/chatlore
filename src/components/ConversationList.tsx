@@ -15,7 +15,7 @@ interface ConversationListProps {
 type SortOrder = "newest" | "oldest";
 type DateFilter = "all" | "30d" | "90d" | "1y";
 
-const dateFilters: { value: DateFilter; label: string }[] = [
+const DATE_FILTERS: { value: DateFilter; label: string }[] = [
   { value: "all", label: "All" },
   { value: "30d", label: "30 days" },
   { value: "90d", label: "90 days" },
@@ -42,13 +42,11 @@ export function ConversationList({
   const filtered = useMemo(() => {
     let result = conversations;
 
-    // Date filter
     const threshold = getDateThreshold(dateFilter);
     if (threshold) {
       result = result.filter((c) => c.createTime >= threshold);
     }
 
-    // Search filter
     const query = search.toLowerCase().trim();
     if (query) {
       result = result.filter((c) => c.title.toLowerCase().includes(query));
@@ -107,24 +105,23 @@ export function ConversationList({
         onProcess={handleProcess}
       />
 
-      {/* Date filter pills */}
       <div className="flex items-center gap-1.5">
-        {dateFilters.map((f) => (
+        {DATE_FILTERS.map((f) => (
           <button
             key={f.value}
             onClick={() => setDateFilter(f.value)}
-            className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
+            className={cn(
+              "rounded-full px-3 py-1 text-xs font-bold transition-all",
               dateFilter === f.value
-                ? "bg-amber/10 text-amber"
+                ? "bg-primary text-white shadow-sm"
                 : "text-muted-foreground hover:bg-accent hover:text-foreground"
-            }`}
+            )}
           >
             {f.label}
           </button>
         ))}
       </div>
 
-      {/* Search + sort bar */}
       <div className="flex items-center gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -133,7 +130,7 @@ export function ConversationList({
             placeholder="Search conversations..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="h-9 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm outline-none placeholder:text-muted-foreground focus:border-ring focus:ring-1 focus:ring-ring"
+            className="h-9 w-full rounded-md border border-input bg-background pl-9 pr-3 text-sm outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-1 focus:ring-primary/20"
           />
         </div>
 
@@ -141,22 +138,20 @@ export function ConversationList({
           onClick={() =>
             setSortOrder((s) => (s === "newest" ? "oldest" : "newest"))
           }
-          className="flex h-9 items-center gap-1.5 rounded-md border border-input bg-background px-3 text-sm transition-colors hover:bg-accent"
+          className="flex h-9 items-center gap-1.5 rounded-md border border-input bg-background px-3 text-sm font-medium transition-colors hover:bg-accent"
         >
           <ArrowUpDown className="size-3.5" />
           {sortOrder === "newest" ? "Newest" : "Oldest"}
         </button>
       </div>
 
-      {/* Counter */}
-      <p className="text-sm text-muted-foreground">
+      <p className="text-xs font-medium text-muted-foreground/60 uppercase tracking-wider">
         {filtered.length === conversations.length
-          ? `${filtered.length.toLocaleString()} conversation${filtered.length !== 1 ? "s" : ""}`
+          ? `${filtered.length.toLocaleString()} conversations found`
           : `${filtered.length.toLocaleString()} of ${conversations.length.toLocaleString()} conversations`}
         {search && ` matching \u201c${search}\u201d`}
       </p>
 
-      {/* Virtualized list */}
       {filtered.length === 0 ? (
         <div className="flex flex-1 items-center justify-center py-12">
           <p className="text-muted-foreground">
@@ -206,7 +201,6 @@ export function ConversationList({
           </div>
         </div>
       )}
-
     </div>
   );
 }
