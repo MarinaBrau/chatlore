@@ -21,6 +21,14 @@ const faqs = [
     a: "Your privacy is our top priority. Your chat history file is parsed locally in your browser and never uploaded to our servers. Only the specific conversations you manually select for analysis are sent to the AI via stateless processing and are immediately discarded. We never store your data or use it for training.",
   },
   {
+    q: "What is the 'Catch-up Prompt'?",
+    a: "The Catch-up Prompt is a special export format designed to help you move ongoing projects between AIs. It generates a message that includes your profile and a request for the AI to continue from where you left off, reducing the 'AI amnesia' when starting new chats.",
+  },
+  {
+    q: "How does the item selection work?",
+    a: "After analysis, you can toggle individual topics, preferences, and tone adjectives on or off. This gives you full control over your profile and helps you stay within the character limits of platforms like ChatGPT (1,500 chars).",
+  },
+  {
     q: "How long does the export process take?",
     a: "Usually, platforms like ChatGPT or Claude send the export email within 5 to 15 minutes. However, if you have years of chat history, it might take longer for them to bundle your data.",
   },
@@ -29,16 +37,8 @@ const faqs = [
     a: "Yes! While ChatLore provides optimized templates for Claude (Project Instructions, CLAUDE.md), the generated profiles are structured in Markdown and work perfectly with ChatGPT Custom Instructions, Gemini System Instructions, and even local LLMs.",
   },
   {
-    q: "Do I need a paid AI subscription?",
-    a: "No. You can use ChatLore and its generated profiles with the free tiers of ChatGPT, Claude, and Gemini.",
-  },
-  {
     q: "Does it work with Cursor or Windsurf?",
     a: "Absolutely. ChatLore can export a CLAUDE.md file, which is specifically designed for Cursor, Windsurf, and other AI-powered coding tools to understand your project context immediately.",
-  },
-  {
-    q: "What data leaves my browser?",
-    a: "Only the text of the specific conversations you manually select. This data is sent via an encrypted connection for analysis and is not retained after the result is generated.",
   },
 ];
 

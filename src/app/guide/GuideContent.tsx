@@ -7,6 +7,8 @@ import {
   MessageCircle,
   Brain,
   Sparkles,
+  MousePointer2,
+  Zap,
 } from "lucide-react";
 import { FlowDemo } from "@/components/landing/FlowDemo";
 
@@ -34,8 +36,8 @@ const exportGuides = [
     ai: "ChatGPT",
     icon: MessageCircle,
     steps: [
-      "Click your profile picture (bottom-left) \u2192 Settings.",
-      "Go to Data Controls \u2192 Export Data.",
+      "Click your profile picture (bottom-left) → Settings.",
+      "Go to Data Controls → Export Data.",
       "Open the email from OpenAI and download the .zip.",
       "Upload the conversations.json file to ChatLore."
     ]
@@ -54,8 +56,8 @@ const exportGuides = [
     ai: "Claude (Anthropic)",
     icon: Sparkles,
     steps: [
-      "Click your profile (bottom-left) \u2192 Settings.",
-      "Go to Account \u2192 Export Data.",
+      "Click your profile (bottom-left) → Settings.",
+      "Go to Account → Export Data.",
       "Anthropic will email you a link to your data.",
       "Upload the .json file from the export to ChatLore."
     ]
@@ -81,6 +83,34 @@ export function GuideContent() {
 
       <section className="-mt-12 mb-8">
         <FlowDemo />
+      </section>
+
+      {/* ── Power User Tips ── */}
+      <section className="px-4 py-12">
+        <div className="mx-auto max-w-5xl grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 flex gap-4">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
+              <MousePointer2 className="size-5" />
+            </div>
+            <div>
+              <h3 className="font-bold mb-1">Interactive Selection</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                After uploading, you can toggle individual items on/off. This is perfect for fitting into ChatGPT's 1,500-character limit.
+              </p>
+            </div>
+          </div>
+          <div className="rounded-2xl border border-primary/20 bg-primary/5 p-6 flex gap-4">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
+              <Zap className="size-5" />
+            </div>
+            <div>
+              <h3 className="font-bold mb-1">Catch-up Prompt</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Moving an ongoing project? Use the <strong>Catch-up</strong> export to tell the new AI exactly where you left off.
+              </p>
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="px-4 py-12">
