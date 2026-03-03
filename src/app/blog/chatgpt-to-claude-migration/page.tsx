@@ -90,7 +90,7 @@ export default function BlogPost() {
               href="/upload"
               className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-amber/90 shadow-lg shadow-amber/20"
             >
-              Sync My Style Now
+              Sync My AI History Now
               <ArrowRight className="size-4" />
             </Link>
             <p className="text-xs text-muted-foreground flex items-center gap-2">

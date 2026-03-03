@@ -57,7 +57,7 @@ const steps = [
     id: "upload",
     num: "02",
     icon: Upload,
-    title: "Sync your personality",
+    title: "Import your history",
     substeps: [
       { icon: Upload, text: "Drop your history file or paste a single chat manually." },
       { icon: FileText, text: "We process everything locally. Your private data never leaves your computer." },

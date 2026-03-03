@@ -67,7 +67,7 @@ export default function UploadPage() {
             How do you want to start?
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Upload your history or paste a chat to capture your AI personality.
+            Upload your history or paste a chat to extract your AI memory.
           </p>
         </div>
 
