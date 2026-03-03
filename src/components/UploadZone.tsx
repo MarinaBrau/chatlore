@@ -119,10 +119,10 @@ export function UploadZone({ onFileAccepted, status, error }: UploadZoneProps) {
               <p className="font-bold text-lg">
                 {isDragging
                   ? "Drop it here!"
-                  : "Upload your ChatGPT history"}
+                  : "Upload your AI history file"}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Drag and drop your <span className="font-mono text-xs text-amber font-semibold">conversations.json</span> file here
+                Drag and drop your export from <span className="text-amber font-semibold">ChatGPT, Gemini, or Claude</span> here
               </p>
               <p className="mt-4 text-xs font-medium text-amber/60">
                 or click to browse your computer
