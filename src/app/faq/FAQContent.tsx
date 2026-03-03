@@ -14,31 +14,31 @@ import { JsonLd } from "@/components/JsonLd";
 const faqs = [
   {
     q: "Is ChatLore completely free?",
-    a: "Yes, ChatLore is 100% free to use. We do not charge for context profile generation, and you don't even need to create an account to get started.",
+    a: "Yes, ChatLore is 100% free to use. We don't charge for context profile generation, and you don't even need to create an account to get started.",
   },
   {
     q: "Are my private conversations safe?",
-    a: "Your privacy is our top priority. Your chat history file is parsed locally in your browser and never uploaded to our servers. Only the specific conversations you manually select for analysis are sent to the AI via stateless processing and are immediately discarded. We never store your data or use it for training.",
+    a: "Your privacy is our absolute priority. Your chat history file is parsed locally in your browser and never uploaded to our servers. Only the specific conversations you manually select for analysis are sent to the AI via stateless processing and are immediately discarded. We never store your data or use it for training.",
   },
   {
     q: "What is the 'Catch-up Prompt'?",
-    a: "The Catch-up Prompt is a special export format designed to help you move ongoing projects between AIs. It generates a message that includes your profile and a request for the AI to continue from where you left off, reducing the 'AI amnesia' when starting new chats.",
+    a: "The Catch-up Prompt is a specialized export format designed to help you migrate ongoing projects between AI assistants. It generates a message that includes your profile and a request for the AI to continue exactly from where you left off, eliminating 'AI amnesia' in new chats.",
   },
   {
     q: "How does the item selection work?",
-    a: "After analysis, you can toggle individual topics, preferences, and tone adjectives on or off. This gives you full control over your profile and helps you stay within the character limits of platforms like ChatGPT (1,500 chars).",
+    a: "After analysis, you can toggle individual topics, preferences, technical context, and tone adjectives on or off. This gives you full control over your profile and ensures you stay within the strict character limits of platforms like ChatGPT (1,500 characters).",
+  },
+  {
+    q: "Can it extract technical project states?",
+    a: "Yes! ChatLore is designed to identify technical context, including architectural decisions, library versions, and pending TODOs. This makes it ideal for developers moving complex coding projects between IDEs like Cursor and web-based AIs.",
   },
   {
     q: "How long does the export process take?",
-    a: "Usually, platforms like ChatGPT or Claude send the export email within 5 to 15 minutes. However, if you have years of chat history, it might take longer for them to bundle your data.",
-  },
-  {
-    q: "Does ChatLore work with all AI models?",
-    a: "Yes! While ChatLore provides optimized templates for Claude (Project Instructions, CLAUDE.md), the generated profiles are structured in Markdown and work perfectly with ChatGPT Custom Instructions, Gemini System Instructions, and even local LLMs.",
+    a: "Platforms like ChatGPT, Claude, or Gemini (via Google Takeout) usually send the export email within 5 to 15 minutes. For very large accounts with years of history, it may take slightly longer.",
   },
   {
     q: "Does it work with Cursor or Windsurf?",
-    a: "Absolutely. ChatLore can export a CLAUDE.md file, which is specifically designed for Cursor, Windsurf, and other AI-powered coding tools to understand your project context immediately.",
+    a: "Absolutely. ChatLore can export a specialized CLAUDE.md file or .cursorrules, which are designed for Cursor, Windsurf, and other AI-powered IDEs to understand your project context and coding style immediately.",
   },
 ];
 
@@ -75,7 +75,7 @@ export function FAQContent() {
           Common <span className="italic text-primary">Questions</span>
         </h1>
         <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-          Everything you need to know about ChatLore, privacy, and how to sync your AI context.
+          Everything you need to know about ChatLore, privacy, and syncing your technical project context.
         </p>
       </motion.div>
 
