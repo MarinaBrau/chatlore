@@ -1,7 +1,6 @@
 "use client";
 
 import { HeroSection } from "@/components/landing/HeroSection";
-import { FlowDemo } from "@/components/landing/FlowDemo";
 import { OutputPreview } from "@/components/landing/OutputPreview";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { HowItWorks } from "@/components/landing/HowItWorks";
@@ -39,7 +38,6 @@ export default function Home() {
       <HeroSection />
       <SocialProof />
       <HowItWorks />
-      <FlowDemo />
       <OutputPreview />
       <TrustPillars />
       <FaqSection />
