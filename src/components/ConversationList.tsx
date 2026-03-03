@@ -3,6 +3,7 @@
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Search, ArrowUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { ConversationCard } from "./ConversationCard";
 import { SelectionBar } from "./SelectionBar";
 import type { Conversation } from "@/lib/parsers/types";

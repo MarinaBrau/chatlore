@@ -14,7 +14,15 @@ import { ChatGptMockup } from "@/components/mockups/ChatGptMockup";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
-const GUIDES = {
+interface GuideStep {
+  num: string;
+  icon: any;
+  title: string;
+  body: string;
+  mockup?: boolean;
+}
+
+const GUIDES: Record<string, GuideStep[]> = {
   chatgpt: [
     { num: "1", icon: Settings, title: "Open Settings", body: "Click your profile picture (bottom-left) → Settings." },
     { num: "2", icon: Upload, title: "Export Data", body: "Go to Data controls and click Export. OpenAI will bundle your data.", mockup: true },

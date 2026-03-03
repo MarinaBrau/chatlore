@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,8 +8,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { FileText, Tag, Heart, Repeat, Mic2, Ban } from "lucide-react";
+import { cn } from "@/lib/utils";
 import type { ConversationAnalysis } from "@/lib/types";
-import { useState, useEffect } from "react";
 
 interface ResultCardProps {
   analysis: ConversationAnalysis;
@@ -226,9 +227,6 @@ export function ResultCard({ analysis, onUpdate, selectedItems, onToggleItem }: 
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-    </div>
-  );
-}
     </div>
   );
 }

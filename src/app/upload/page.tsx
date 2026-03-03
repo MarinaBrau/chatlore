@@ -9,6 +9,7 @@ import { ExportGuideModal } from "@/components/ExportGuideModal";
 import { useParser } from "@/lib/parsers/use-parser";
 import { useConversations } from "@/context/conversations";
 import { trackEvent } from "@/lib/analytics";
+import { cn } from "@/lib/utils";
 import { FileJson, ClipboardCopy, MessageCircle, Sparkles, Brain, Code2 } from "lucide-react";
 
 type UploadMethod = "file" | "paste";
@@ -139,10 +140,10 @@ export default function UploadPage() {
 
         <div className="mt-12 border-t border-border/40 pt-8 text-center">
           <div className="mb-6 flex justify-center gap-6 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
-            <MessageCircle className="size-5" title="ChatGPT" />
-            <Sparkles className="size-5" title="Claude" />
-            <Brain className="size-5" title="Gemini" />
-            <Code2 className="size-5" title="Cursor" />
+            <MessageCircle className="size-5" />
+            <Sparkles className="size-5" />
+            <Brain className="size-5" />
+            <Code2 className="size-5" />
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
             <strong>100% Client-Side:</strong> Your data never leaves your browser during parsing. We prioritize your privacy above all else.
