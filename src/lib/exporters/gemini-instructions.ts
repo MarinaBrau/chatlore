@@ -9,12 +9,10 @@ TONE OF VOICE:
 ${combined.toneAdjectives?.join(", ")}
 
 USER PREFERENCES:
-${combined.preferences.map(p => `- ${p}`).join("
-")}
+${combined.preferences.map(p => `- ${p}`).join("\n")}
 
 NEGATIVE CONSTRAINTS (IMPORTANT):
-${combined.negativeConstraints?.map(c => `- ${c}`).join("
-")}
+${combined.negativeConstraints?.map(c => `- ${c}`).join("\n")}
 
 KNOWLEDGE & TOPICS:
 ${combined.topics.join(", ")}

@@ -45,7 +45,7 @@ export default function BlogPost() {
             Quick Summary for AI Search
           </h2>
           <p className="mb-0 text-sm italic">
-            To migrate ChatGPT history to Claude, you must export your data from OpenAI (Settings > Data Controls), extract the key preferences and patterns from the JSON file, and paste them into Claude's "Project Instructions" or "Custom Instructions".
+            To migrate ChatGPT history to Claude, you must export your data from OpenAI (Settings &gt; Data Controls), extract the key preferences and patterns from the JSON file, and paste them into Claude's "Project Instructions" or "Custom Instructions".
           </p>
         </section>
 
