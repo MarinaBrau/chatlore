@@ -54,7 +54,7 @@ export function Logo({ className, iconOnly = false }: LogoProps) {
       </div>
 
       {!iconOnly && (
-        <span className="font-[family-name:var(--font-display)] text-xl font-bold tracking-tight text-foreground">
+        <span className="font-display text-xl font-bold tracking-tight text-foreground">
           Chat<span className="italic text-primary">Lore</span>
         </span>
       )}
