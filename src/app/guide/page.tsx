@@ -82,7 +82,7 @@ export default function GuidePage() {
             How to get your <span className="italic text-amber">AI History</span>
           </motion.h1>
           <p className="mt-6 text-muted-foreground text-lg max-w-2xl mx-auto">
-            Each platform has a different way of letting you take your data. Here is how to do it for each one.
+            Each platform has a unique way of allowing you to export your data. Here is a step-by-step guide for each one.
           </p>
         </motion.div>
       </section>
@@ -112,7 +112,7 @@ export default function GuidePage() {
               </div>
               <ul className="space-y-4 flex-1">
                 {guide.steps.map((step, idx) => (
-                  <li key={idx} className="flex gap-3 text-sm text-muted-foreground leading-relaxed">
+                  <li key={idx} className="flex gap-3 text-sm text-muted-foreground leading-relaxed text-left">
                     <span className="font-mono text-amber font-bold">{idx + 1}.</span>
                     {step}
                   </li>

@@ -13,23 +13,23 @@ import { ArrowRight, HelpCircle } from "lucide-react";
 const faqs = [
   {
     q: "Is ChatLore completely free?",
-    a: "Yes, ChatLore is 100% free to use. We do not charge for the context file generation, and you don't even need to create an account to get started.",
+    a: "Yes, ChatLore is 100% free to use. We do not charge for context profile generation, and you don't even need to create an account to get started.",
   },
   {
     q: "Are my private conversations safe?",
-    a: "Your privacy is our priority. Your chat history file is parsed locally in your browser. Only the specific conversations you select for analysis are sent to the AI (stateless processing) and are immediately discarded. We never store your data or use it for training.",
+    a: "Your privacy is our top priority. Your chat history file is parsed locally in your browser and never uploaded to our servers. Only the specific conversations you manually select for analysis are sent to the AI via stateless processing and are immediately discarded. We never store your data or use it for training.",
   },
   {
-    q: "How long does the export take?",
-    a: "Usually, platforms like ChatGPT or Claude send the export email within 5-15 minutes. However, if you have years of history, it might take a bit longer for them to bundle the file.",
+    q: "How long does the export process take?",
+    a: "Usually, platforms like ChatGPT or Claude send the export email within 5 to 15 minutes. However, if you have years of chat history, it might take longer for them to bundle your data.",
   },
   {
     q: "Does ChatLore work with all AI models?",
-    a: "Yes! While ChatLore provides optimized templates for Claude (Project Instructions, CLAUDE.md), the generated profiles are structured in markdown and work perfectly with ChatGPT Custom Instructions, Gemini System Instructions, and even local LLMs.",
+    a: "Yes! While ChatLore provides optimized templates for Claude (Project Instructions, CLAUDE.md), the generated profiles are structured in Markdown and work perfectly with ChatGPT Custom Instructions, Gemini System Instructions, and even local LLMs.",
   },
   {
     q: "Do I need a paid AI subscription?",
-    a: "No. You can use ChatLore and its generated files with the free tiers of ChatGPT, Claude, and Gemini.",
+    a: "No. You can use ChatLore and its generated profiles with the free tiers of ChatGPT, Claude, and Gemini.",
   },
   {
     q: "Does it work with Cursor or Windsurf?",
@@ -37,7 +37,7 @@ const faqs = [
   },
   {
     q: "What data leaves my browser?",
-    a: "Only the text of the specific conversations you manually select. This data is sent via an encrypted connection to the Anthropic API for analysis and is not retained after the result is generated.",
+    a: "Only the text of the specific conversations you manually select. This data is sent via an encrypted connection for analysis and is not retained after the result is generated.",
   },
 ];
 

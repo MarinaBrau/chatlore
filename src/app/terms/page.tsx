@@ -42,7 +42,7 @@ export default function TermsPage() {
         <section className="space-y-6">
           <h2 className="text-2xl font-bold">4. Limitation of Liability</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Since ChatLore processes data locally and does not store your information, we cannot be held responsible for any data loss, API errors from third-party providers (like Anthropic), or misuse of the generated context files.
+            Since ChatLore processes data locally and does not store your information, we cannot be held responsible for any data loss, API errors from third-party providers, or misuse of the generated context profiles.
           </p>
         </section>
 

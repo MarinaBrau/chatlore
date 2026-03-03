@@ -16,17 +16,17 @@ const softwareSchema = {
   "name": "ChatLore",
   "operatingSystem": "Web",
   "applicationCategory": "UtilitiesApplication",
-  "description": "A secure web tool to migrate ChatGPT history to Claude.ai. Extracts user style, preferences, and knowledge to create structured context files and Project Instructions.",
+  "description": "Universal AI Context Hub — Transfer your chat history, memory, and style between ChatGPT, Claude, and Gemini in seconds.",
   "offers": {
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD"
   },
   "featureList": [
-    "ChatGPT JSON export parsing",
-    "Manual chat paste sync",
-    "Claude Project Instructions generation",
-    "CLAUDE.md export for developers",
+    "ChatGPT, Gemini, and Claude export parsing",
+    "Generate structured profiles for Any AI",
+    "Claude Project Instructions & CLAUDE.md generation",
+    "ChatGPT & Gemini custom instructions optimization",
     "100% private client-side processing"
   ]
 };
@@ -73,14 +73,14 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ChatLore — Universal AI Memory Sync",
+  title: "ChatLore — Universal AI Context Hub",
   description:
-    "Sync your style and preferences between ChatGPT, Claude, and Gemini. Generate structured profiles and system instructions in minutes. 100% private and free.",
-  keywords: ["AI memory sync", "transfer ChatGPT to Claude", "Gemini context migration", "AI custom instructions", "sync AI profiles"],
+    "Transfer your AI memory, style, and projects between ChatGPT, Claude, and Gemini in seconds. 100% private, free, and no sign-up required.",
+  keywords: ["AI context hub", "sync AI memory", "transfer ChatGPT to Claude", "Gemini custom instructions", "AI profile migration"],
   openGraph: {
-    title: "ChatLore — Universal AI Memory Sync",
+    title: "ChatLore — Universal AI Context Hub",
     description:
-      "Don't start from zero. Transfer your AI memory between ChatGPT, Claude, and Gemini instantly.",
+      "Don't start from scratch. Transfer your style and memory between ChatGPT, Claude, and Gemini instantly.",
     url: "https://chatlore.app",
     siteName: "ChatLore",
     locale: "en_US",
@@ -88,8 +88,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ChatLore — Universal AI Memory Sync",
-    description: "Sync your AI memory between ChatGPT, Claude, and Gemini instantly.",
+    title: "ChatLore — Universal AI Context Hub",
+    description: "Sync your AI memory and style between ChatGPT, Claude, and Gemini instantly.",
   },
   robots: {
     index: true,

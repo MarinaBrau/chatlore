@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { analyzeWithClaude } from "@/lib/claude";
-import { buildAnalysisPrompt } from "@/lib/prompts";
+import { buildAnalysisPrompt, ANALYSIS_SYSTEM_PROMPT } from "@/lib/prompts";
 import { checkRateLimit } from "@/lib/rate-limit";
 import type { Message } from "@/lib/parsers/types";
 
@@ -58,25 +58,25 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Process conversations sequentially to avoid API rate limits
+  // Process conversations in parallel
   try {
-    const results = [];
-    for (const conv of parsed.data.conversations) {
+    const analysisPromises = parsed.data.conversations.map(async (conv) => {
       const prompt = buildAnalysisPrompt(conv.title, conv.messages as unknown as Message[]);
-      const analysis = await analyzeWithClaude(prompt);
-      results.push({
+      const analysis = await analyzeWithClaude(prompt, ANALYSIS_SYSTEM_PROMPT);
+      return {
         id: conv.id,
         title: conv.title,
         ...analysis,
-      });
-    }
+      };
+    });
 
+    const results = await Promise.all(analysisPromises);
     return NextResponse.json({ results });
   } catch (err) {
-    console.error("Claude API error:", err);
+    console.error("AI processing error:", err);
 
     return NextResponse.json(
-      { error: "AI processing failed. Please try again." },
+      { error: "AI processing failed. Our team has been notified. Please try again with fewer conversations." },
       { status: 502 }
     );
   }

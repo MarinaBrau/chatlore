@@ -25,7 +25,9 @@ export function ExportButtons({ analyses }: ExportButtonsProps) {
     try {
       await navigator.clipboard.writeText(text);
       trackEvent("export_clicked", { format, method: "copy", target });
-      toast.success(`${label} copied! Now paste it in ${target}.`);
+      
+      const targetLabel = target === "claude" ? "Claude" : target === "chatgpt" ? "ChatGPT" : "Gemini";
+      toast.success(`${label} copied! Now paste them into ${targetLabel}.`);
     } catch {
       toast.error("Failed to copy. Please try again.");
     }

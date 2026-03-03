@@ -64,10 +64,10 @@ export default function UploadPage() {
             Desktop Recommended
           </div>
           <h1 className="text-3xl font-bold tracking-tight">
-            How do you want to start?
+            How would you like to start?
           </h1>
           <p className="mt-2 text-muted-foreground">
-            Upload your history or paste a chat to extract your AI memory.
+            Upload your export file or paste a conversation to extract your AI memory.
           </p>
         </div>
 
@@ -82,7 +82,7 @@ export default function UploadPage() {
             }`}
           >
             <FileJson className="size-4" />
-            AI History File
+            AI Export File
           </button>
           <button
             onClick={() => setMethod("paste")}
@@ -93,7 +93,7 @@ export default function UploadPage() {
             }`}
           >
             <ClipboardCopy className="size-4" />
-            Manual Paste (Instant)
+            Manual Paste
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export default function UploadPage() {
               <div className="mt-4 flex flex-col items-center gap-2">
                 <ExportGuideModal />
                 <p className="text-center text-xs text-muted-foreground">
-                  Look for <code className="text-amber font-mono">conversations.json</code> in your export zip.
+                  Look for <code className="text-amber font-mono">.json</code> files inside your export archive.
                 </p>
               </div>
             </motion.div>
@@ -131,7 +131,7 @@ export default function UploadPage() {
                 isProcessing={status === "parsing"} 
               />
               {error && (
-                <p className="mt-4 text-center text-sm text-destructive">{error}</p>
+                <p className="mt-4 text-center text-sm text-destructive font-medium">{error}</p>
               )}
             </motion.div>
           )}
@@ -146,7 +146,7 @@ export default function UploadPage() {
             ))}
           </div>
           <p className="text-xs text-muted-foreground leading-relaxed">
-            <strong>100% Client-side Processing:</strong> Trusted by 10,000+ users to keep their context safe. Your history is processed locally in your browser.
+            <strong>100% Client-Side Processing:</strong> Your history is processed entirely within your browser to keep your context private and secure.
           </p>
         </div>
       </motion.div>

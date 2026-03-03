@@ -5,23 +5,23 @@ import { motion } from "framer-motion";
 const steps = [
   {
     num: "01",
-    title: "Grab your ChatGPT data",
-    body: "Go to Settings > Data Controls > Export in ChatGPT. OpenAI will email you a link to download your history (it takes a few minutes).",
+    title: "Grab your AI data",
+    body: "Go to Settings in ChatGPT, Claude, or Google Takeout for Gemini. Export your history (it usually takes a few minutes for them to send the email).",
   },
   {
     num: "02",
-    title: "Pick what matters most",
-    body: "Upload your file here. Browse your chats and select the ones that define your tone, your style, or your complex projects.",
+    title: "Pick what matters",
+    body: "Upload your export file locally. Browse your chat history and select the conversations that define your tone, style, or specific projects.",
   },
   {
     num: "03",
-    title: "Smart Analysis",
-    body: "Claude identifies what you care about \u2014 your style, preferences, and recurring topics \u2014 across every selected conversation.",
+    title: "Instant analysis",
+    body: "ChatLore identifies your recurring themes, style preferences, and constraints across every selected conversation using stateless AI calls.",
   },
   {
     num: "04",
-    title: "Teach it to Claude",
-    body: "Paste your new context into Claude Project instructions or as a CLAUDE.md file. Now Claude knows you perfectly.",
+    title: "Sync your memory",
+    body: "Paste your structured profile into Claude Projects, ChatGPT Custom Instructions, or Gemini. Now your assistant knows you perfectly.",
   },
 ];
 

@@ -65,42 +65,32 @@ export function useParser() {
     const reader = new FileReader();
 
     reader.onload = (e) => {
-      const result = e.target?.result;
-      if (typeof result !== "string") {
+      const text = e.target?.result;
+      if (typeof text !== "string") {
         setState({ status: "error", conversations: [], error: "Failed to read file" });
         return;
       }
       
-      const text = result;
+      // Use Web Worker for parsing large files
+      const worker = new Worker(new URL("../../workers/parse-worker.ts", import.meta.url));
       
-      try {
-        const json = JSON.parse(text);
-        let parsedConversations: Conversation[] = [];
+      worker.onmessage = (event: MessageEvent<ParseWorkerResponse>) => {
+        const response = event.data;
+        if (response.type === "success") {
+          setState({ status: "success", conversations: response.conversations, error: null });
+        } else {
+          setState({ status: "error", conversations: [], error: response.error });
+        }
+        worker.terminate();
+      };
 
-        // Check for ChatGPT format (mapping exists)
-        if (Array.isArray(json) && json[0]?.mapping) {
-          parsedConversations = parseChatGPTExport(text);
-        } 
-        // Check for Gemini format (conversations key exists)
-        else if (Array.isArray(json) && json[0]?.conversations) {
-          parsedConversations = parseGeminiExport(text);
-        }
-        // Check for Claude format (chat_messages key exists)
-        else if (Array.isArray(json) && json[0]?.chat_messages) {
-          parsedConversations = parseClaudeExport(text);
-        }
-        else {
-          throw new Error("Format not recognized. Please upload a valid ChatGPT, Gemini, or Claude export file.");
-        }
+      worker.onerror = (err) => {
+        console.error("Worker error:", err);
+        setState({ status: "error", conversations: [], error: "Parsing failed. The file might be too large or corrupted." });
+        worker.terminate();
+      };
 
-        setState({ status: "success", conversations: parsedConversations, error: null });
-      } catch (err) {
-        setState({
-          status: "error",
-          conversations: [],
-          error: err instanceof Error ? err.message : "Parsing failed",
-        });
-      }
+      worker.postMessage({ type: "parse", data: text });
     };
 
     reader.onerror = () => {

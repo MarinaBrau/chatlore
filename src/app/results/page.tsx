@@ -19,9 +19,9 @@ const STORAGE_KEY = "chatlore-last-results";
 const loadingMessages = [
   "Analyzing your tone of voice...",
   "Extracting hidden preferences...",
-  "Identifying what you dislike...",
+  "Identifying constraints and dislikes...",
   "Mapping your interaction patterns...",
-  "Building your Claude profile...",
+  "Building your universal AI profile...",
 ];
 
 interface ProcessState {
@@ -52,14 +52,14 @@ export default function ResultsPage() {
     return () => clearInterval(interval);
   }, [state.status]);
 
-  // Load from localStorage on mount
+  // Load from sessionStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = sessionStorage.getItem(STORAGE_KEY);
     if (saved && !hasStarted.current) {
       try {
         const { results, combined, timestamp } = JSON.parse(saved);
-        // Only restore if less than 24h old
-        if (Date.now() - timestamp < 24 * 60 * 60 * 1000) {
+        // Only restore if less than 2h old (session-based)
+        if (Date.now() - timestamp < 2 * 60 * 60 * 1000) {
           setState({ status: "success", results, combined, error: null });
           hasStarted.current = true;
         }
@@ -69,10 +69,10 @@ export default function ResultsPage() {
     }
   }, []);
 
-  // Save to localStorage whenever results change
+  // Save to sessionStorage whenever results change
   useEffect(() => {
     if (state.status === "success" && state.results.length > 0) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify({
         results: state.results,
         combined: state.combined,
         timestamp: Date.now()
@@ -81,7 +81,7 @@ export default function ResultsPage() {
   }, [state.results, state.combined, state.status]);
 
   const clearStorage = () => {
-    localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_KEY);
     router.push("/upload");
   };
 
@@ -125,15 +125,16 @@ export default function ResultsPage() {
       const data = await res.json();
       const results: ConversationAnalysis[] = data.results;
 
+      // Improved combined analysis logic to remove duplicates and normalize text
       const combined: ConversationAnalysis = {
         id: "combined",
-        title: "Combined Analysis",
+        title: "Combined AI Profile",
         summary: results.map((r) => r.summary).join(" "),
-        topics: [...new Set(results.flatMap((r) => r.topics))],
-        preferences: [...new Set(results.flatMap((r) => r.preferences))],
-        patterns: [...new Set(results.flatMap((r) => r.patterns))],
-        toneAdjectives: [...new Set(results.flatMap((r) => r.toneAdjectives || []))],
-        negativeConstraints: [...new Set(results.flatMap((r) => r.negativeConstraints || []))],
+        topics: Array.from(new Set(results.flatMap((r) => r.topics || []))).filter(Boolean),
+        preferences: Array.from(new Set(results.flatMap((r) => r.preferences || []))).filter(Boolean),
+        patterns: Array.from(new Set(results.flatMap((r) => r.patterns || []))).filter(Boolean),
+        toneAdjectives: Array.from(new Set(results.flatMap((r) => r.toneAdjectives || []))).filter(Boolean),
+        negativeConstraints: Array.from(new Set(results.flatMap((r) => r.negativeConstraints || []))).filter(Boolean),
       };
 
       trackEvent("analysis_completed", { result_count: results.length });

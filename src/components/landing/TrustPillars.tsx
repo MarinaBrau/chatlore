@@ -7,7 +7,7 @@ const pillars = [
   {
     icon: ShieldCheck,
     title: "Nothing stored. Ever.",
-    body: "Your file is parsed entirely in your browser. Selected conversations go through Claude\u2019s API via stateless calls \u2014 zero data retention, no database, no logs.",
+    body: "Your file is parsed entirely in your browser. Selected conversations go through stateless AI calls \u2014 zero data retention, no database, no logs.",
   },
   {
     icon: Eye,
@@ -16,8 +16,8 @@ const pillars = [
   },
   {
     icon: FileOutput,
-    title: "Works with every Claude surface",
-    body: "Whether you use Claude on the web, in your code editor, or just want to paste into a chat \u2014 we\u2019ve got a format that fits.",
+    title: "Works with every AI",
+    body: "Whether you use Claude, ChatGPT, Gemini, or Cursor \u2014 we provide optimized formats for every platform, from web chats to code editors.",
   },
 ];
 

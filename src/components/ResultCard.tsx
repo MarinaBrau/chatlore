@@ -47,10 +47,34 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
             <textarea
               value={editedAnalysis.summary}
               onChange={(e) => handleUpdate("summary", e.target.value)}
-              className="w-full bg-transparent text-muted-foreground leading-relaxed focus:outline-none resize-none min-h-[80px]"
+              className="w-full bg-transparent text-sm text-muted-foreground leading-relaxed focus:outline-none resize-none min-h-[80px]"
             />
           </AccordionContent>
         </AccordionItem>
+
+        {/* Topics */}
+        {editedAnalysis.topics && editedAnalysis.topics.length > 0 && (
+          <AccordionItem value="topics" className="px-6 border-b border-border/40">
+            <AccordionTrigger className="hover:no-underline py-4">
+              <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
+                <Tag className="size-4 text-amber" />
+                Key Topics
+              </span>
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {editedAnalysis.topics.map((topic, i) => (
+                  <span
+                    key={i}
+                    className="rounded-lg bg-muted border border-border/40 px-2.5 py-1 text-xs font-medium text-muted-foreground"
+                  >
+                    {topic}
+                  </span>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        )}
 
         {/* Tone Adjectives */}
         {editedAnalysis.toneAdjectives && editedAnalysis.toneAdjectives.length > 0 && (
@@ -139,7 +163,7 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
               <Repeat className="size-4 text-amber" />
-              Interaction Patterns
+              Patterns & Behaviors
             </span>
           </AccordionTrigger>
           <AccordionContent>

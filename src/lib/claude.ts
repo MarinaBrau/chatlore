@@ -22,28 +22,30 @@ export interface AnalysisResult {
  * Send a prompt to Claude and parse the JSON response.
  */
 export async function analyzeWithClaude(
-  prompt: string
+  prompt: string,
+  systemPrompt?: string,
+  retries = 2
 ): Promise<AnalysisResult> {
-  // Use Haiku for speed and cost-efficiency
-  const response = await client.messages.create({
-    model: "claude-3-haiku-20240307",
-    max_tokens: 4096,
-    temperature: 0, // Deterministic for consistent extraction
-    messages: [{ role: "user", content: prompt }],
-  });
-
-  const firstBlock = response.content[0];
-  const text =
-    firstBlock && firstBlock.type === "text" ? firstBlock.text : "";
-
-  // Parse JSON, handling possible markdown fences
-  const cleaned = text
-    .replace(/^```(?:json)?\s*\n?/m, "")
-    .replace(/\n?\s*```\s*$/m, "")
-    .trim();
-
   try {
+    const response = await client.messages.create({
+      model: "claude-3-haiku-20240307",
+      max_tokens: 4096,
+      temperature: 0,
+      system: systemPrompt,
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const firstBlock = response.content[0];
+    const text = firstBlock && firstBlock.type === "text" ? firstBlock.text : "";
+
+    // Parse JSON, handling markdown fences
+    const cleaned = text
+      .replace(/^```(?:json)?\s*\n?/m, "")
+      .replace(/\n?\s*```\s*$/m, "")
+      .trim();
+
     const parsed = JSON.parse(cleaned);
+    
     return {
       summary: typeof parsed.summary === "string" ? parsed.summary : "",
       topics: Array.isArray(parsed.topics) ? parsed.topics : [],
@@ -53,7 +55,13 @@ export async function analyzeWithClaude(
       negativeConstraints: Array.isArray(parsed.negative_constraints) ? parsed.negative_constraints : [],
     };
   } catch (e) {
-    console.error("JSON Parse Error:", e, "Raw Text:", text);
-    throw new Error("Failed to parse Claude response as JSON");
+    if (retries > 0) {
+      console.warn(`Claude API error, retrying... (${retries} left)`);
+      // Exponential backoff
+      await new Promise(resolve => setTimeout(resolve, (3 - retries) * 1000));
+      return analyzeWithClaude(prompt, systemPrompt, retries - 1);
+    }
+    console.error("Claude Analysis Error:", e);
+    throw e;
   }
 }
