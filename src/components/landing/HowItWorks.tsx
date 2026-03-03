@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-const steps = [
+const STEPS = [
   {
     num: "01",
     title: "Grab your AI data",
@@ -48,7 +48,7 @@ export function HowItWorks() {
         </motion.h2>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {steps.map((step, i) => (
+          {STEPS.map((step, i) => (
             <motion.div
               key={step.num}
               initial={{ opacity: 0, y: 20 }}
@@ -57,7 +57,7 @@ export function HowItWorks() {
               transition={{
                 delay: i * 0.1,
                 duration: 0.6,
-                ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+                ease: [0.25, 0.1, 0.25, 1],
               }}
               className="group relative rounded-xl border border-border/40 bg-card/30 p-6 transition-colors hover:border-amber/20 hover:bg-card/60"
             >

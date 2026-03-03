@@ -5,6 +5,6 @@ export interface ConversationAnalysis {
   topics: string[];
   preferences: string[];
   patterns: string[];
-  toneAdjectives?: string[];
-  negativeConstraints?: string[];
+  toneAdjectives: string[];
+  negativeConstraints: string[];
 }

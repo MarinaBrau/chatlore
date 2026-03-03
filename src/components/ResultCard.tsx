@@ -35,7 +35,6 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
       </div>
 
       <Accordion type="multiple" defaultValue={["summary", "tone", "preferences"]}>
-        {/* Summary */}
         <AccordionItem value="summary" className="px-6 border-b border-border/40">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
@@ -52,7 +51,6 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Topics */}
         {editedAnalysis.topics && editedAnalysis.topics.length > 0 && (
           <AccordionItem value="topics" className="px-6 border-b border-border/40">
             <AccordionTrigger className="hover:no-underline py-4">
@@ -76,7 +74,6 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           </AccordionItem>
         )}
 
-        {/* Tone Adjectives */}
         {editedAnalysis.toneAdjectives && editedAnalysis.toneAdjectives.length > 0 && (
           <AccordionItem value="tone" className="px-6 border-b border-border/40">
             <AccordionTrigger className="hover:no-underline py-4">
@@ -100,7 +97,6 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           </AccordionItem>
         )}
 
-        {/* Preferences */}
         <AccordionItem value="preferences" className="px-6 border-b border-border/40">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
@@ -128,7 +124,6 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Negative Constraints */}
         {editedAnalysis.negativeConstraints && editedAnalysis.negativeConstraints.length > 0 && (
           <AccordionItem value="negative" className="px-6 border-b border-border/40">
             <AccordionTrigger className="hover:no-underline py-4">
@@ -158,7 +153,6 @@ export function ResultCard({ analysis, onUpdate }: ResultCardProps) {
           </AccordionItem>
         )}
 
-        {/* Patterns */}
         <AccordionItem value="patterns" className="px-6 border-b-0">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">

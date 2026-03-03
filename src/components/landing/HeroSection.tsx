@@ -1,22 +1,19 @@
-"use client";
-
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, AnimatePresence } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
-import { ArrowRight, FileJson, Check, Upload, Sparkles } from "lucide-react";
+import { ArrowRight, FileJson, Check, Upload } from "lucide-react";
 
-/* ─── Animation constants ─── */
 const FRAME_DURATION = 3000;
 const TOTAL_FRAMES = 3;
 
-const conversations = [
+const CONVERSATIONS = [
   { title: "Project: Marketing Plan", msgs: 15 },
   { title: "Personal Coding Style", msgs: 23 },
   { title: "Writing Tone Preferences", msgs: 8 },
   { title: "Study Notes: AI Ethics", msgs: 12 },
 ];
 
-const contextLines = [
+const CONTEXT_LINES = [
   "## Personality & Style",
   "- Professional but friendly tone",
   "- Direct and concise answers",
@@ -25,21 +22,21 @@ const contextLines = [
   "- Prefer step-by-step code",
 ];
 
-const stagger = {
+const STAGGER_ANIMATION = {
   hidden: {},
   visible: {
     transition: { staggerChildren: 0.08, delayChildren: 0.3 },
   },
 };
 
-const fadeSlide = {
+const FADE_UP_ANIMATION = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
       duration: 0.7,
-      ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
+      ease: [0.25, 0.1, 0.25, 1],
     },
   },
 };
@@ -69,12 +66,10 @@ export function HeroSection() {
   useEffect(() => {
     const el = heroRef.current;
     if (!el) return;
-    const unsub1 = smoothX.on("change", (v) =>
-      el.style.setProperty("--glow-x", `${v}%`)
-    );
-    const unsub2 = smoothY.on("change", (v) =>
-      el.style.setProperty("--glow-y", `${v}%`)
-    );
+    
+    const unsub1 = smoothX.on("change", (v) => el.style.setProperty("--glow-x", `${v}%`));
+    const unsub2 = smoothY.on("change", (v) => el.style.setProperty("--glow-y", `${v}%`));
+    
     return () => {
       unsub1();
       unsub2();
@@ -94,14 +89,12 @@ export function HeroSection() {
       className="glow-amber relative flex flex-col items-center px-4 pb-16 pt-24 sm:pt-32"
     >
       <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
-        {/* ─── LEFT SIDE: ANIMATION ─── */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="relative order-2 lg:order-1"
         >
-          {/* Step indicators */}
           <div className="mb-6 flex items-center justify-center gap-2 lg:justify-start">
             {["Input", "Select", "Sync"].map((label, i) => (
               <div key={label} className="flex items-center gap-2">
@@ -114,17 +107,13 @@ export function HeroSection() {
                 >
                   {label}
                 </span>
-                {i < 2 && (
-                  <ArrowRight className="size-3 text-muted-foreground/20" />
-                )}
+                {i < 2 && <ArrowRight className="size-3 text-muted-foreground/20" />}
               </div>
             ))}
           </div>
 
-          {/* Animation container */}
           <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/50 p-6 shadow-2xl shadow-amber/5 backdrop-blur-sm sm:p-10">
             <AnimatePresence mode="wait">
-              {/* Frame 1: Upload */}
               {frame === 0 && (
                 <motion.div
                   key="upload"
@@ -137,29 +126,22 @@ export function HeroSection() {
                   <div className="rounded-2xl border-2 border-dashed border-amber/30 bg-amber/5 px-16 py-12">
                     <motion.div
                       animate={{ y: [0, -8, 0] }}
-                      transition={{
-                        repeat: Infinity,
-                        duration: 2,
-                        ease: "easeInOut",
-                      }}
+                      transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
                       className="flex flex-col items-center gap-3"
                     >
                       <Upload className="size-10 text-amber/60" />
                       <div className="flex items-center gap-2">
                         <FileJson className="size-4 text-amber" />
-                        <span className="font-mono text-sm text-amber">
-                          AI Export File
-                        </span>
+                        <span className="font-mono text-sm text-amber">AI Export File</span>
                       </div>
                     </motion.div>
                   </div>
-                  <p className="font-medium text-muted-foreground text-center">
+                  <p className="font-medium text-muted-foreground text-center text-sm">
                     Import from ChatGPT, Gemini, or Claude
                   </p>
                 </motion.div>
               )}
 
-              {/* Frame 2: Select */}
               {frame === 1 && (
                 <motion.div
                   key="select"
@@ -169,7 +151,7 @@ export function HeroSection() {
                   transition={{ duration: 0.35 }}
                   className="space-y-2.5"
                 >
-                  {conversations.map((conv, i) => (
+                  {CONVERSATIONS.map((conv, i) => (
                     <motion.div
                       key={conv.title}
                       initial={{ opacity: 0, x: -12 }}
@@ -185,15 +167,12 @@ export function HeroSection() {
                       >
                         <Check className="size-3 text-amber" />
                       </motion.div>
-                      <span className="flex-1 truncate text-sm font-medium">
-                        {conv.title}
-                      </span>
+                      <span className="flex-1 truncate text-sm font-medium">{conv.title}</span>
                     </motion.div>
                   ))}
                 </motion.div>
               )}
 
-              {/* Frame 3: Context generated */}
               {frame === 2 && (
                 <motion.div
                   key="context"
@@ -210,17 +189,13 @@ export function HeroSection() {
                       </span>
                     </div>
                     <div className="px-5 py-4 font-mono text-[13px] leading-relaxed">
-                      {contextLines.map((line, i) => (
+                      {CONTEXT_LINES.map((line, i) => (
                         <motion.div
                           key={i}
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: i * 0.1, duration: 0.3 }}
-                          className={
-                            line.startsWith("##")
-                              ? "mt-2 text-amber first:mt-0"
-                              : "text-neutral-400"
-                          }
+                          className={line.startsWith("##") ? "mt-2 text-amber first:mt-0" : "text-neutral-400"}
                         >
                           {line}
                         </motion.div>
@@ -243,35 +218,29 @@ export function HeroSection() {
           </div>
         </motion.div>
 
-        {/* ─── RIGHT SIDE: TEXT ─── */}
         <motion.div
-          variants={stagger}
+          variants={STAGGER_ANIMATION}
           initial="hidden"
           animate="visible"
           className="flex flex-col items-center text-center order-1 lg:order-2 lg:items-start lg:text-left"
         >
-          {/* Headline */}
           <motion.h1
-            variants={fadeSlide}
+            variants={FADE_UP_ANIMATION}
             className="font-[family-name:var(--font-display)] text-5xl leading-[1.1] tracking-tight sm:text-6xl lg:text-7xl"
           >
             Stop repeating yourself
             <br />
-            <span className="italic text-amber">
-              to every new AI
-            </span>
+            <span className="italic text-amber">to every new AI</span>
           </motion.h1>
 
-          {/* Subhead */}
           <motion.p
-            variants={fadeSlide}
+            variants={FADE_UP_ANIMATION}
             className="mt-6 max-w-lg text-lg leading-relaxed text-muted-foreground"
           >
             Transfer your memory, style, and projects between ChatGPT, Claude, and Gemini in seconds. Your assistant changes, but your context stays.
           </motion.p>
 
-          {/* CTA */}
-          <motion.div variants={fadeSlide} className="mt-10">
+          <motion.div variants={FADE_UP_ANIMATION} className="mt-10">
             <Link
               href="/upload"
               className="group inline-flex items-center gap-3 rounded-full bg-amber px-8 py-4 text-sm font-bold text-white transition-all hover:gap-4 hover:bg-amber/90 hover:shadow-[0_0_32px_oklch(0.65_0.15_45/20%)]"
@@ -282,7 +251,7 @@ export function HeroSection() {
           </motion.div>
 
           <motion.p
-            variants={fadeSlide}
+            variants={FADE_UP_ANIMATION}
             className="mt-6 flex items-center justify-center gap-2 text-[11px] font-medium uppercase tracking-widest text-muted-foreground/40 lg:justify-start"
           >
             ChatGPT • Gemini • Claude • Cursor

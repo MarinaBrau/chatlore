@@ -9,6 +9,13 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 import { ArrowRight, HelpCircle } from "lucide-react";
+import { JsonLd } from "@/components/JsonLd";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "FAQ — ChatLore Universal AI Hub",
+  description: "Common questions about syncing AI memory, privacy, and how ChatLore works with ChatGPT, Claude, and Gemini.",
+};
 
 const faqs = [
   {
@@ -41,9 +48,23 @@ const faqs = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(faq => ({
+    "@type": "Question",
+    "name": faq.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": faq.a
+    }
+  }))
+};
+
 export default function FaqPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-24 sm:py-32">
+      <JsonLd data={faqSchema} />
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

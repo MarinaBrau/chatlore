@@ -55,7 +55,6 @@ export function ExportButtons({ analyses }: ExportButtonsProps) {
 
   return (
     <div className="space-y-6">
-      {/* Target Selector */}
       <div className="flex flex-wrap gap-2 p-1 bg-muted/30 rounded-xl border border-border/60 w-fit">
         <button
           onClick={() => setTarget("claude")}
