@@ -6,19 +6,17 @@ import {
   ArrowRight,
   Download,
   FileText,
-  Settings,
   Upload,
   Search,
   Copy,
   ClipboardCheck,
   Lightbulb,
-  FolderOpen,
   MessageCircle,
   Brain,
   Sparkles,
+  ExternalLink,
 } from "lucide-react";
 
-/* ── animation variants ── */
 const stagger = {
   hidden: {},
   visible: {
@@ -38,190 +36,125 @@ const fadeSlide = {
   },
 };
 
-/* ── Universal steps ── */
-const steps = [
+const exportGuides = [
   {
-    id: "export",
-    num: "01",
-    icon: Download,
-    title: "Export your history",
-    accent: true,
-    substeps: [
-      { icon: MessageCircle, text: "ChatGPT: Settings \u2192 Data controls \u2192 Export." },
-      { icon: Brain, text: "Gemini: Go to Google Takeout \u2192 Select Gemini \u2192 Export." },
-      { icon: Sparkles, text: "Claude: Settings \u2192 Account \u2192 Export Data." },
-    ],
-    tip: "You'll receive a .zip via email. Extract it and look for the .json file (e.g., conversations.json).",
+    ai: "ChatGPT",
+    icon: MessageCircle,
+    steps: [
+      "Click your profile picture (bottom-left) \u2192 Settings.",
+      "Go to Data Controls \u2192 Export Data.",
+      "Open the email from OpenAI and download the .zip.",
+      "Upload the conversations.json file to ChatLore."
+    ]
   },
   {
-    id: "upload",
-    num: "02",
-    icon: Upload,
-    title: "Import your history",
-    substeps: [
-      { icon: Upload, text: "Drop your history file or paste a single chat manually." },
-      { icon: FileText, text: "We process everything locally. Your private data never leaves your computer." },
-    ],
-    tip: "Pro Tip: Use 'Manual Paste' if you don't want to wait for the OpenAI email.",
+    ai: "Google Gemini",
+    icon: Brain,
+    steps: [
+      "Go to Google Takeout (takeout.google.com).",
+      "Deselect all and check only Gemini.",
+      "Create the export and download the resulting .zip.",
+      "Find the .json file inside and upload it here."
+    ]
   },
   {
-    id: "select",
-    num: "03",
-    icon: Search,
-    title: "Refine your profile",
-    substeps: [
-      { icon: Search, text: "We automatically extract your tone, preferences, and hidden rules." },
-      { icon: ClipboardCheck, text: "Review and edit the results to make them 100% yours." },
-    ],
-    tip: "The more chats you select, the smarter your final AI assistant will be.",
-  },
-  {
-    id: "use",
-    num: "04",
-    icon: Copy,
-    title: "Power up your AI",
-    accent: true,
-    substeps: [
-      { icon: Copy, text: "Choose your target: Claude, ChatGPT, or Gemini." },
-      { icon: ClipboardCheck, text: "Copy your instructions and paste them once. That's it!" },
-    ],
-    tip: "Works instantly with Claude Projects, ChatGPT Custom Instructions, and Gemini Systems.",
-  },
-];
-
-const targetAIs = [
-  {
-    title: "Claude.ai (Recommended)",
-    description: "Best for complex reasoning and long-term projects.",
-    where: "Project Settings \u2192 Instructions",
-  },
-  {
-    title: "ChatGPT",
-    description: "Best for quick daily tasks and simple automations.",
-    where: "Customize ChatGPT \u2192 Custom Instructions",
-  },
-  {
-    title: "Google Gemini",
-    description: "Best for integration with Google Workspace.",
-    where: "Gemini Manager \u2192 System Instructions",
-  },
+    ai: "Claude (Anthropic)",
+    icon: Sparkles,
+    steps: [
+      "Click your profile (bottom-left) \u2192 Settings.",
+      "Go to Account \u2192 Export Data.",
+      "Anthropic will email you a link to your data.",
+      "Upload the .json file from the export to ChatLore."
+    ]
+  }
 ];
 
 export default function GuidePage() {
   return (
     <div className="relative">
-      {/* ── Hero ── */}
-      <section className="px-4 pb-16 pt-24 sm:pt-32">
-        <motion.div
-          variants={stagger}
-          initial="hidden"
-          animate="visible"
-          className="mx-auto max-w-3xl text-center"
-        >
-          <motion.p
-            variants={fadeSlide}
-            className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-amber"
-          >
+      <section className="px-4 pb-16 pt-24 sm:pt-32 text-center">
+        <motion.div variants={stagger} initial="hidden" animate="visible" className="mx-auto max-w-3xl">
+          <motion.p variants={fadeSlide} className="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-amber">
             Universal Sync Guide
           </motion.p>
-          <motion.h1
-            variants={fadeSlide}
-            className="font-[family-name:var(--font-display)] text-4xl leading-tight sm:text-5xl"
-          >
-            Sync your AI Memory <span className="italic text-amber">between platforms</span>
+          <motion.h1 variants={fadeSlide} className="font-[family-name:var(--font-display)] text-4xl sm:text-5xl lg:text-6xl">
+            How to get your <span className="italic text-amber">AI History</span>
           </motion.h1>
-          <motion.p
-            variants={fadeSlide}
-            className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground"
-          >
-            Don&apos;t lose your style when switching assistants. Follow these steps to migrate between ChatGPT, Gemini, and Claude.
-          </motion.p>
+          <p className="mt-6 text-muted-foreground text-lg max-w-2xl mx-auto">
+            Each platform has a different way of letting you take your data. Here is how to do it for each one.
+          </p>
         </motion.div>
       </section>
 
-      {/* ── Steps ── */}
+      {/* ── Export Guides Section ── */}
       <section className="px-4 py-12">
-        <div className="mx-auto max-w-3xl space-y-6">
-          {steps.map((step, i) => {
-            return (
-              <motion.div
-                key={step.num}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className={`rounded-2xl border p-8 ${
-                  step.accent ? "border-amber/30 bg-amber/5 shadow-sm shadow-amber/5" : "border-border/40 bg-card/30"
-                }`}
-              >
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-amber/10 text-amber font-bold">
-                    {step.num}
-                  </div>
-                  <h2 className="text-xl font-bold">{step.title}</h2>
+        <div className="mx-auto max-w-5xl grid gap-8 md:grid-cols-3">
+          {exportGuides.map((guide, i) => (
+            <motion.div
+              key={guide.ai}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1 }}
+              className="rounded-3xl border border-border/40 bg-card/30 p-8 flex flex-col shadow-sm"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex size-10 items-center justify-center rounded-2xl bg-amber/10 text-amber">
+                  <guide.icon className="size-5" />
                 </div>
-                <ul className="space-y-4">
-                  {step.substeps.map((sub, idx) => (
-                    <li key={idx} className="flex items-start gap-3 text-muted-foreground">
-                      <sub.icon className="mt-1 size-4 shrink-0 text-amber/60" />
-                      <span className="text-sm">{sub.text}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-6 flex items-start gap-3 rounded-xl bg-background/50 p-4 border border-border/20">
-                  <Lightbulb className="mt-1 size-4 shrink-0 text-amber" />
-                  <p className="text-xs italic leading-relaxed">{step.tip}</p>
-                </div>
-              </motion.div>
-            );
-          })}
+                <h2 className="text-xl font-bold">{guide.ai}</h2>
+              </div>
+              <ul className="space-y-4 flex-1">
+                {guide.steps.map((step, idx) => (
+                  <li key={idx} className="flex gap-3 text-sm text-muted-foreground leading-relaxed">
+                    <span className="font-mono text-amber font-bold">{idx + 1}.</span>
+                    {step}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* ── Target AI Section ── */}
-      <section id="targets" className="border-t border-border/40 px-4 py-24">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="mb-12 text-center font-[family-name:var(--font-display)] text-3xl">
-            Where to paste your results?
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-3">
-            {targetAIs.map((target) => (
-              <div key={target.title} className="rounded-2xl border border-border/40 p-6 bg-card/20 flex flex-col">
-                <h3 className="text-lg font-bold mb-2">{target.title}</h3>
-                <p className="text-xs text-muted-foreground mb-6 flex-1">{target.description}</p>
-                <div className="mt-auto">
-                  <div className="text-[10px] uppercase tracking-widest text-amber font-bold mb-2">Settings Path:</div>
-                  <div className="text-xs font-mono bg-background p-2 rounded border border-border/20 break-words">
-                    {target.where}
-                  </div>
-                </div>
-              </div>
-            ))}
+      {/* ── Final Usage Section ── */}
+      <section className="border-t border-border/40 px-4 py-24">
+        <div className="mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl font-bold mb-12">Where to use your results?</h2>
+          <div className="grid gap-6 sm:grid-cols-2 text-left">
+            <div className="rounded-2xl border border-border/40 p-6 bg-amber/5 border-amber/20">
+              <h3 className="font-bold text-amber mb-2 flex items-center gap-2">
+                <Sparkles className="size-4" /> Recommended: Claude Projects
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                The best way to keep your memory permanent. Paste your results into <strong>Project Instructions</strong>.
+              </p>
+            </div>
+            <div className="rounded-2xl border border-border/40 p-6 bg-card/20">
+              <h3 className="font-bold mb-2 flex items-center gap-2">
+                <MessageCircle className="size-4 text-muted-foreground" /> ChatGPT / Gemini Custom
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Paste into <strong>Custom Instructions</strong> (ChatGPT) or <strong>System Instructions</strong> (Gemini).
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Privacy Note ── */}
-      <section id="privacy" className="px-4 py-12">
-        <div className="mx-auto max-w-3xl rounded-3xl border border-border/40 bg-muted/20 p-8 text-center">
-          <h2 className="text-xl font-bold mb-4">Your Privacy is our Priority</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            ChatLore is a 100% client-side tool. This means your conversation files never leave your computer. 
-            The analysis happens in your browser session and is forgotten as soon as you close the tab. 
-            We do not have a database, and we do not store your personal information.
-          </p>
-        </div>
-      </section>
-
-      {/* ── Final CTA ── */}
-      <section className="border-t border-border/40 px-4 py-24">
+      {/* ── Privacy & CTA ── */}
+      <section className="px-4 pb-24 pt-12">
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="text-3xl font-bold mb-4 italic">Ready to Sync?</h2>
-          <p className="text-muted-foreground mb-8">Take your AI personality with you, anywhere.</p>
+          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100/10 px-4 py-1.5 text-xs font-semibold text-emerald-500 mb-8">
+            <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
+            100% Private & Local Analysis
+          </div>
+          <h2 className="text-3xl font-bold mb-6">Ready to Sync?</h2>
           <Link
             href="/upload"
             className="group inline-flex items-center gap-3 rounded-full bg-amber px-10 py-4 text-sm font-bold text-white transition-all hover:bg-amber/90 shadow-xl shadow-amber/20"
           >
-            Start Now
+            Go to Upload
             <ArrowRight className="size-4" />
           </Link>
         </div>
