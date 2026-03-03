@@ -9,7 +9,7 @@ import { ExportGuideModal } from "@/components/ExportGuideModal";
 import { useParser } from "@/lib/parsers/use-parser";
 import { useConversations } from "@/context/conversations";
 import { trackEvent } from "@/lib/analytics";
-import { FileJson, ClipboardCopy } from "lucide-react";
+import { FileJson, ClipboardCopy, MessageCircle, Sparkles, Brain, Code2 } from "lucide-react";
 
 type UploadMethod = "file" | "paste";
 
@@ -35,7 +35,6 @@ export default function UploadPage() {
     [parseRawText]
   );
 
-  // Redirect to conversations list after successful parse
   useEffect(() => {
     if (status === "success" && conversations.length > 0) {
       trackEvent("parse_completed", { 
@@ -56,41 +55,42 @@ export default function UploadPage() {
         className="w-full max-w-xl"
       >
         <div className="mb-8 text-center">
-          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-amber/10 px-3 py-1 text-xs font-semibold text-amber">
+          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary uppercase tracking-wider">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-75"></span>
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-amber"></span>
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
             </span>
-            Desktop Recommended
+            Local Processing
           </div>
           <h1 className="text-3xl font-bold tracking-tight">
             How would you like to start?
           </h1>
-          <p className="mt-2 text-muted-foreground">
+          <p className="mt-2 text-muted-foreground text-sm">
             Upload your export file or paste a conversation to extract your AI memory.
           </p>
         </div>
 
-        {/* Method Toggle */}
         <div className="mb-8 flex rounded-xl border border-border/60 bg-card/30 p-1">
           <button
             onClick={() => setMethod("file")}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition-all ${
+            className={cn(
+              "flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-bold transition-all",
               method === "file"
-                ? "bg-amber text-white shadow-md"
+                ? "bg-primary text-white shadow-md"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+            )}
           >
             <FileJson className="size-4" />
             AI Export File
           </button>
           <button
             onClick={() => setMethod("paste")}
-            className={`flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-semibold transition-all ${
+            className={cn(
+              "flex flex-1 items-center justify-center gap-2 rounded-lg py-2.5 text-sm font-bold transition-all",
               method === "paste"
-                ? "bg-amber text-white shadow-md"
+                ? "bg-primary text-white shadow-md"
                 : "text-muted-foreground hover:text-foreground"
-            }`}
+            )}
           >
             <ClipboardCopy className="size-4" />
             Manual Paste
@@ -113,8 +113,8 @@ export default function UploadPage() {
               />
               <div className="mt-4 flex flex-col items-center gap-2">
                 <ExportGuideModal />
-                <p className="text-center text-xs text-muted-foreground">
-                  Look for <code className="text-amber font-mono">.json</code> files inside your export archive.
+                <p className="text-center text-xs text-muted-foreground font-medium">
+                  Look for <code className="text-primary font-mono">.json</code> files inside your export zip.
                 </p>
               </div>
             </motion.div>
@@ -131,22 +131,21 @@ export default function UploadPage() {
                 isProcessing={status === "parsing"} 
               />
               {error && (
-                <p className="mt-4 text-center text-sm text-destructive font-medium">{error}</p>
+                <p className="mt-4 text-center text-sm text-destructive font-bold">{error}</p>
               )}
             </motion.div>
           )}
         </AnimatePresence>
 
-        <div className="mt-12 border-t border-border/40 pt-6 text-center">
-          <div className="mb-4 flex justify-center -space-x-2">
-            {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="size-6 rounded-full border-2 border-background bg-muted flex items-center justify-center text-[8px] font-bold text-muted-foreground">
-                {String.fromCharCode(64 + i)}
-              </div>
-            ))}
+        <div className="mt-12 border-t border-border/40 pt-8 text-center">
+          <div className="mb-6 flex justify-center gap-6 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+            <MessageCircle className="size-5" title="ChatGPT" />
+            <Sparkles className="size-5" title="Claude" />
+            <Brain className="size-5" title="Gemini" />
+            <Code2 className="size-5" title="Cursor" />
           </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            <strong>100% Client-Side Processing:</strong> Your history is processed entirely within your browser to keep your context private and secure.
+          <p className="text-xs text-muted-foreground leading-relaxed max-w-sm mx-auto">
+            <strong>100% Client-Side:</strong> Your data never leaves your browser during parsing. We prioritize your privacy above all else.
           </p>
         </div>
       </motion.div>
