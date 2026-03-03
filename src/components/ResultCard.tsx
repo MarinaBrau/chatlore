@@ -7,7 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FileText, Tag, Heart, Repeat, Mic2, Ban } from "lucide-react";
+import { FileText, Tag, Heart, Repeat, Mic2, Ban, Workflow } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { ConversationAnalysis } from "@/lib/types";
 
@@ -42,7 +42,7 @@ export function ResultCard({ analysis, onUpdate, selectedItems, onToggleItem }: 
         <h3 className="font-bold text-lg leading-snug">{analysis.title}</h3>
       </div>
 
-      <Accordion type="multiple" defaultValue={["summary", "tone", "preferences"]}>
+      <Accordion type="multiple" defaultValue={["summary", "technical", "preferences"]}>
         <AccordionItem value="summary" className="px-6 border-b border-border/40">
           <AccordionTrigger className="hover:no-underline py-4">
             <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
@@ -58,6 +58,44 @@ export function ResultCard({ analysis, onUpdate, selectedItems, onToggleItem }: 
             />
           </AccordionContent>
         </AccordionItem>
+
+        {editedAnalysis.technicalContext && editedAnalysis.technicalContext.length > 0 && (
+          <AccordionItem value="technical" className="px-6 border-b border-border/40">
+            <AccordionTrigger className="hover:no-underline py-4">
+              <span className="flex items-center gap-2 font-bold text-sm uppercase tracking-wider">
+                <Workflow className="size-4 text-primary" />
+                Technical Context & State
+              </span>
+            </AccordionTrigger>
+            <AccordionContent>
+              <ul className="space-y-3">
+                {editedAnalysis.technicalContext.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <button 
+                      onClick={() => onToggleItem?.("technicalContext", item)}
+                      className={cn(
+                        "mt-1.5 size-2 shrink-0 rounded-full transition-all",
+                        isSelected("technicalContext", item) ? "bg-primary" : "bg-muted-foreground/30"
+                      )}
+                    />
+                    <input
+                      value={item}
+                      onChange={(e) => {
+                        const next = [...(editedAnalysis.technicalContext || [])];
+                        next[i] = e.target.value;
+                        handleUpdate("technicalContext", next);
+                      }}
+                      className={cn(
+                        "flex-1 bg-transparent text-sm transition-all focus:outline-none",
+                        isSelected("technicalContext", item) ? "text-muted-foreground" : "text-muted-foreground/40 italic"
+                      )}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </AccordionContent>
+          </AccordionItem>
+        )}
 
         {editedAnalysis.topics && editedAnalysis.topics.length > 0 && (
           <AccordionItem value="topics" className="px-6 border-b border-border/40">

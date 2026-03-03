@@ -53,6 +53,7 @@ export async function analyzeWithClaude(
       patterns: Array.isArray(parsed.patterns) ? parsed.patterns : [],
       toneAdjectives: Array.isArray(parsed.tone_adjectives) ? parsed.tone_adjectives : [],
       negativeConstraints: Array.isArray(parsed.negative_constraints) ? parsed.negative_constraints : [],
+      technicalContext: Array.isArray(parsed.technical_context) ? parsed.technical_context : [],
     };
   } catch (e) {
     if (retries > 0) {

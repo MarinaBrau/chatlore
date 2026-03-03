@@ -16,5 +16,6 @@ export function mergeAnalyses(
     patterns: Array.from(new Set(analyses.flatMap((a) => a.patterns || []))),
     toneAdjectives: Array.from(new Set(analyses.flatMap((a) => a.toneAdjectives || []))),
     negativeConstraints: Array.from(new Set(analyses.flatMap((a) => a.negativeConstraints || []))),
+    technicalContext: Array.from(new Set(analyses.flatMap((a) => a.technicalContext || []))),
   };
 }

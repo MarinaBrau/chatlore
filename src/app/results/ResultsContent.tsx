@@ -53,13 +53,15 @@ export function ResultsContent() {
     const prefs = Array.from(new Set(all.flatMap(r => r.preferences || [])));
     const negative = Array.from(new Set(all.flatMap(r => r.negativeConstraints || [])));
     const patterns = Array.from(new Set(all.flatMap(r => r.patterns || [])));
+    const technical = Array.from(new Set(all.flatMap(r => r.technicalContext || [])));
 
     setSelectedItems({
       topics,
       toneAdjectives: tone,
       preferences: prefs,
       negativeConstraints: negative,
-      patterns
+      patterns,
+      technicalContext: technical
     });
   };
 

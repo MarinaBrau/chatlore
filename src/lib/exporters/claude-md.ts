@@ -16,6 +16,12 @@ export function exportAsClaudeMd(analyses: ConversationAnalysis[]): string {
 
   sections.push(`## Background\n\n${merged.summary}`);
 
+  if (merged.technicalContext.length > 0) {
+    sections.push(
+      `## Project State & Technical Context\n\n${merged.technicalContext.map((t) => `- ${t}`).join("\n")}`
+    );
+  }
+
   if (merged.topics.length > 0) {
     sections.push(
       `## Domain Knowledge\n\nTopics the user frequently works with:\n\n${merged.topics.map((t) => `- ${t}`).join("\n")}`

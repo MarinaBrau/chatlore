@@ -7,4 +7,5 @@ export interface ConversationAnalysis {
   patterns: string[];
   toneAdjectives: string[];
   negativeConstraints: string[];
+  technicalContext: string[];
 }

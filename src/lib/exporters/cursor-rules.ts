@@ -14,6 +14,10 @@ export function exportAsCursorRules(analyses: ConversationAnalysis[]): string {
       content += `Tone: ${a.toneAdjectives.join(", ")}\n`;
     }
     
+    if (a.technicalContext && a.technicalContext.length > 0) {
+      content += `Project State & Technical Context:\n${a.technicalContext.map((t) => `- ${t}`).join("\n")}\n\n`;
+    }
+    
     if (a.preferences.length > 0) {
       content += `User Preferences:\n${a.preferences.map((p) => `- ${p}`).join("\n")}\n\n`;
     }
