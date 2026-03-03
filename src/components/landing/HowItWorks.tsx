@@ -57,7 +57,7 @@ export function HowItWorks() {
               transition={{
                 delay: i * 0.1,
                 duration: 0.6,
-                ease: [0.25, 0.1, 0.25, 1],
+                ease: [0.25, 0.1, 0.25, 1] as [number, number, number, number],
               }}
               className="group relative rounded-xl border border-border/40 bg-card/30 p-6 transition-colors hover:border-amber/20 hover:bg-card/60"
             >

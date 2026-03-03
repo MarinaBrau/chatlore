@@ -1,10 +1,7 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { parseChatGPTExport } from "./chatgpt";
-import { parseGeminiExport } from "./gemini";
-import { parseClaudeExport } from "./claude";
-import type { Conversation, Message } from "./types";
+import { useCallback, useState } from "react";
+import type { Conversation, ParseWorkerResponse } from "./types";
 
 interface ParserState {
   status: "idle" | "parsing" | "success" | "error";
@@ -76,10 +73,10 @@ export function useParser() {
       
       worker.onmessage = (event: MessageEvent<ParseWorkerResponse>) => {
         const response = event.data;
-        if (response.type === "success") {
+        if (response.type === "success" && response.conversations) {
           setState({ status: "success", conversations: response.conversations, error: null });
         } else {
-          setState({ status: "error", conversations: [], error: response.error });
+          setState({ status: "error", conversations: [], error: response.error || "Parsing failed" });
         }
         worker.terminate();
       };
