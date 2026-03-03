@@ -1,13 +1,12 @@
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
 
 export function Footer() {
   return (
     <footer className="border-t border-border/30 bg-muted/10 py-12">
       <div className="mx-auto flex max-w-5xl flex-col gap-8 px-4 sm:flex-row sm:justify-between">
         <div className="flex flex-col gap-4">
-          <p className="font-mono text-xs uppercase tracking-widest text-amber font-bold">
-            ChatLore
-          </p>
+          <Logo />
           <p className="max-w-xs text-sm text-muted-foreground">
             The universal memory layer for your AI life. Sync context between ChatGPT, Gemini, and Claude securely.
           </p>
