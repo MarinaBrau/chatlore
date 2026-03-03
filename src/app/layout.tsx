@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import { JsonLd } from "@/components/JsonLd";
 import { Toaster } from "@/components/ui/sonner";
+import { CookieBanner } from "@/components/CookieBanner";
 import { ConversationsProvider } from "@/context/conversations";
 import "./globals.css";
 
@@ -117,6 +118,7 @@ export default function RootLayout({
             <Footer />
           </div>
           <Toaster />
+          <CookieBanner />
         </ConversationsProvider>
       </body>
     </html>

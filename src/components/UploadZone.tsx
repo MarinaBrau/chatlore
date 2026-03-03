@@ -70,8 +70,18 @@ export function UploadZone({ onFileAccepted, status, error }: UploadZoneProps) {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onClick={() => !isParsing && inputRef.current?.click()}
+      onKeyDown={(e) => {
+        if (!isParsing && (e.key === "Enter" || e.key === " ")) {
+          e.preventDefault();
+          inputRef.current?.click();
+        }
+      }}
+      tabIndex={isParsing ? -1 : 0}
+      role="button"
+      aria-label="Upload your AI history JSON file"
+      aria-disabled={isParsing}
       className={cn(
-        "relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-12 transition-all duration-200",
+        "relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-12 transition-all duration-200 outline-none",
         isDragging
           ? "border-primary bg-primary/5 scale-[1.01]"
           : "border-border/60 hover:border-primary/50 hover:bg-accent/30",

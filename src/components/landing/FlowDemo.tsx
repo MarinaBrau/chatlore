@@ -160,7 +160,7 @@ export function FlowDemo() {
                 <div className="overflow-hidden rounded-lg border border-border/40 bg-neutral-950">
                   <div className="border-b border-neutral-800 px-3 py-1.5">
                     <span className="font-mono text-[11px] text-neutral-500">
-                      claude-context.md
+                      universal-ai-profile.md
                     </span>
                   </div>
                   <div className="px-4 py-3 font-mono text-xs leading-relaxed">

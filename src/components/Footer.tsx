@@ -22,9 +22,10 @@ export function Footer() {
           
           <div className="flex flex-col gap-3">
             <span className="font-bold text-foreground">Legal & Support</span>
-            <Link href="/guide#privacy" className="text-muted-foreground hover:text-amber transition-colors">Privacy Policy</Link>
-            <a href="mailto:hello@chatlore.app" className="text-muted-foreground hover:text-amber transition-colors">Contact</a>
-            <a href="https://github.com/MarinaBrau/chatlore" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-amber transition-colors">GitHub</a>
+            <Link href="/privacy" className="text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="text-muted-foreground hover:text-primary transition-colors">Terms of Use</Link>
+            <a href="mailto:hello@chatlore.app" className="text-muted-foreground hover:text-primary transition-colors" aria-label="Contact us via email">Contact</a>
+            <a href="https://github.com/MarinaBrau/chatlore" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors" aria-label="View source code on GitHub">GitHub</a>
           </div>
         </div>
       </div>

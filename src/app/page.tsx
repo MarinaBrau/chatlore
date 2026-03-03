@@ -1,6 +1,7 @@
 "use client";
 
 import { HeroSection } from "@/components/landing/HeroSection";
+import { FlowDemo } from "@/components/landing/FlowDemo";
 import { OutputPreview } from "@/components/landing/OutputPreview";
 import { SocialProof } from "@/components/landing/SocialProof";
 import { HowItWorks } from "@/components/landing/HowItWorks";
@@ -17,16 +18,16 @@ const softwareSchema = {
   applicationCategory: "UtilitiesApplication",
   operatingSystem: "Web",
   description:
-    "Transform your ChatGPT conversation history into structured context files for Claude. 100% free, no sign-up required.",
+    "Universal AI Context Hub — Transfer your chat history, memory, and style between ChatGPT, Claude, and Gemini in seconds.",
   offers: {
     "@type": "Offer",
     price: "0",
     priceCurrency: "USD",
   },
   featureList: [
-    "Import ChatGPT conversation history",
-    "Generate structured context for Claude",
-    "Export as Project Instructions, CLAUDE.md, or plain text",
+    "Import from ChatGPT, Gemini, or Claude",
+    "Generate structured context for Any AI",
+    "Export for Claude, ChatGPT, Gemini, and Cursor",
     "100% client-side parsing for privacy",
   ],
 };
@@ -38,6 +39,7 @@ export default function Home() {
       <HeroSection />
       <SocialProof />
       <HowItWorks />
+      <FlowDemo />
       <OutputPreview />
       <TrustPillars />
       <FaqSection />

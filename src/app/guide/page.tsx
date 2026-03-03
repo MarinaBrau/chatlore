@@ -16,6 +16,7 @@ import {
   Sparkles,
   ExternalLink,
 } from "lucide-react";
+import { FlowDemo } from "@/components/landing/FlowDemo";
 
 const stagger = {
   hidden: {},
@@ -86,6 +87,11 @@ export default function GuidePage() {
         </motion.div>
       </section>
 
+      {/* ── Visual Demo Section ── */}
+      <section className="-mt-12 mb-8">
+        <FlowDemo />
+      </section>
+
       {/* ── Export Guides Section ── */}
       <section className="px-4 py-12">
         <div className="mx-auto max-w-5xl grid gap-8 md:grid-cols-3">
@@ -145,16 +151,12 @@ export default function GuidePage() {
       {/* ── Privacy & CTA ── */}
       <section className="px-4 pb-24 pt-12">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-100/10 px-4 py-1.5 text-xs font-semibold text-emerald-500 mb-8">
-            <div className="size-1.5 rounded-full bg-emerald-500 animate-pulse" />
-            100% Private & Local Analysis
-          </div>
           <h2 className="text-3xl font-bold mb-6">Ready to Sync?</h2>
           <Link
             href="/upload"
             className="group inline-flex items-center gap-3 rounded-full bg-amber px-10 py-4 text-sm font-bold text-white transition-all hover:bg-amber/90 shadow-xl shadow-amber/20"
           >
-            Go to Upload
+            Get Started
             <ArrowRight className="size-4" />
           </Link>
         </div>

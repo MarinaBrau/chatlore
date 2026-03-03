@@ -236,9 +236,6 @@ export function HeroSection() {
                     <div className="flex size-6 items-center justify-center rounded-full bg-emerald-100/10">
                       <Check className="size-4 text-emerald-500" />
                     </div>
-                    <span className="text-sm font-semibold text-emerald-500 text-center">
-                      Ready for Any AI assistant
-                    </span>
                   </motion.div>
                 </motion.div>
               )}
