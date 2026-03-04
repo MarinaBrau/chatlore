@@ -1,4 +1,4 @@
-# ChatLore Universal (v3) 🏺
+# ChatLore Universal (v3) 
 
 **Universal AI Context Hub — Transfer your chat history, memory, and style between ChatGPT, Claude, and Gemini in seconds.**
 
@@ -51,5 +51,3 @@ ChatLore is built on the principle of **Zero Data Retention**.
 -   **Stateless API**: Only the text of conversations you *manually select* is sent to the AI for analysis.
 -   **No Database**: We do not store your chat history or the generated results.
 
----
-Built with ❤️ for the AI community.
