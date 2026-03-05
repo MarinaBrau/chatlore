@@ -9,6 +9,8 @@ import { exportAsClaudeMd } from "@/lib/exporters/claude-md";
 import { exportAsCursorRules } from "@/lib/exporters/cursor-rules";
 import { exportForChatGPT } from "@/lib/exporters/chatgpt-instructions";
 import { exportForGemini } from "@/lib/exporters/gemini-instructions";
+import { exportAsWindsurf } from "@/lib/exporters/windsurf";
+import { exportAsPerplexity } from "@/lib/exporters/perplexity";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 import type { ConversationAnalysis } from "@/lib/types";
@@ -18,7 +20,7 @@ interface ExportButtonsProps {
   selections?: Record<string, string[]>;
 }
 
-type TargetAI = "claude" | "chatgpt" | "gemini" | "catchup";
+type TargetAI = "claude" | "chatgpt" | "gemini" | "perplexity" | "catchup";
 
 export function ExportButtons({ analyses, selections }: ExportButtonsProps) {
   const [target, setTarget] = useState<TargetAI>("claude");
@@ -28,7 +30,7 @@ export function ExportButtons({ analyses, selections }: ExportButtonsProps) {
       await navigator.clipboard.writeText(text);
       trackEvent("export_clicked", { format, method: "copy", target });
       
-      const targetLabel = target === "claude" ? "Claude" : target === "chatgpt" ? "ChatGPT" : target === "gemini" ? "Gemini" : "AI";
+      const targetLabel = target === "claude" ? "Claude" : target === "chatgpt" ? "ChatGPT" : target === "gemini" ? "Gemini" : target === "perplexity" ? "Perplexity" : "AI";
       toast.success(`${label} copied! Now paste them into ${targetLabel}.`);
     } catch {
       toast.error("Failed to copy. Please try again.");
@@ -51,6 +53,7 @@ export function ExportButtons({ analyses, selections }: ExportButtonsProps) {
     switch (target) {
       case "chatgpt": return exportForChatGPT(analyses, selections);
       case "gemini": return exportForGemini(analyses, selections);
+      case "perplexity": return exportAsPerplexity(analyses);
       case "catchup": 
         const profile = exportAsProjectInstructions(analyses, selections);
         return `Hello! I'm moving our conversation context here. 
@@ -65,7 +68,7 @@ Let's continue from where we left off. Please acknowledge you've received this c
 
   const exportText = getExportText();
   const charCount = exportText.length;
-  const limit = target === "chatgpt" ? 1500 : target === "gemini" ? 20000 : 8000;
+  const limit = target === "chatgpt" ? 1500 : target === "perplexity" ? 2500 : target === "gemini" ? 20000 : 8000;
   const isOverLimit = charCount > limit;
 
   return (
@@ -88,6 +91,12 @@ Let's continue from where we left off. Please acknowledge you've received this c
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${target === "gemini" ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
         >
           <Brain className="size-3" /> Gemini
+        </button>
+        <button
+          onClick={() => setTarget("perplexity")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${target === "perplexity" ? "bg-primary text-white shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+        >
+          <Sparkles className="size-3" /> Perplexity
         </button>
         <button
           onClick={() => setTarget("catchup")}
@@ -167,6 +176,18 @@ Let's continue from where we left off. Please acknowledge you've received this c
               >
                 <FileDown className="size-3.5" />
                 Download .cursorrules
+              </Button>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                className="gap-1.5 text-muted-foreground hover:text-primary"
+                onClick={() =>
+                  downloadFile(exportAsWindsurf(analyses), ".windsurfrules", "windsurf_rules")
+                }
+              >
+                <FileDown className="size-3.5" />
+                Download .windsurfrules
               </Button>
             </div>
           </div>

@@ -16,7 +16,7 @@ const softwareSchema = {
   "name": "ChatLore",
   "operatingSystem": "Web",
   "applicationCategory": "UtilitiesApplication",
-  "description": "Universal AI Context Hub — Transfer your chat history, memory, and style between ChatGPT, Claude, and Gemini in seconds.",
+  "description": "Universal AI Context Hub — Transfer your chat history, memory, and style between ChatGPT, Claude, Gemini, Windsurf, and Perplexity.",
   "offers": {
     "@type": "Offer",
     "price": "0",
@@ -25,8 +25,8 @@ const softwareSchema = {
   "featureList": [
     "ChatGPT, Gemini, and Claude export parsing",
     "Generate structured profiles for Any AI",
-    "Claude Project Instructions & CLAUDE.md generation",
-    "ChatGPT & Gemini custom instructions optimization",
+    "Windsurf & Cursor IDE rule generation (.windsurfrules, .cursorrules)",
+    "Perplexity & AI Search system prompt optimization",
     "100% private client-side processing"
   ]
 };
@@ -73,14 +73,23 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  title: "ChatLore — Universal AI Context Hub",
+  title: "ChatLore — Universal AI Context Hub for ChatGPT, Claude, Gemini & Windsurf",
   description:
-    "Transfer your AI memory, style, and projects between ChatGPT, Claude, and Gemini in seconds. 100% private, free, and no sign-up required.",
-  keywords: ["AI context hub", "sync AI memory", "transfer ChatGPT to Claude", "Gemini custom instructions", "AI profile migration"],
+    "Transfer your AI memory, style, and projects between ChatGPT, Claude, Gemini, Windsurf, and Perplexity instantly. 100% private, free, and no sign-up required.",
+  keywords: [
+    "AI context hub",
+    "sync AI memory",
+    "transfer ChatGPT to Claude",
+    "Windsurf rules generator",
+    "Perplexity system prompt",
+    "AI profile migration",
+    "cursor rules generator",
+    ".windsurfrules generator"
+  ],
   openGraph: {
     title: "ChatLore — Universal AI Context Hub",
     description:
-      "Don't start from scratch. Transfer your style and memory between ChatGPT, Claude, and Gemini instantly.",
+      "Don't start from scratch. Sync your style and memory across ChatGPT, Claude, Gemini, Windsurf, and Perplexity.",
     url: "https://chatlore.app",
     siteName: "ChatLore",
     locale: "en_US",
@@ -89,7 +98,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ChatLore — Universal AI Context Hub",
-    description: "Sync your AI memory and style between ChatGPT, Claude, and Gemini instantly.",
+    description: "Sync your AI memory and style between ChatGPT, Claude, Gemini, Windsurf, and Perplexity instantly.",
   },
   robots: {
     index: true,

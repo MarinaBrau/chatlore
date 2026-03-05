@@ -149,18 +149,18 @@ export function GuideContent() {
           <div className="grid gap-6 sm:grid-cols-2 text-left">
             <div className="rounded-2xl border border-border/40 p-6 bg-card/20 transition-all hover:bg-card/40">
               <h3 className="font-bold mb-2 flex items-center gap-2">
-                <Sparkles className="size-4 text-primary" /> Claude & Cursor
+                <Sparkles className="size-4 text-primary" /> Claude, Cursor & Windsurf
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-                Paste your results into <strong>Project Instructions</strong> or use <strong>CLAUDE.md</strong>. Ideal for developers moving complex technical context.
+                Paste your results into <strong>Project Instructions</strong> or use <strong>CLAUDE.md</strong> and <strong>.windsurfrules</strong>. Ideal for developers moving complex technical context.
               </p>
             </div>
             <div className="rounded-2xl border border-border/40 p-6 bg-card/20 transition-all hover:bg-card/40">
               <h3 className="font-bold mb-2 flex items-center gap-2">
-                <MessageCircle className="size-4 text-primary" /> ChatGPT & Gemini
+                <MessageCircle className="size-4 text-primary" /> ChatGPT, Gemini & Perplexity
               </h3>
               <p className="text-sm text-muted-foreground leading-relaxed font-medium">
-                Paste into <strong>Custom Instructions</strong> (ChatGPT) or <strong>System Instructions</strong> (Gemini) to sync your AI persona globally.
+                Paste into <strong>Custom Instructions</strong> (ChatGPT), <strong>System Instructions</strong> (Gemini) or as a <strong>System Prompt</strong> in Perplexity to sync your persona.
               </p>
             </div>
           </div>

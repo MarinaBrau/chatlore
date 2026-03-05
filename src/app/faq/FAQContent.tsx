@@ -38,7 +38,11 @@ const faqs = [
   },
   {
     q: "Does it work with Cursor or Windsurf?",
-    a: "Absolutely. ChatLore can export a specialized CLAUDE.md file or .cursorrules, which are designed for Cursor, Windsurf, and other AI-powered IDEs to understand your project context and coding style immediately.",
+    a: "Absolutely. ChatLore can export specialized CLAUDE.md, .cursorrules, and .windsurfrules files, which are designed for AI-powered IDEs to understand your project context and coding style immediately.",
+  },
+  {
+    q: "Can I use my profile with Perplexity?",
+    a: "Yes! Use the 'Copy for Perplexity' option to get a concise persona prompt. You can paste this into Perplexity's 'System Prompt' (in Pro settings) or as the first message in a new thread to ensure results match your tone and preferences.",
   },
 ];
 
