@@ -31,14 +31,9 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  // Font optimization: ensure fonts are downloaded and cached
-  optimizeFonts: true,
-  // Environment-ready fallbacks for CI/Build
+  // Environment-ready settings
   typescript: {
     ignoreBuildErrors: false,
-  },
-  eslint: {
-    ignoreDuringBuilds: false,
   },
 };
 
