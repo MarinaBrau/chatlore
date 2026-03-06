@@ -1,13 +1,12 @@
-import type { Conversation, Message } from "./types";
+import { Conversation, Message, ClaudeExportConversation, ClaudeMessage } from "./types";
 
 /**
  * Parse a Claude.ai data export JSON into structured Conversation[].
- * Claude exports are usually a list of conversation objects.
  */
-export function parseClaudeExport(jsonString: string): Conversation[] {
-  let raw: unknown;
+export function parseClaudeExport(json: string): Conversation[] {
+  let raw: ClaudeExportConversation[];
   try {
-    raw = JSON.parse(jsonString);
+    raw = JSON.parse(json);
   } catch {
     throw new Error("Invalid JSON file. Make sure you uploaded the correct Claude export.");
   }
@@ -23,7 +22,7 @@ export function parseClaudeExport(jsonString: string): Conversation[] {
     const rawMessages = entry.chat_messages;
     if (!Array.isArray(rawMessages) || rawMessages.length === 0) continue;
 
-    const messages: Message[] = rawMessages.map((m: any) => ({
+    const messages: Message[] = rawMessages.map((m: ClaudeMessage) => ({
       id: m.uuid || `claude-msg-${Date.now()}-${Math.random()}`,
       role: m.sender === "human" ? "user" : "assistant",
       content: m.text || "",
@@ -41,5 +40,5 @@ export function parseClaudeExport(jsonString: string): Conversation[] {
     });
   }
 
-  return conversations.sort((a, b) => b.createTime.getTime() - a.createTime.getTime());
+  return conversations;
 }

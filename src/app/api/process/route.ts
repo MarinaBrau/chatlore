@@ -9,7 +9,7 @@ const MessageSchema = z.object({
   id: z.string(),
   role: z.enum(["user", "assistant", "system", "tool"]),
   content: z.string(),
-  timestamp: z.string().nullable(),
+  timestamp: z.string().or(z.date()).nullable().transform(val => val instanceof Date ? val : (val ? new Date(val) : null)),
 });
 
 const ConversationSchema = z.object({
@@ -58,19 +58,26 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // Process conversations in parallel
+  // Process conversations sequentially to avoid API rate limits and ensure robustness
   try {
-    const analysisPromises = parsed.data.conversations.map(async (conv) => {
-      const prompt = buildAnalysisPrompt(conv.title, conv.messages as unknown as Message[]);
+    const results = [];
+    for (const conv of parsed.data.conversations) {
+      // conv.messages is now correctly typed as Message[] after Zod transformation
+      const prompt = buildAnalysisPrompt(conv.title, conv.messages as Message[]);
       const analysis = await analyzeWithClaude(prompt, ANALYSIS_SYSTEM_PROMPT);
-      return {
+      
+      results.push({
         id: conv.id,
         title: conv.title,
         ...analysis,
-      };
-    });
+      });
 
-    const results = await Promise.all(analysisPromises);
+      // Optional: small delay between items if processing many
+      if (parsed.data.conversations.length > 1) {
+        await new Promise(resolve => setTimeout(resolve, 500));
+      }
+    }
+
     return NextResponse.json({ results });
   } catch (err) {
     console.error("AI processing error:", err);

@@ -89,8 +89,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ChatLore — Universal AI Context Hub",
     description:
-      "Don't start from scratch. Sync your style and memory across ChatGPT, Claude, Gemini, Windsurf, and Perplexity.",
-    url: "https://chatlore.app",
+      "Don&apos;t start from scratch. Sync your style and memory across ChatGPT, Claude, Gemini, Windsurf, and Perplexity.",    url: "https://chatlore.app",
     siteName: "ChatLore",
     locale: "en_US",
     type: "website",

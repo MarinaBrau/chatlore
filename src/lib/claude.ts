@@ -16,6 +16,7 @@ export interface AnalysisResult {
   patterns: string[];
   toneAdjectives: string[];
   negativeConstraints: string[];
+  technicalContext: string[];
 }
 
 /**
@@ -51,9 +52,12 @@ export async function analyzeWithClaude(
       topics: Array.isArray(parsed.topics) ? parsed.topics : [],
       preferences: Array.isArray(parsed.preferences) ? parsed.preferences : [],
       patterns: Array.isArray(parsed.patterns) ? parsed.patterns : [],
-      toneAdjectives: Array.isArray(parsed.tone_adjectives) ? parsed.tone_adjectives : [],
-      negativeConstraints: Array.isArray(parsed.negative_constraints) ? parsed.negative_constraints : [],
-      technicalContext: Array.isArray(parsed.technical_context) ? parsed.technical_context : [],
+      toneAdjectives: Array.isArray(parsed.tone_adjectives) ? parsed.tone_adjectives : 
+                       (Array.isArray(parsed.toneAdjectives) ? parsed.toneAdjectives : []),
+      negativeConstraints: Array.isArray(parsed.negative_constraints) ? parsed.negative_constraints :
+                           (Array.isArray(parsed.negativeConstraints) ? parsed.negativeConstraints : []),
+      technicalContext: Array.isArray(parsed.technical_context) ? parsed.technical_context :
+                        (Array.isArray(parsed.technicalContext) ? parsed.technicalContext : []),
     };
   } catch (e) {
     if (retries > 0) {

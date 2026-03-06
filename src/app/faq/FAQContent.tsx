@@ -111,7 +111,7 @@ export function FAQContent() {
         viewport={{ once: true }}
         className="mt-24 text-center border-t border-border/40 pt-16"
       >
-        <h2 className="text-2xl font-bold mb-6">Didn't find what you were looking for?</h2>
+        <h2 className="text-2xl font-bold mb-6">Didn&apos;t find what you were looking for?</h2>
         <div className="flex flex-wrap justify-center gap-4">
           <Link
             href="/upload"

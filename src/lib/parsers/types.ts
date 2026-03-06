@@ -23,6 +23,33 @@ export interface ChatGPTMessage {
   metadata?: { is_user_system_message?: boolean };
 }
 
+// ---- Claude raw export types ----
+
+export interface ClaudeExportConversation {
+  uuid: string;
+  name: string;
+  chat_messages: ClaudeMessage[];
+}
+
+export interface ClaudeMessage {
+  uuid?: string;
+  sender: "human" | "assistant";
+  text: string;
+  created_at: string;
+}
+
+// ---- Gemini raw export types ----
+
+export interface GeminiExportEntry {
+  conversations: GeminiMessage[];
+}
+
+export interface GeminiMessage {
+  author: "USER" | "MODEL";
+  content: string;
+  create_time: string;
+}
+
 // ---- Parsed output types ----
 
 export interface Conversation {

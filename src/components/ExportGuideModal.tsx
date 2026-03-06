@@ -9,14 +9,14 @@ import {
   DialogTrigger,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { HelpCircle, Settings, Mail, FolderOpen, Upload, MessageCircle, Sparkles, Brain } from "lucide-react";
+import { HelpCircle, Settings, Mail, FolderOpen, Upload, MessageCircle, Sparkles, Brain, LucideIcon } from "lucide-react";
 import { ChatGptMockup } from "@/components/mockups/ChatGptMockup";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 interface GuideStep {
   num: string;
-  icon: any;
+  icon: LucideIcon;
   title: string;
   body: string;
   mockup?: boolean;
@@ -26,8 +26,8 @@ const GUIDES: Record<string, GuideStep[]> = {
   chatgpt: [
     { num: "1", icon: Settings, title: "Open Settings", body: "Click your profile picture (bottom-left) → Settings." },
     { num: "2", icon: Upload, title: "Export Data", body: "Go to Data controls and click Export. OpenAI will bundle your data.", mockup: true },
-    { num: "3", icon: Mail, title: "Check Email", body: "You'll receive a link within minutes. Check spam if it's missing." },
-    { num: "4", icon: FolderOpen, title: "Pick JSON", body: "Extract the .zip and find 'conversations.json' to upload here." },
+    { num: "3", icon: Mail, title: "Check Email", body: "You&apos;ll receive a link within minutes. Check spam if it&apos;s missing." },
+    { num: "4", icon: FolderOpen, title: "Pick JSON", body: "Extract the .zip and find &apos;conversations.json&apos; to upload here." },
   ],
   gemini: [
     { num: "1", icon: Brain, title: "Google Takeout", body: "Go to takeout.google.com and sign in." },
@@ -37,7 +37,7 @@ const GUIDES: Record<string, GuideStep[]> = {
   ],
   claude: [
     { num: "1", icon: Sparkles, title: "Claude Settings", body: "Click your name (bottom-left) → Settings." },
-    { num: "2", icon: Upload, title: "Account Export", body: "Go to Account and click 'Export Data'." },
+    { num: "2", icon: Upload, title: "Account Export", body: "Go to Account and click &apos;Export Data&apos;." },
     { num: "3", icon: Mail, title: "Get Link", body: "Anthropic will email you a unique download link for your data." },
     { num: "4", icon: FolderOpen, title: "Upload File", body: "Upload the .json file from your export to ChatLore." },
   ]

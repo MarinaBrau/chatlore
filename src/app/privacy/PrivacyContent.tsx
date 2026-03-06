@@ -27,7 +27,7 @@ export function PrivacyContent() {
           <h2 className="text-2xl font-bold">2. Data Processing (Local & API)</h2>
           <ul className="list-disc pl-6 text-muted-foreground space-y-4">
             <li>
-              <strong>Local Parsing:</strong> When you upload an AI export file (such as ChatGPT's <code>conversations.json</code>, Claude's <code>chat.json</code>, or a Gemini export), the parsing happens entirely within your browser using Web Workers. Your file is never uploaded to our servers.
+              <strong>Local Parsing:</strong> When you upload an AI export file (such as ChatGPT&apos;s <code>conversations.json</code>, Claude&apos;s <code>chat.json</code>, or a Gemini export), the parsing happens entirely within your browser using Web Workers. Your file is never uploaded to our servers.
             </li>
             <li>
               <strong>Stateless AI Analysis:</strong> Only the specific conversations you manually select are sent to our secure AI processing endpoint for analysis. This processing is <strong>stateless</strong>, meaning the data is used only for the immediate request and is not used to train models or stored by us.

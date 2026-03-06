@@ -59,6 +59,13 @@ export function exportAsProjectInstructions(
     );
   }
 
+  const tech = filter("technicalContext", merged.technicalContext);
+  if (tech.length > 0) {
+    sections.push(
+      `## Technical Context & Project State\n${tech.map((t) => `- ${t}`).join("\n")}`
+    );
+  }
+
   sections.push(
     "\nUse this context to provide more personalized and relevant responses. Reference prior knowledge naturally without explicitly mentioning this context document."
   );

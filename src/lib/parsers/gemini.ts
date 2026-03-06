@@ -1,12 +1,12 @@
-import type { Conversation, Message } from "./types";
+import { Conversation, Message, GeminiExportEntry, GeminiMessage } from "./types";
 
 /**
- * Parse a Gemini (Google Takeout) export JSON into structured Conversation[].
+ * Parse a Google Gemini export JSON into structured Conversation[].
  */
-export function parseGeminiExport(jsonString: string): Conversation[] {
-  let raw: unknown;
+export function parseGeminiExport(json: string): Conversation[] {
+  let raw: GeminiExportEntry[];
   try {
-    raw = JSON.parse(jsonString);
+    raw = JSON.parse(json);
   } catch {
     throw new Error("Invalid JSON file. Make sure you uploaded the correct Gemini export.");
   }
@@ -22,7 +22,7 @@ export function parseGeminiExport(jsonString: string): Conversation[] {
     const rawMessages = entry.conversations;
     if (!Array.isArray(rawMessages) || rawMessages.length === 0) continue;
 
-    const messages: Message[] = rawMessages.map((m: any, index: number) => ({
+    const messages: Message[] = rawMessages.map((m: GeminiMessage, index: number) => ({
       id: `gemini-${Date.now()}-${index}`,
       role: m.author === "USER" ? "user" : "assistant",
       content: m.content || "",
@@ -44,5 +44,5 @@ export function parseGeminiExport(jsonString: string): Conversation[] {
     });
   }
 
-  return conversations.sort((a, b) => b.createTime.getTime() - a.createTime.getTime());
+  return conversations;
 }

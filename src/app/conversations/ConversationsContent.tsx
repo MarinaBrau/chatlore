@@ -20,7 +20,10 @@ export function ConversationsContent() {
         const minimized = selected.map(c => ({
           id: c.id,
           title: c.title,
-          messages: c.messages.slice(-50) // Keep last 50 msgs for context
+          messages: c.messages.slice(-20).map(m => ({
+            role: m.role,
+            content: m.content.slice(-500) // Only last 500 chars for context
+          }))
         }));
         
         sessionStorage.setItem(

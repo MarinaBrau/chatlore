@@ -21,7 +21,7 @@ export function TermsContent() {
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-foreground">1. Acceptance of Terms</h2>
           <p className="leading-relaxed">
-            By using ChatLore, you agree to these Terms of Use. If you do not agree, please do not use the tool. We provide this utility "as is" to help users manage their own AI data.
+            By using ChatLore, you agree to these Terms of Use. If you do not agree, please do not use the tool. We provide this utility &quot;as is&quot; to help users manage their own AI data.
           </p>
         </section>
 

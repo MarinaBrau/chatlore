@@ -11,7 +11,7 @@ import {
 const faqs = [
   {
     q: "Do I need to pay for this?",
-    a: "No, ChatLore is completely free to use. You don't even need to create an account.",
+    a: "No, ChatLore is completely free to use. You don&apos;t even need to create an account.",
   },
   {
     q: "Are my private chats safe?",

@@ -1,6 +1,6 @@
 "use client";
 
-import { Settings, Database, User, Shield, ChevronRight } from "lucide-react";
+import { Database, User, Shield, ChevronRight } from "lucide-react";
 
 const menuItems = [
   { icon: User, label: "General" },

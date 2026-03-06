@@ -25,10 +25,10 @@ export function ResultCard({ analysis, onUpdate, selectedItems, onToggleItem }: 
     setEditedAnalysis(analysis);
   }, [analysis]);
 
-  const handleUpdate = (field: keyof ConversationAnalysis, value: any) => {
+  const handleUpdate = (field: keyof ConversationAnalysis, value: string | string[]) => {
     const updated = { ...editedAnalysis, [field]: value };
-    setEditedAnalysis(updated);
-    if (onUpdate) onUpdate(updated);
+    setEditedAnalysis(updated as ConversationAnalysis);
+    if (onUpdate) onUpdate(updated as ConversationAnalysis);
   };
 
   const isSelected = (field: string, value: string) => {

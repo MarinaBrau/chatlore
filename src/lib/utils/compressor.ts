@@ -1,4 +1,5 @@
 import type { ConversationAnalysis } from "../types";
+import { mergeAnalyses } from "../exporters/merge";
 
 /**
  * Compresses analysis into a string under a specific character limit.
@@ -10,8 +11,8 @@ export function compressAnalysis(
   limit: number = 1500,
   selections?: Record<string, string[]>
 ): string {
-  // Use the first analysis as base (or consolidated if we had a reducer)
-  const combined = analyses[0];
+  // Consolidate all analyses into a single merged view
+  const combined = mergeAnalyses(analyses);
   if (!combined) return "";
 
   let result = "";

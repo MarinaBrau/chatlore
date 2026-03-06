@@ -31,6 +31,12 @@ interface ProcessState {
   error: string | null;
 }
 
+interface MinimizedConversation {
+  id: string;
+  title: string;
+  messages: { role: string; content: string }[];
+}
+
 export function ResultsContent() {
   const router = useRouter();
   const [viewMode, setViewMode] = useState<ViewMode>("individual");
@@ -46,7 +52,6 @@ export function ResultsContent() {
 
   const initSelections = (results: ConversationAnalysis[], combined: ConversationAnalysis | null) => {
     const all = combined ? [combined, ...results] : results;
-    const initial: Record<string, string[]> = {};
     
     const topics = Array.from(new Set(all.flatMap(r => r.topics || [])));
     const tone = Array.from(new Set(all.flatMap(r => r.toneAdjectives || [])));
@@ -124,7 +129,7 @@ export function ResultsContent() {
       return;
     }
 
-    let selected: any[];
+    let selected: MinimizedConversation[];
     try {
       selected = JSON.parse(raw);
     } catch {
@@ -158,6 +163,7 @@ export function ResultsContent() {
         patterns: Array.from(new Set(results.flatMap((r) => r.patterns || []))).filter(Boolean),
         toneAdjectives: Array.from(new Set(results.flatMap((r) => r.toneAdjectives || []))).filter(Boolean),
         negativeConstraints: Array.from(new Set(results.flatMap((r) => r.negativeConstraints || []))).filter(Boolean),
+        technicalContext: Array.from(new Set(results.flatMap((r) => r.technicalContext || []))).filter(Boolean),
       };
 
       trackEvent("analysis_completed", { result_count: results.length });
