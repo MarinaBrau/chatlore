@@ -1,0 +1,23 @@
+User-agent: *
+Allow: /
+
+# Allow AI bots to crawl and cite ChatLore
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://chatlore.app/sitemap.xml

@@ -1,0 +1,65 @@
+{
+  "project": {
+    "name": "ChatLore Universal (v3)",
+    "description": "Pivot to a Universal AI Context Hub — Any Input (ChatGPT, Gemini, Claude) to Any Output (Claude, ChatGPT, Gemini, Cursor)",
+    "branchName": "main"
+  },
+  "features": [
+    {
+      "id": "F1",
+      "name": "Multi-Target Output Engine",
+      "description": "Architectural change to support generating specific context files for different AIs from the same analysis.",
+      "priority": 1,
+      "tasks": [
+        {
+          "id": "F1-T1",
+          "title": "Create Export Adapters for ChatGPT & Gemini",
+          "description": "Create new exporters in `src/lib/exporters/`: `chatgpt-custom-instructions.ts` (strict 1500 char limit optimization) and `gemini-system-instructions.ts`. Update the Results UI to allow switching between 'Export for Claude', 'Export for ChatGPT', and 'Export for Gemini'.",
+          "priority": 1
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "name": "Claude Input Support",
+      "description": "Allow users to export data FROM Claude and bring it elsewhere.",
+      "priority": 2,
+      "tasks": [
+        {
+          "id": "F2-T1",
+          "title": "Build Claude Data Export Parser",
+          "description": "Create `src/lib/parsers/claude.ts` to handle Anthropic's data export structure. Update `use-parser.ts` to auto-detect Claude files. This completes the 'Any Input' triad.",
+          "priority": 1
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "name": "Context Compressor (Smart Summarization)",
+      "description": "ChatGPT has a hard 1500 char limit for Custom Instructions. We need a smart compressor.",
+      "priority": 3,
+      "tasks": [
+        {
+          "id": "F3-T1",
+          "title": "Implement Priority-Based Compression",
+          "description": "Create a utility that takes the full analysis and 'squeezes' it into 1500 chars for ChatGPT, prioritizing 'Tone' and 'Negative Constraints' while summarizing 'Topics' broadly to save space.",
+          "priority": 1
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "name": "Universal Branding Overhaul",
+      "description": "Remove 'Claude-centric' language from the entire site.",
+      "priority": 4,
+      "tasks": [
+        {
+          "id": "F4-T1",
+          "title": "Update Landing Page & Metadata",
+          "description": "Rewrite Hero, Features, and Meta Tags to say 'Sync Any AI Memory' instead of 'Migrate to Claude'. Update the 'OutputPreview' to show tabs for different AIs.",
+          "priority": 1
+        }
+      ]
+    }
+  ]
+}
